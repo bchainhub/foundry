@@ -115,7 +115,7 @@ impl TestArgs {
     pub fn build_args(&self) -> &CoreBuildArgs {
         &self.opts
     }
-
+1
     pub async fn run(self) -> eyre::Result<TestOutcome> {
         trace!(target: "spark::test", "executing test command");
         shell::set_shell(shell::Shell::from_args(self.opts.silent, self.json))?;

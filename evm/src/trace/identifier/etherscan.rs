@@ -100,6 +100,8 @@ impl TraceIdentifier for EtherscanIdentifier {
         &mut self,
         addresses: Vec<(&Address, Option<&[u8]>)>,
     ) -> Vec<AddressIdentity> {
+        return Vec::new();
+
         trace!(target: "etherscanidentifier", "identify {} addresses", addresses.len());
 
         let Some(client) = self.client.clone() else {
