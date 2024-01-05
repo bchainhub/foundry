@@ -21,9 +21,9 @@ use corebc::{
         TransactionRequest, U256,
     },
 };
+use foxar_common::evm::Breakpoints;
+use foxar_utils::error::SolError;
 use itertools::Itertools;
-use orbitalis_common::evm::Breakpoints;
-use orbitalis_utils::error::SolError;
 use revm::{
     interpreter::{opcode, CallInputs, CreateInputs, Energy, InstructionResult, Interpreter},
     primitives::{BlockEnv, TransactTo, B176, B256},
@@ -89,7 +89,7 @@ pub type ExpectedCallTracker = BTreeMap<Address, BTreeMap<Vec<u8>, (ExpectedCall
 /// `readFile` which can manipulate files of the filesystem. Therefore, several restrictions are
 /// implemented for these cheatcodes:
 ///
-///    - `ffi`, and file cheatcodes are _always_ opt-in (via orbitalis config) and never enabled by
+///    - `ffi`, and file cheatcodes are _always_ opt-in (via foxar config) and never enabled by
 ///      default: all respective cheatcode handlers implement the appropriate checks
 ///    - File cheatcodes require explicit permissions which paths are allowed for which operation,
 ///      see `Config.fs_permission`
@@ -258,7 +258,7 @@ impl Cheatcodes {
         {
             // we only grant cheat code access for new contracts if the caller also has
             // cheatcode access and the new contract is created in top most call
-            return
+            return;
         }
 
         data.db.allow_cheatcode_access(created_address);
@@ -273,12 +273,12 @@ impl Cheatcodes {
 
         // Delay revert clean up until expected revert is handled, if set.
         if self.expected_revert.is_some() {
-            return
+            return;
         }
 
         // we only want to apply cleanup top level
         if data.journaled_state.depth() > 0 {
-            return
+            return;
         }
 
         // Roll back all previously applied deals
@@ -620,7 +620,7 @@ where
                         mock_retdata.ret_type,
                         Energy::new(call.energy_limit),
                         mock_retdata.data.clone().0,
-                    )
+                    );
                 } else if let Some((_, mock_retdata)) = mocks.iter().find(|(mock, _)| {
                     mock.calldata.len() <= call.input.len() &&
                         *mock.calldata == call.input[..mock.calldata.len()] &&
@@ -631,7 +631,7 @@ where
                         mock_retdata.ret_type,
                         Energy::new(call.energy_limit),
                         mock_retdata.data.0.clone(),
-                    )
+                    );
                 }
             }
 
@@ -692,7 +692,7 @@ where
                                 InstructionResult::Revert,
                                 Energy::new(call.energy_limit),
                                 err.encode_string().0,
-                            )
+                            );
                         }
 
                         let is_fixed_energy_limit =
@@ -754,7 +754,7 @@ where
         if call.contract == h176_to_b176(CHEATCODE_ADDRESS) ||
             call.contract == h176_to_b176(HARDHAT_CONSOLE_ADDRESS)
         {
-            return (status, remaining_energy, retdata)
+            return (status, remaining_energy, retdata);
         }
 
         if data.journaled_state.depth() == 0 && self.skip {
@@ -762,7 +762,7 @@ where
                 InstructionResult::Revert,
                 remaining_energy,
                 Error::custom_bytes(MAGIC_SKIP_BYTES).encode_error().0,
-            )
+            );
         }
 
         // Clean up pranks
@@ -801,7 +801,7 @@ where
                         (InstructionResult::Revert, remaining_energy, error.encode_error().0)
                     }
                     Ok((_, retdata)) => (InstructionResult::Return, remaining_energy, retdata.0),
-                }
+                };
             }
         }
 
@@ -830,7 +830,7 @@ where
                     InstructionResult::Revert,
                     remaining_energy,
                     "Log != expected log".to_string().encode().into(),
-                )
+                );
             } else {
                 // All emits were found, we're good.
                 // Clear the queue, as we expect the user to declare more events for the next call
@@ -926,7 +926,7 @@ where
         // return a better error here
         if status == InstructionResult::Revert {
             if let Some(err) = self.fork_revert_diagnostic.take() {
-                return (status, remaining_energy, err.to_error_msg(self).encode().into())
+                return (status, remaining_energy, err.to_error_msg(self).encode().into());
             }
         }
 
@@ -989,7 +989,7 @@ where
                         None,
                         Energy::new(call.energy_limit),
                         err.encode_string().0,
-                    )
+                    );
                 }
 
                 data.env.tx.caller = h176_to_b176(broadcast.new_origin);
@@ -1087,7 +1087,7 @@ where
                     Err(err) => {
                         (InstructionResult::Revert, None, remaining_energy, err.encode_error().0)
                     }
-                }
+                };
             }
         }
 

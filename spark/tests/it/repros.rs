@@ -5,7 +5,7 @@ use crate::{
     test_helpers::{filter::Filter, PROJECT},
 };
 use corebc::abi::{Address, Event, EventParam, Log, LogParam, ParamType, RawLog, Token};
-use orbitalis_config::{fs_permissions::PathPermission, Config, FsPermissions};
+use foxar_config::{fs_permissions::PathPermission, Config, FsPermissions};
 use std::str::FromStr;
 
 /// A macro that tests a single pattern (".*/repros/<issue>")
@@ -61,107 +61,107 @@ macro_rules! run_test_repro {
 }
 
 // /* todo:error2215 fix tests after forking will be implemented for core blockchain
-// // <https://github.com/orbitalis-rs/orbitalis/issues/2623>
+// // <https://github.com/foxar-rs/foxar/issues/2623>
 // #[tokio::test(flavor = "multi_thread")]
 // async fn test_issue_2623() {
 //     test_repro!("Issue2623");
 // }
 
-// // <https://github.com/orbitalis-rs/orbitalis/issues/2629>
+// // <https://github.com/foxar-rs/foxar/issues/2629>
 // #[tokio::test(flavor = "multi_thread")]
 // async fn test_issue_2629() {
 //     test_repro!("Issue2629");
 // }
 
-// // <https://github.com/orbitalis-rs/orbitalis/issues/2723>
+// // <https://github.com/foxar-rs/foxar/issues/2723>
 // #[tokio::test(flavor = "multi_thread")]
 // async fn test_issue_2723() {
 //     test_repro!("Issue2723");
 // }
 // */
-// <https://github.com/orbitalis-rs/orbitalis/issues/2898>
+// <https://github.com/foxar-rs/foxar/issues/2898>
 #[tokio::test(flavor = "multi_thread")]
 async fn test_issue_2898() {
     test_repro!("Issue2898");
 }
 
 // /* todo:error2215 fix tests after forking will be implemented for core blockchain
-// // <https://github.com/orbitalis-rs/orbitalis/issues/2956>
+// // <https://github.com/foxar-rs/foxar/issues/2956>
 // #[tokio::test(flavor = "multi_thread")]
 // async fn test_issue_2956() {
 //     test_repro!("Issue2956");
 // }
 
-// // <https://github.com/orbitalis-rs/orbitalis/issues/2984>
+// // <https://github.com/foxar-rs/foxar/issues/2984>
 // #[tokio::test(flavor = "multi_thread")]
 // async fn test_issue_2984() {
 //     test_repro!("Issue2984");
 // }
 
-// // <https://github.com/orbitalis-rs/orbitalis/issues/4640>
+// // <https://github.com/foxar-rs/foxar/issues/4640>
 // #[tokio::test(flavor = "multi_thread")]
 // async fn test_issue_4640() {
 //     test_repro!("Issue4640");
 // }
 
-// // <https://github.com/orbitalis-rs/orbitalis/issues/3077>
+// // <https://github.com/foxar-rs/foxar/issues/3077>
 // #[tokio::test(flavor = "multi_thread")]
 // async fn test_issue_3077() {
 //     test_repro!("Issue3077");
 // }
 // */
-// <https://github.com/orbitalis-rs/orbitalis/issues/3055>
+// <https://github.com/foxar-rs/foxar/issues/3055>
 #[tokio::test(flavor = "multi_thread")]
 async fn test_issue_3055() {
     test_repro_fail!("Issue3055");
 }
 
 // /* todo:error2215 fix tests after forking will be implemented for core blockchain
-// // <https://github.com/orbitalis-rs/orbitalis/issues/3192>
+// // <https://github.com/foxar-rs/foxar/issues/3192>
 // #[tokio::test(flavor = "multi_thread")]
 // async fn test_issue_3192() {
 //     test_repro!("Issue3192");
 // }
 
-// // <https://github.com/orbitalis-rs/orbitalis/issues/3110>
+// // <https://github.com/foxar-rs/foxar/issues/3110>
 // #[tokio::test(flavor = "multi_thread")]
 // async fn test_issue_3110() {
 //     test_repro!("Issue3110");
 // }
 // */
-// <https://github.com/orbitalis-rs/orbitalis/issues/3189>
+// <https://github.com/foxar-rs/foxar/issues/3189>
 #[tokio::test(flavor = "multi_thread")]
 async fn test_issue_3189() {
     test_repro_fail!("Issue3189");
 }
 
 // /* todo:error2215 fix tests after forking will be implemented for core blockchain
-// // <https://github.com/orbitalis-rs/orbitalis/issues/3119>
+// // <https://github.com/foxar-rs/foxar/issues/3119>
 // #[tokio::test(flavor = "multi_thread")]
 // async fn test_issue_3119() {
 //     test_repro!("Issue3119");
 // }
 // */
-// <https://github.com/orbitalis-rs/orbitalis/issues/3190>
+// <https://github.com/foxar-rs/foxar/issues/3190>
 #[tokio::test(flavor = "multi_thread")]
 async fn test_issue_3190() {
     test_repro!("Issue3190");
 }
 
 // /* todo:error2215 fix tests after forking will be implemented for core blockchain
-// // <https://github.com/orbitalis-rs/orbitalis/issues/3221>
+// // <https://github.com/foxar-rs/foxar/issues/3221>
 // #[tokio::test(flavor = "multi_thread")]
 // async fn test_issue_3221() {
 //     test_repro!("Issue3221");
 // }
 
-// // <https://github.com/orbitalis-rs/orbitalis/issues/3708>
+// // <https://github.com/foxar-rs/foxar/issues/3708>
 // #[tokio::test(flavor = "multi_thread")]
 // async fn test_issue_3708() {
 //     test_repro!("Issue3708");
 // }
 
-// // <https://github.com/orbitalis-rs/orbitalis/issues/3221>
+// // <https://github.com/foxar-rs/foxar/issues/3221>
 // #[tokio::test(flavor = "multi_thread")]
 // async fn test_issue_3223() {
 //     test_repro_with_sender!(
@@ -170,13 +170,13 @@ async fn test_issue_3190() {
 //     );
 // }
 
-// // <https://github.com/orbitalis-rs/orbitalis/issues/3220>
+// // <https://github.com/foxar-rs/foxar/issues/3220>
 // #[tokio::test(flavor = "multi_thread")]
 // async fn test_issue_3220() {
 //     test_repro!("Issue3220");
 // }
 // */
-// <https://github.com/orbitalis-rs/orbitalis/issues/3347>
+// <https://github.com/foxar-rs/foxar/issues/3347>
 #[tokio::test(flavor = "multi_thread")]
 async fn test_issue_3347() {
     let mut res = run_test_repro!("Issue3347");
@@ -205,32 +205,32 @@ async fn test_issue_3347() {
     );
 }
 
-// <https://github.com/orbitalis-rs/orbitalis/issues/3685>
+// <https://github.com/foxar-rs/foxar/issues/3685>
 #[tokio::test(flavor = "multi_thread")]
 async fn test_issue_3685() {
     test_repro!("Issue3685");
 }
 // /* todo:error2215 fix tests after forking will be implemented for core blockchain
-// // <https://github.com/orbitalis-rs/orbitalis/issues/3653>
+// // <https://github.com/foxar-rs/foxar/issues/3653>
 // #[tokio::test(flavor = "multi_thread")]
 // async fn test_issue_3653() {
 //     test_repro!("Issue3653");
 // }
 // */
-// <https://github.com/orbitalis-rs/orbitalis/issues/3596>
+// <https://github.com/foxar-rs/foxar/issues/3596>
 #[tokio::test(flavor = "multi_thread")]
 async fn test_issue_3596() {
     test_repro!("Issue3596", true, None);
 }
 
-// <https://github.com/orbitalis-rs/orbitalis/issues/3661>
+// <https://github.com/foxar-rs/foxar/issues/3661>
 #[tokio::test(flavor = "multi_thread")]
 async fn test_issue_3661() {
     test_repro!("Issue3661");
 }
 
 // /* todo:error2215 fix tests after forking will be implemented for core blockchain
-// // <https://github.com/orbitalis-rs/orbitalis/issues/3674>
+// // <https://github.com/foxar-rs/foxar/issues/3674>
 // #[tokio::test(flavor = "multi_thread")]
 // async fn test_issue_3674() {
 //     test_repro_with_sender!(
@@ -239,32 +239,32 @@ async fn test_issue_3661() {
 //     );
 // }
 
-// // <https://github.com/orbitalis-rs/orbitalis/issues/3703>
+// // <https://github.com/foxar-rs/foxar/issues/3703>
 // #[tokio::test(flavor = "multi_thread")]
 // async fn test_issue_3703() {
 //     test_repro!("Issue3703");
 // }
 // */
-// <https://github.com/orbitalis-rs/orbitalis/issues/3753>
+// <https://github.com/foxar-rs/foxar/issues/3753>
 #[tokio::test(flavor = "multi_thread")]
 async fn test_issue_3753() {
     test_repro!("Issue3753");
 }
 
-// <https://github.com/orbitalis-rs/orbitalis/issues/4630>
+// <https://github.com/foxar-rs/foxar/issues/4630>
 #[tokio::test(flavor = "multi_thread")]
 async fn test_issue_4630() {
     test_repro!("Issue4630");
 }
 
 /* todo:error2215 fix tests after forking will be implemented for core blockchain
-// <https://github.com/orbitalis-rs/orbitalis/issues/4586>
+// <https://github.com/foxar-rs/foxar/issues/4586>
 #[tokio::test(flavor = "multi_thread")]
 async fn test_issue_4586() {
     test_repro!("Issue4586");
 }
 */
-// <https://github.com/orbitalis-rs/orbitalis/issues/5038>
+// <https://github.com/foxar-rs/foxar/issues/5038>
 #[tokio::test(flavor = "multi_thread")]
 async fn test_issue_5038() {
     test_repro!("Issue5038");

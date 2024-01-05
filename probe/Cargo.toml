@@ -4,14 +4,14 @@ version = "0.2.0"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 readme = "README.md"
-repository = "https://github.com/orbitalis-rs/orbitalis"
+repository = "https://github.com/bchainhub/foxar"
 keywords = ["ethereum", "web3"]
 
 [dependencies]
-orbitalis-utils = { path = "../utils" }
-orbitalis-evm = { path = "./../evm" }
-orbitalis-config = { path = "./../config" }
-orbitalis-common = { path = "./../common" }
+foxar-utils = { path = "../utils" }
+foxar-evm = { path = "./../evm" }
+foxar-config = { path = "./../config" }
+foxar-common = { path = "./../common" }
 
 corebc-blockindex = { workspace = true}
 corebc-contract = { workspace = true, features = ["abigen"]}

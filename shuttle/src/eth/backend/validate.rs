@@ -1,7 +1,7 @@
 //! Support for validating transactions at certain stages
 
 use crate::eth::error::{BlockchainError, InvalidTransactionError};
-use orbitalis_evm::revm::primitives::{AccountInfo, Env};
+use foxar_evm::revm::primitives::{AccountInfo, Env};
 use shuttle_core::eth::transaction::PendingTransaction;
 
 /// A trait for validating transactions

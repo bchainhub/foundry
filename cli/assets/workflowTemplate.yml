@@ -3,22 +3,22 @@ name: test
 on: workflow_dispatch
 
 env:
-  ORBITALIS_PROFILE: ci
+  FOXAR_PROFILE: ci
 
 jobs:
   check:
     strategy:
       fail-fast: true
 
-    name: Orbitalis project
+    name: Foxar project
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: recursive
 
-      - name: Install Orbitalis
-        uses: orbitalis-rs/orbitalis-toolchain@v1
+      - name: Install Foxar
+        uses: foxar-rs/foxar-toolchain@v1
         with:
           version: nightly
 

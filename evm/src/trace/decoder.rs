@@ -13,8 +13,8 @@ use corebc::{
     abi::{Abi, Address, Event, Function, Param, ParamType, Token},
     types::{H176, H256},
 };
+use foxar_common::{abi::get_indexed_event, SELECTOR_LEN};
 use hashbrown::HashSet;
-use orbitalis_common::{abi::get_indexed_event, SELECTOR_LEN};
 use std::collections::{BTreeMap, HashMap};
 
 /// Build a new [CallTraceDecoder].
@@ -288,7 +288,7 @@ impl CallTraceDecoder {
         if let RawOrDecodedLog::Raw(raw_log) = log {
             // do not attempt decoding if no topics
             if raw_log.topics.is_empty() {
-                return
+                return;
             }
 
             let mut events = vec![];
@@ -322,7 +322,7 @@ impl CallTraceDecoder {
                             })
                             .collect(),
                     );
-                    break
+                    break;
                 }
             }
         }

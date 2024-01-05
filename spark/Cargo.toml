@@ -5,10 +5,10 @@ edition = "2021"
 license = "MIT OR Apache-2.0"
 
 [dependencies]
-orbitalis-utils = { path = "./../utils" }
-orbitalis-common = { path = "./../common" }
-orbitalis-config = { path = "./../config" }
-orbitalis-evm = { path = "./../evm" }
+foxar-utils = { path = "./../utils" }
+foxar-common = { path = "./../common" }
+foxar-config = { path = "./../config" }
+foxar-evm = { path = "./../evm" }
 
 # TODO: Trim down
 corebc = { workspace = true, features = ["ylem-full"]}
@@ -33,4 +33,4 @@ yansi = "0.5"
 
 [dev-dependencies]
 corebc = { workspace = true, features = ["ylem-full", "ylem-tests", "rustls"]}
-orbitalis-utils = { path = "./../utils" }
+foxar-utils = { path = "./../utils" }

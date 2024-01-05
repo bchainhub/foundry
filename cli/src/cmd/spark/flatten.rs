@@ -3,7 +3,7 @@ use crate::cmd::{
     Cmd, LoadConfig,
 };
 use clap::{Parser, ValueHint};
-use orbitalis_common::fs;
+use foxar_common::fs;
 use std::path::PathBuf;
 
 /// CLI arguments for `spark flatten`.

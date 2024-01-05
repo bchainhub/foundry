@@ -154,7 +154,7 @@ contract Contract {
     }
 }
 
-// <https://github.com/orbitalis-rs/orbitalis/issues/2656>
+// <https://github.com/foxar-rs/foxar/issues/2656>
 #[tokio::test(flavor = "multi_thread")]
 #[ignore]
 async fn test_trace_address_fork() {
@@ -370,7 +370,7 @@ async fn test_trace_address_fork() {
     })
 }
 
-// <https://github.com/orbitalis-rs/orbitalis/issues/2705>
+// <https://github.com/foxar-rs/foxar/issues/2705>
 // <https://etherscan.io/tx/0x2d951c5c95d374263ca99ad9c20c9797fc714330a8037429a3aa4c83d456f845>
 #[tokio::test(flavor = "multi_thread")]
 #[ignore]

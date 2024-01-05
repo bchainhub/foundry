@@ -106,7 +106,7 @@ impl PilotSession {
         std::fs::write(&cache_file_name, serialized_contents)?;
 
         // Return the full cache file path
-        // Ex: /home/user/.orbitalis/cache/pilot/pilot-0.json
+        // Ex: /home/user/.foxar/cache/pilot/pilot-0.json
         Ok(cache_file_name)
     }
 
@@ -150,7 +150,7 @@ impl PilotSession {
         let home_dir = dirs::home_dir().ok_or(eyre::eyre!("Failed to grab home directory"))?;
         let home_dir_str =
             home_dir.to_str().ok_or(eyre::eyre!("Failed to convert home directory to string"))?;
-        Ok(format!("{home_dir_str}/.orbitalis/cache/pilot/"))
+        Ok(format!("{home_dir_str}/.foxar/cache/pilot/"))
     }
 
     /// Create the cache directory if it does not exist

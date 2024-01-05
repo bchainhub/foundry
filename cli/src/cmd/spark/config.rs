@@ -2,10 +2,10 @@
 
 use crate::cmd::{spark::build::BuildArgs, utils::Cmd, LoadConfig};
 use clap::Parser;
-use orbitalis_common::{evm::EvmArgs, term::cli_warn};
-use orbitalis_config::fix::fix_tomls;
+use foxar_common::{evm::EvmArgs, term::cli_warn};
+use foxar_config::fix::fix_tomls;
 
-orbitalis_config::impl_figment_convert!(ConfigArgs, opts, evm_opts);
+foxar_config::impl_figment_convert!(ConfigArgs, opts, evm_opts);
 
 /// CLI arguments for `spark config`.
 #[derive(Debug, Clone, Parser)]
@@ -38,7 +38,7 @@ impl Cmd for ConfigArgs {
             for warning in fix_tomls() {
                 cli_warn!("{warning}");
             }
-            return Ok(())
+            return Ok(());
         }
 
         let config = self.try_load_config_unsanitized_emit_warnings()?;

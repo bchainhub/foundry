@@ -1,13 +1,13 @@
 //! Contains various tests related to spark script
 use crate::constants::TEMPLATE_CONTRACT;
 use corebc::{abi::Address, types::Network};
-use orbitalis_cli_test_utils::{
+use foxar_cli_test_utils::{
     sparktest, sparktest_async, sparktest_init,
     util::{OutputExt, TestCommand, TestProject},
     ScriptOutcome, ScriptTester,
 };
-use orbitalis_config::Config;
-use orbitalis_utils::rpc;
+use foxar_config::Config;
+use foxar_utils::rpc;
 use probe::SimpleCast;
 use regex::Regex;
 use serde_json::Value;
@@ -41,7 +41,7 @@ contract ContractScript is Script {
             )
             .unwrap();
 
-        let rpc = orbitalis_utils::rpc::next_http_rpc_endpoint(Network::Mainnet);
+        let rpc = foxar_utils::rpc::next_http_rpc_endpoint(Network::Mainnet);
 
         cmd.arg("script").arg(script).args(["--fork-url", rpc.as_str(), "-vvvv"]);
     }
@@ -129,7 +129,7 @@ contract Demo {
 sparktest_async!(
     can_execute_script_command_with_manual_gas_limit_unlocked,
     |prj: TestProject, mut cmd: TestCommand| async move {
-        orbitalis_cli_test_utils::util::initialize(prj.root());
+        foxar_cli_test_utils::util::initialize(prj.root());
         let deploy_script = prj
             .inner()
             .add_source(
@@ -191,7 +191,7 @@ contract DeployScript is Script {
 sparktest_async!(
     can_execute_script_command_with_manual_gas_limit,
     |prj: TestProject, mut cmd: TestCommand| async move {
-        orbitalis_cli_test_utils::util::initialize(prj.root());
+        foxar_cli_test_utils::util::initialize(prj.root());
         let deploy_script = prj
             .inner()
             .add_source(
@@ -312,7 +312,7 @@ contract Demo {
 sparktest_async!(
     can_broadcast_script_skipping_simulation,
     |prj: TestProject, mut cmd: TestCommand| async move {
-        orbitalis_cli_test_utils::util::initialize(prj.root());
+        foxar_cli_test_utils::util::initialize(prj.root());
         // This example script would fail in on-chain simulation
         let deploy_script = prj
             .inner()
@@ -814,7 +814,6 @@ struct Transaction {
     arguments: Vec<String>,
 }
 
-// test we output arguments <https://github.com/orbitalis-rs/orbitalis/issues/3053>
 sparktest_async!(
     can_execute_script_with_arguments,
     |prj: TestProject, mut cmd: TestCommand| async move {
@@ -877,12 +876,12 @@ contract Script0 is Script {
 
         assert!(cmd.stdout_lossy().contains("SIMULATION COMPLETE"));
 
-        let run_latest = orbitalis_common::fs::json_files(prj.root().join("broadcast"))
+        let run_latest = foxar_common::fs::json_files(prj.root().join("broadcast"))
             .into_iter()
             .find(|file| file.ends_with("run-latest.json"))
             .expect("No broadcast artifacts");
 
-        let content = orbitalis_common::fs::read_to_string(run_latest).unwrap();
+        let content = foxar_common::fs::read_to_string(run_latest).unwrap();
 
         let transactions: Transactions = serde_json::from_str(&content).unwrap();
         let transactions = transactions.transactions;
@@ -903,7 +902,7 @@ contract Script0 is Script {
     }
 );
 
-// test we output arguments <https://github.com/orbitalis-rs/orbitalis/issues/3053>
+// test we output arguments <https://github.com/foxar-rs/foxar/issues/3053>
 sparktest_async!(
     can_execute_script_with_arguments_nested_deploy,
     |prj: TestProject, mut cmd: TestCommand| async move {
@@ -970,12 +969,12 @@ contract Script0 is Script {
 
         assert!(cmd.stdout_lossy().contains("SIMULATION COMPLETE"));
 
-        let run_latest = orbitalis_common::fs::json_files(prj.root().join("broadcast"))
+        let run_latest = foxar_common::fs::json_files(prj.root().join("broadcast"))
             .into_iter()
             .find(|file| file.ends_with("run-latest.json"))
             .expect("No broadcast artifacts");
 
-        let content = orbitalis_common::fs::read_to_string(run_latest).unwrap();
+        let content = foxar_common::fs::read_to_string(run_latest).unwrap();
 
         let transactions: Transactions = serde_json::from_str(&content).unwrap();
         let transactions = transactions.transactions;

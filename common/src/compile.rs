@@ -79,8 +79,8 @@ impl ProjectCompiler {
     /// # Example
     ///
     /// ```no_run
-    /// use orbitalis_common::compile::ProjectCompiler;
-    /// let config = orbitalis_config::Config::load();
+    /// use foxar_common::compile::ProjectCompiler;
+    /// let config = foxar_config::Config::load();
     /// ProjectCompiler::default()
     ///     .compile_with(&config.project().unwrap(), |prj| Ok(prj.compile()?)).unwrap();
     /// ```
@@ -389,7 +389,7 @@ pub fn compile_target_with_filter(
         if verify {
             eyre::bail!("You can only verify deployments from inside a project! Make sure it exists with `spark tree`.");
         }
-        return compile_files(project, vec![target_path.to_path_buf()], silent)
+        return compile_files(project, vec![target_path.to_path_buf()], silent);
     }
 
     if silent {

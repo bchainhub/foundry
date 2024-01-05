@@ -3,11 +3,11 @@
 use crate::test_helpers::{
     filter::Filter, COMPILED, COMPILED_WITH_LIBS, EVM_OPTS, LIBS_PROJECT, PROJECT,
 };
-use orbitalis_config::{
+use foxar_config::{
     fs_permissions::PathPermission, Config, FsPermissions, FuzzConfig, FuzzDictionaryConfig,
     InvariantConfig, RpcEndpoint, RpcEndpoints,
 };
-use orbitalis_evm::{
+use foxar_evm::{
     decode::decode_console_logs, executor::inspector::CheatsConfig, revm::primitives::SpecId,
 };
 use spark::{

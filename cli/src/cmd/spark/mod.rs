@@ -1,9 +1,9 @@
 //! Subcommands for spark
 //!
-//! All subcommands should respect the `orbitalis_config::Config`.
+//! All subcommands should respect the `foxar_config::Config`.
 //! If a subcommand accepts values that are supported by the `Config`, then the subcommand should
 //! implement `figment::Provider` which allows the subcommand to override the config's defaults, see
-//! [`orbitalis_config::Config`].
+//! [`foxar_config::Config`].
 //!
 //! See [`BuildArgs`] for a reference implementation.
 //! And [`DebugArgs`] for how to merge `Providers`.
@@ -11,14 +11,14 @@
 //! # Example
 //!
 //! create a `clap` subcommand into a `figment::Provider` and integrate it in the
-//! `orbitalis_config::Config`:
+//! `foxar_config::Config`:
 //!
 //! ```
 //! use clap::Parser;
 //! use spark::executor::opts::EvmOpts;
-//! use orbitalis_cli::cmd::spark::build::BuildArgs;
-//! use orbitalis_common::evm::EvmArgs;
-//! use orbitalis_config::{figment::Figment, *};
+//! use foxar_cli::cmd::spark::build::BuildArgs;
+//! use foxar_common::evm::EvmArgs;
+//! use foxar_config::{figment::Figment, *};
 //!
 //! // A new clap subcommand that accepts both `EvmArgs` and `BuildArgs`
 //! #[derive(Debug, Clone, Parser)]
@@ -30,7 +30,7 @@
 //! }
 //!
 //! // add `Figment` and `Config` converters
-//! orbitalis_config::impl_figment_convert!(MyArgs, opts, evm_opts);
+//! foxar_config::impl_figment_convert!(MyArgs, opts, evm_opts);
 //! let args = MyArgs::parse_from(["build"]);
 //!
 //! let figment: Figment = From::from(&args);

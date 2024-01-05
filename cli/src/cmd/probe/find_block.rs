@@ -4,8 +4,8 @@ use crate::{opts::RpcOpts, utils};
 use clap::Parser;
 use corebc::prelude::*;
 use eyre::Result;
+use foxar_config::Config;
 use futures::join;
-use orbitalis_config::Config;
 use probe::Cast;
 
 /// CLI arguments for `probe find-block`.

@@ -57,7 +57,7 @@ impl fmt::Display for Warning {
             }
             Self::NoLocalToml(tried) => {
                 let path = tried.display();
-                f.write_fmt(format_args!("No local TOML found to fix at {path}. Change the current directory to a project path or set the orbitalis.toml path with the ORBITALIS_CONFIG environment variable"))
+                f.write_fmt(format_args!("No local TOML found to fix at {path}. Change the current directory to a project path or set the foxar.toml path with the FOXAR_CONFIG environment variable"))
             }
             Self::CouldNotReadToml { path, err } => {
                 f.write_fmt(format_args!("Could not read TOML at {}: {err}", path.display()))

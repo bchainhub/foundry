@@ -1,18 +1,18 @@
 [package]
-name = "orbitalis-evm"
+name = "foxar-evm"
 version = "0.2.0"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 readme = "../README.md"
-repository = "https://github.com/orbitalis-rs/orbitalis"
+repository = "https://github.com/bchainhub/foxar"
 keywords = ["ethereum", "web3", "evm"]
 
 [dependencies]
-orbitalis-abi = { path = "../abi" }
-orbitalis-utils = { path = "../utils" }
-orbitalis-common = { path = "../common" }
-orbitalis-config = { path = "../config" }
-orbitalis-macros = { path = "../macros" }
+foxar-abi = { path = "../abi" }
+foxar-utils = { path = "../utils" }
+foxar-common = { path = "../common" }
+foxar-config = { path = "../config" }
+foxar-macros = { path = "../macros" }
 
 corebc = { workspace = true, features = ["corebc-ylem"]}
 
@@ -62,5 +62,5 @@ walkdir = "2"
 semver = "1"
 
 [dev-dependencies]
-orbitalis-utils = { path = "../utils" }
+foxar-utils = { path = "../utils" }
 tempfile = "3"

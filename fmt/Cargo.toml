@@ -2,15 +2,15 @@
 name = "spark-fmt"
 version = "0.2.0"
 edition = "2021"
-description = "Orbitalis's solidity formatting and linting support"
+description = "Foxar's solidity formatting and linting support"
 license = "MIT OR Apache-2.0"
 readme = "README.md"
-repository = "https://github.com/orbitalis-rs/orbitalis"
+repository = "https://github.com/bchainhub/foxar"
 keywords = ["ethereum", "web3", "solidity", "linter"]
 
 [dependencies]
-# orbitalis dep
-orbitalis-config = { path = "../config" }
+# foxar dep
+foxar-config = { path = "../config" }
 
 corebc-core = { workspace = true}
 

@@ -8,7 +8,7 @@ use crossterm::{
     terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
 };
 use eyre::Result;
-use orbitalis_common::evm::Breakpoints;
+use foxar_common::evm::Breakpoints;
 use revm::{interpreter::opcode, primitives::SpecId};
 use spark::{
     debug::{DebugStep, Instruction},
@@ -1024,18 +1024,18 @@ impl Ui for Tui {
                     let event = event::read().unwrap();
                     if let Event::Key(key) = event {
                         if tx.send(Interrupt::KeyPressed(key)).is_err() {
-                            return
+                            return;
                         }
                     } else if let Event::Mouse(mouse) = event {
                         if tx.send(Interrupt::MouseEvent(mouse)).is_err() {
-                            return
+                            return;
                         }
                     }
                 }
                 // Force update if time has passed
                 if last_tick.elapsed() > tick_rate {
                     if tx.send(Interrupt::IntervalElapsed).is_err() {
-                        return
+                        return;
                     }
                     last_tick = Instant::now();
                 }
@@ -1079,7 +1079,7 @@ impl Ui for Tui {
                                 {
                                     draw_memory.inner_call_index = i;
                                     self.current_step = step;
-                                    break
+                                    break;
                                 }
                             }
                         }
@@ -1095,7 +1095,7 @@ impl Ui for Tui {
                                 LeaveAlternateScreen,
                                 DisableMouseCapture
                             )?;
-                            return Ok(TUIExitReason::CharExit)
+                            return Ok(TUIExitReason::CharExit);
                         }
                         // Move down
                         KeyCode::Char('j') | KeyCode::Down => {
@@ -1332,7 +1332,7 @@ impl Interrupt {
         if let Self::KeyPressed(event) = &self {
             if let KeyCode::Char(c) = event.code {
                 if c.is_alphanumeric() || c == '\'' {
-                    return Some(c)
+                    return Some(c);
                 }
             }
         }

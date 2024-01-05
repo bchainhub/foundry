@@ -25,7 +25,7 @@ pub type RpcUrl = String;
 /// # Example
 ///
 /// ```
-/// use orbitalis_common::get_http_provider;
+/// use foxar_common::get_http_provider;
 /// # fn f() {
 ///  let retry_provider = get_http_provider("http://localhost:8545");
 /// # }
@@ -63,7 +63,7 @@ impl ProviderBuilder {
         if url_str.starts_with("localhost:") {
             // invalid url: non-prefixed URL scheme is not allowed, so we prepend the default http
             // prefix
-            return Self::new(format!("http://{url_str}"))
+            return Self::new(format!("http://{url_str}"));
         }
         let err = format!("Invalid provider url: {url_str}");
         Self {

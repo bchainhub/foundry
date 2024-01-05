@@ -24,7 +24,7 @@ pub struct Opts {
 /// Perform Ethereum RPC calls from the comfort of your command line.
 #[derive(Debug, Subcommand)]
 #[clap(
-    after_help = "Find more information in the book: http://book.getorbitalis.sh/reference/probe/probe.html",
+    after_help = "Find more information in the book: http://book.getfoxar.sh/reference/probe/probe.html",
     next_display_order = None
 )]
 pub enum Subcommands {
@@ -873,7 +873,7 @@ mod tests {
     #[test]
     fn parse_call_data() {
         let args: Opts = Opts::parse_from([
-            "orbitalis-cli",
+            "foxar-cli",
             "calldata",
             "f()",
             "5c9d55b78febcc2061715ba4f57ecf8ea2711f2c",

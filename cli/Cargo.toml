@@ -1,24 +1,24 @@
 [package]
-name = "orbitalis-cli"
+name = "foxar-cli"
 version = "0.2.0"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 readme = "README.md"
-repository = "https://github.com/orbitalis-rs/orbitalis"
+repository = "https://github.com/bchainhub/foxar"
 keywords = ["ethereum", "web3"]
 
 [build-dependencies]
 vergen = { version = "8", default-features = false, features = ["build", "git", "git2"] }
 
 [dependencies]
-# orbitalis internal
+# foxar internal
 spark-fmt = { path = "../fmt" }
 spark-doc = { path = "../doc" }
-orbitalis-utils = { path = "../utils" }
+foxar-utils = { path = "../utils" }
 spark = { path = "../spark" }
-orbitalis-config = { path = "../config" }
-orbitalis-common = { path = "../common" }
-orbitalis-evm = { path = "../evm" }
+foxar-config = { path = "../config" }
+foxar-common = { path = "../common" }
+foxar-evm = { path = "../evm" }
 probe = { path = "../probe" }
 ui = { path = "../ui" }
 
@@ -83,8 +83,8 @@ parking_lot = "0.12"
 
 [dev-dependencies]
 shuttle = { path = "../shuttle" }
-orbitalis-utils = { path = "./../utils" }
-orbitalis-cli-test-utils = { path = "./test-utils" }
+foxar-utils = { path = "./../utils" }
+foxar-cli-test-utils = { path = "./test-utils" }
 pretty_assertions = "1"
 toml = "0.7"
 serial_test = "2"

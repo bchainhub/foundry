@@ -1,18 +1,18 @@
-# orbitalis-binder
+# foxar-binder
 
 Utilities for generating bindings for solidity projects in one step.
 
-First add `orbitalis-binder` to your cargo build-dependencies.
+First add `foxar-binder` to your cargo build-dependencies.
 
 ```toml
 [build-dependencies]
-orbitalis-binder = { git = "https://github.com/orbitalis-rs/orbitalis" }
+foxar-binder = { git = "https://github.com/bchainhub/foxar" }
 # required in order to enable ssh support in [libgit2](https://github.com/rust-lang/git2-rs)
 git2 = "0.16.1"
 ```
 
 ```rust
-use orbitalis_binder::{Binder, RepositoryBuilder, Url};
+use foxar_binder::{Binder, RepositoryBuilder, Url};
 
 // github repository url
 const REPO_URL: &str = "<the-url-of-the-project>";

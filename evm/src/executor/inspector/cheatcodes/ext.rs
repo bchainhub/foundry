@@ -5,9 +5,9 @@ use corebc::{
     prelude::artifacts::CompactContractBytecode,
     types::*,
 };
+use foxar_common::{fmt::*, fs, get_artifact_path};
+use foxar_config::fs_permissions::FsAccessKind;
 use hex::FromHex;
-use orbitalis_common::{fmt::*, fs, get_artifact_path};
-use orbitalis_config::fs_permissions::FsAccessKind;
 use serde::Deserialize;
 use serde_json::Value;
 use std::{collections::BTreeMap, env, path::Path, process::Command, str::FromStr};
@@ -168,7 +168,6 @@ fn value_to_token(value: &Value) -> Result<Token> {
             Ok(Token::Array(values))
         }
         value @ Value::Object(_) => {
-            // See: [#3647](https://github.com/orbitalis-rs/orbitalis/pull/3647)
             let ordered_object: BTreeMap<String, Value> =
                 serde_json::from_value(value.clone()).unwrap();
             let values = ordered_object.values().map(value_to_token).collect::<Result<Vec<_>>>()?;
@@ -194,16 +193,16 @@ fn value_to_token(value: &Value) -> Result<Token> {
                     let fallback_s = format!("{f}");
 
                     if let Ok(n) = U256::from_dec_str(&s) {
-                        return Ok(Token::Uint(n))
+                        return Ok(Token::Uint(n));
                     }
                     if let Ok(n) = I256::from_dec_str(&s) {
-                        return Ok(Token::Int(n.into_raw()))
+                        return Ok(Token::Int(n.into_raw()));
                     }
                     if let Ok(n) = U256::from_dec_str(&fallback_s) {
-                        return Ok(Token::Uint(n))
+                        return Ok(Token::Uint(n));
                     }
                     if let Ok(n) = I256::from_dec_str(&fallback_s) {
-                        return Ok(Token::Int(n.into_raw()))
+                        return Ok(Token::Int(n.into_raw()));
                     }
                 }
             }
@@ -272,7 +271,7 @@ fn parse_json(json_str: &str, key: &str, coerce: Option<ParamType>) -> Result {
             util::parse_array(array.iter().map(to_string), &coercion_type)
         } else {
             util::parse(&to_string(values[0]), &coercion_type)
-        }
+        };
     }
 
     let res = values

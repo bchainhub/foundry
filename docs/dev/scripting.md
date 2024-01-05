@@ -88,7 +88,7 @@ Executor::call-. BroadcastableTransactions .->ScriptArgs::handle_broadcastable_t
 
 ## Nonce Management
 
-During the first execution stage on `spark script`, orbitalis has to adjust the nonce from the sender to make sure the execution and state are as close as possible to its on-chain representation.
+During the first execution stage on `spark script`, foxar has to adjust the nonce from the sender to make sure the execution and state are as close as possible to its on-chain representation.
 
 Making sure that `msg.sender` is our signer when calling `setUp()` and `run()` and that its nonce is correct (decreased by one on each call) when calling `vm.broadcast` to create a contract.
 
@@ -98,8 +98,8 @@ We skip this, if the user hasn't set a sender and they're using the `Config::DEF
 ```mermaid
 graph TD
 
-    ScriptRunner::setup-->default_orbitalis_caller-deployScript;
-    default_orbitalis_caller-deployScript-->user_sender-deployLibs;
+    ScriptRunner::setup-->default_foxar_caller-deployScript;
+    default_foxar_caller-deployScript-->user_sender-deployLibs;
     user_sender-deployLibs-->Contract.setUp;
     Contract.setUp-->A0{Executor::call};
     A0-->vm.broadcast;

@@ -10,8 +10,8 @@ use corebc::{
 };
 use error::{FuzzError, ASSUME_MAGIC_RETURN_CODE};
 use eyre::Result;
-use orbitalis_common::{calc, contracts::ContractsByAddress};
-use orbitalis_config::FuzzConfig;
+use foxar_common::{calc, contracts::ContractsByAddress};
+use foxar_config::FuzzConfig;
 pub use proptest::test_runner::Reason;
 use proptest::test_runner::{TestCaseError, TestError, TestRunner};
 use serde::{Deserialize, Serialize};
@@ -120,9 +120,9 @@ impl<'a> FuzzedExecutor<'a> {
                 &self.config.dictionary,
             );
 
-            // When assume cheat code is triggered return a special string "ORBITALIS::ASSUME"
+            // When assume cheat code is triggered return a special string "FOXAR::ASSUME"
             if call.result.as_ref() == ASSUME_MAGIC_RETURN_CODE {
-                return Err(TestCaseError::reject(FuzzError::AssumeReject))
+                return Err(TestCaseError::reject(FuzzError::AssumeReject));
             }
 
             let success = self.executor.is_success(
@@ -279,7 +279,7 @@ impl BaseCounterExample {
 
 impl fmt::Display for BaseCounterExample {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let args = orbitalis_common::abi::format_tokens(&self.args).collect::<Vec<_>>().join(", ");
+        let args = foxar_common::abi::format_tokens(&self.args).collect::<Vec<_>>().join(", ");
 
         if let Some(sender) = self.sender {
             write!(f, "sender={sender:?} addr=")?

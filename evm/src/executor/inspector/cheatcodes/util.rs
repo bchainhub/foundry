@@ -22,7 +22,7 @@ use corebc::{
     types::{transaction::eip2718::TypedTransaction, NameOrAddress, H256, U256},
     utils,
 };
-use orbitalis_common::{fmt::*, RpcUrl};
+use foxar_common::{fmt::*, RpcUrl};
 use revm::{
     interpreter::CreateInputs,
     primitives::{Account, TransactTo},
@@ -38,7 +38,7 @@ pub const DEFAULT_CREATE2_DEPLOYER: H176 = H176([
     149, 108,
 ]);
 
-pub const MAGIC_SKIP_BYTES: &[u8] = b"ORBITALIS::SKIP";
+pub const MAGIC_SKIP_BYTES: &[u8] = b"FOXAR::SKIP";
 
 /// Helps collecting transactions from different forks.
 #[derive(Debug, Clone, Default)]
@@ -184,12 +184,12 @@ pub fn parse(s: &str, ty: &ParamType) -> Result {
 
 pub fn skip(state: &mut Cheatcodes, depth: u64, skip: bool) -> Result {
     if !skip {
-        return Ok(b"".into())
+        return Ok(b"".into());
     }
     // Skip should not work if called deeper than at test level.
     // As we're not returning the magic skip bytes, this will cause a test failure.
     if depth > 1 {
-        return Err(Error::custom("The skip cheatcode can only be used at test level"))
+        return Err(Error::custom("The skip cheatcode can only be used at test level"));
     }
 
     state.skip = true;
@@ -286,14 +286,14 @@ where
                 Some(code) => {
                     if code.is_empty() {
                         trace!(create2=?DEFAULT_CREATE2_DEPLOYER, "Empty Create 2 deployer code");
-                        return Err(DatabaseError::MissingCreate2Deployer)
+                        return Err(DatabaseError::MissingCreate2Deployer);
                     }
                 }
                 None => {
                     // forked db
                     trace!(create2=?DEFAULT_CREATE2_DEPLOYER, "Missing Create 2 deployer code");
                     if data.db.code_by_hash(info.code_hash)?.is_empty() {
-                        return Err(DatabaseError::MissingCreate2Deployer)
+                        return Err(DatabaseError::MissingCreate2Deployer);
                     }
                 }
             }

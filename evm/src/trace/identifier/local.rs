@@ -3,8 +3,8 @@ use corebc::{
     abi::{Abi, Address, Event},
     prelude::ArtifactId,
 };
+use foxar_common::contracts::{diff_score, ContractsByArtifact};
 use itertools::Itertools;
-use orbitalis_common::contracts::{diff_score, ContractsByArtifact};
 use ordered_float::OrderedFloat;
 use std::{borrow::Cow, collections::BTreeMap};
 

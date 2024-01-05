@@ -1,12 +1,12 @@
 //! Contains various tests for checking probe commands
 
 use clap::CommandFactory;
-use orbitalis_cli::opts::probe::Opts;
-use orbitalis_cli_test_utils::{
+use foxar_cli::opts::probe::Opts;
+use foxar_cli_test_utils::{
     probetest,
     util::{OutputExt, TestCommand, TestProject},
 };
-use orbitalis_utils::rpc::http_rpc_endpoint;
+use foxar_utils::rpc::http_rpc_endpoint;
 use std::{io::Write, path::PathBuf};
 
 // tests `--help` is printed to std out
@@ -318,7 +318,6 @@ probetest!(calldata_array, |_: TestProject, mut cmd: TestCommand| {
     );
 });
 
-// <https://github.com/orbitalis-rs/orbitalis/issues/2705>
 probetest!(
     //todo:error2215 need an archive node
     #[ignore]

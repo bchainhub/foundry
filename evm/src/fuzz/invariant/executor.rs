@@ -24,9 +24,9 @@ use corebc::{
     types::Network,
 };
 use eyre::ContextCompat;
+use foxar_common::contracts::{ContractsByAddress, ContractsByArtifact};
+use foxar_config::{FuzzDictionaryConfig, InvariantConfig};
 use hashbrown::HashMap;
-use orbitalis_common::contracts::{ContractsByAddress, ContractsByArtifact};
-use orbitalis_config::{FuzzDictionaryConfig, InvariantConfig};
 use parking_lot::{Mutex, RwLock};
 use proptest::{
     strategy::{BoxedStrategy, Strategy, ValueTree},
@@ -120,13 +120,13 @@ impl<'a> InvariantExecutor<'a> {
                 // Scenarios where we want to fail as soon as possible.
                 {
                     if self.config.fail_on_revert && failures.borrow().reverts == 1 {
-                        return Err(TestCaseError::fail("Revert occurred."))
+                        return Err(TestCaseError::fail("Revert occurred."));
                     }
 
                     if failures.borrow().broken_invariants_count ==
                         invariant_contract.invariant_functions.len()
                     {
-                        return Err(TestCaseError::fail("All invariants have been broken."))
+                        return Err(TestCaseError::fail("All invariants have been broken."));
                     }
                 }
 
@@ -191,7 +191,7 @@ impl<'a> InvariantExecutor<'a> {
                     );
 
                     if !can_continue {
-                        break 'fuzz_run
+                        break 'fuzz_run;
                     }
 
                     *last_call_results.borrow_mut() = call_results;
@@ -389,7 +389,7 @@ impl<'a> InvariantExecutor<'a> {
                     .wrap_err(format!("{contract} does not have the selector {selector:?}"))?;
             }
 
-            return Ok(artifact.identifier())
+            return Ok(artifact.identifier());
         }
         eyre::bail!("{contract} not found in the project. Allowed format: `contract_name` or `contract_path:contract_name`.");
     }
@@ -506,7 +506,7 @@ impl<'a> InvariantExecutor<'a> {
                 U256::zero(),
                 Some(abi),
             ) {
-                return call_result.result
+                return call_result.result;
             } else {
                 warn!(
                     "The function {} was found but there was an error querying its data.",
@@ -566,7 +566,7 @@ fn can_continue(
     if !call_result.reverted {
         call_results = assert_invariants(invariant_contract, executor, calldata, failures).ok();
         if call_results.is_none() {
-            return (false, None)
+            return (false, None);
         }
     } else {
         failures.reverts += 1;
@@ -590,7 +590,7 @@ fn can_continue(
                 failures.failed_invariants.insert(invariant.name.clone(), Some(error.clone()));
             }
 
-            return (false, None)
+            return (false, None);
         }
     }
     (true, call_results)

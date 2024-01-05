@@ -11,8 +11,8 @@ use corebc::{
 };
 use probe::Cast;
 
-use orbitalis_common::abi::{get_event, parse_tokens};
-use orbitalis_config::Config;
+use foxar_common::abi::{get_event, parse_tokens};
+use foxar_config::Config;
 
 use itertools::Itertools;
 

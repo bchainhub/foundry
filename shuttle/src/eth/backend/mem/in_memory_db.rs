@@ -9,14 +9,14 @@ use crate::{
     Address, U256,
 };
 use corebc::prelude::H256;
-use orbitalis_utils::types::{ToEthersU256, ToRuint};
+use foxar_utils::types::{ToEthersU256, ToRuint};
 use spark::utils::h176_to_b176;
 use tracing::{trace, warn};
 
 // reexport for convenience
 use crate::mem::state::storage_trie_db;
-use orbitalis_evm::executor::backend::{snapshot::StateSnapshot, DatabaseResult};
-pub use orbitalis_evm::executor::{backend::MemDb, DatabaseRef};
+use foxar_evm::executor::backend::{snapshot::StateSnapshot, DatabaseResult};
+pub use foxar_evm::executor::{backend::MemDb, DatabaseRef};
 
 impl Db for MemDb {
     fn insert_account(&mut self, address: Address, account: AccountInfo) {
@@ -125,8 +125,8 @@ mod tests {
     };
     use bytes::Bytes;
     use corebc::types::U256;
-    use orbitalis_evm::executor::{backend::MemDb, DatabaseRef};
-    use orbitalis_utils::types::ToRuint;
+    use foxar_evm::executor::{backend::MemDb, DatabaseRef};
+    use foxar_utils::types::ToRuint;
     use spark::revm::primitives::{Bytecode, SHA3_EMPTY, U256 as rU256};
     use std::{collections::BTreeMap, str::FromStr};
 

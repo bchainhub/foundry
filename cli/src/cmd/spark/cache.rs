@@ -5,7 +5,7 @@ use cache::Cache;
 use clap::{Parser, Subcommand};
 use corebc::prelude::Network;
 use eyre::Result;
-use orbitalis_config::{cache, Config};
+use foxar_config::{cache, Config};
 use std::str::FromStr;
 
 /// CLI arguments for `spark cache`.
@@ -17,10 +17,10 @@ pub struct CacheArgs {
 
 #[derive(Debug, Subcommand)]
 pub enum CacheSubcommands {
-    /// Cleans cached data from the global orbitalis directory.
+    /// Cleans cached data from the global foxar directory.
     Clean(CleanArgs),
 
-    /// Shows cached data from the global orbitalis directory.
+    /// Shows cached data from the global foxar directory.
     Ls(LsArgs),
 }
 
@@ -63,9 +63,9 @@ impl Cmd for CleanArgs {
                 }
                 NetworkOrAll::All => {
                     if etherscan {
-                        Config::clean_orbitalis_etherscan_cache()?;
+                        Config::clean_foxar_etherscan_cache()?;
                     } else {
-                        Config::clean_orbitalis_cache()?
+                        Config::clean_foxar_cache()?
                     }
                 }
             }
@@ -93,9 +93,9 @@ impl Cmd for LsArgs {
         for network_or_all in networks {
             match network_or_all {
                 NetworkOrAll::Network(network) => {
-                    cache.networks.push(Config::list_orbitalis_network_cache(network)?)
+                    cache.networks.push(Config::list_foxar_network_cache(network)?)
                 }
-                NetworkOrAll::All => cache = Config::list_orbitalis_cache()?,
+                NetworkOrAll::All => cache = Config::list_foxar_cache()?,
             }
         }
         print!("{cache}");
@@ -130,14 +130,14 @@ fn clean_network_cache(
 ) -> Result<()> {
     let network = network.into();
     if blocks.is_empty() {
-        Config::clean_orbitalis_etherscan_network_cache(network)?;
+        Config::clean_foxar_etherscan_network_cache(network)?;
         if etherscan {
-            return Ok(())
+            return Ok(());
         }
-        Config::clean_orbitalis_network_cache(network)?;
+        Config::clean_foxar_network_cache(network)?;
     } else {
         for block in blocks {
-            Config::clean_orbitalis_block_cache(network, block)?;
+            Config::clean_foxar_block_cache(network, block)?;
         }
     }
     Ok(())

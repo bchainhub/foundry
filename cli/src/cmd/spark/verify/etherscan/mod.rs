@@ -18,11 +18,11 @@ use corebc::{
     ylem::{artifacts::CompactContract, cache::CacheEntry, Project, Ylem},
 };
 use eyre::{eyre, Context};
+use foxar_common::abi::encode_args;
+use foxar_config::{Config, YlemReq};
+use foxar_utils::Retry;
 use futures::FutureExt;
 use once_cell::sync::Lazy;
-use orbitalis_common::abi::encode_args;
-use orbitalis_config::{Config, YlemReq};
-use orbitalis_utils::Retry;
 use regex::Regex;
 use rustc_hex::ToHex;
 use semver::{BuildMetadata, Version};
@@ -72,7 +72,7 @@ impl VerificationProvider for EtherscanVerificationProvider {
                 verify_args.address.to_string(),
             );
 
-            return Ok(())
+            return Ok(());
         }
 
         trace!(target : "spark::verify", ?verify_args,  "submitting verification request");
@@ -224,7 +224,7 @@ impl EtherscanVerificationProvider {
         contract_name: &str,
     ) -> eyre::Result<&(PathBuf, CacheEntry, CompactContract)> {
         if let Some(ref entry) = self.cached_entry {
-            return Ok(entry)
+            return Ok(entry);
         }
 
         let cache = project.read_cache_file()?;
@@ -359,7 +359,7 @@ impl EtherscanVerificationProvider {
     /// Parse the compiler version.
     /// The priority desc:
     ///     1. Through CLI arg `--compiler-version`
-    ///     2. `ylem` defined in orbitalis.toml
+    ///     2. `ylem` defined in foxar.toml
     ///     3. The version contract was last compiled with.
     fn compiler_version(
         &mut self,
@@ -368,7 +368,7 @@ impl EtherscanVerificationProvider {
         project: &Project,
     ) -> eyre::Result<Version> {
         if let Some(ref version) = args.compiler_version {
-            return Ok(version.trim_start_matches('v').parse()?)
+            return Ok(version.trim_start_matches('v').parse()?);
         }
 
         if let Some(ref ylem) = config.ylem {
@@ -376,14 +376,14 @@ impl EtherscanVerificationProvider {
                 YlemReq::Version(version) => return Ok(version.to_owned()),
                 YlemReq::Local(ylem) => {
                     if ylem.is_file() {
-                        return Ok(Ylem::new(ylem).version()?)
+                        return Ok(Ylem::new(ylem).version()?);
                     }
                 }
             }
         }
 
         let (_, entry, _) = self.cache_entry(project, &args.contract.name).wrap_err(
-            "If cache is disabled, compiler version must be either provided with `--compiler-version` option or set in orbitalis.toml"
+            "If cache is disabled, compiler version must be either provided with `--compiler-version` option or set in foxar.toml"
         )?;
         let artifacts = entry.artifacts_versions().collect::<Vec<_>>();
         if artifacts.len() == 1 {
@@ -392,7 +392,7 @@ impl EtherscanVerificationProvider {
                 Some(cap) => BuildMetadata::new(cap.name("commit").unwrap().as_str())?,
                 _ => BuildMetadata::EMPTY,
             };
-            return Ok(version)
+            return Ok(version);
         }
 
         if artifacts.is_empty() {
@@ -402,7 +402,7 @@ impl EtherscanVerificationProvider {
             warn!("Ambiguous compiler versions found in cache: {}", versions.join(", "));
         }
 
-        eyre::bail!("Compiler version has to be set in `orbitalis.toml`. If the project was not deployed with orbitalis, specify the version through `--compiler-version` flag.")
+        eyre::bail!("Compiler version has to be set in `foxar.toml`. If the project was not deployed with foxar, specify the version through `--compiler-version` flag.")
     }
 
     /// Return the optional encoded constructor arguments. If the path to
@@ -434,7 +434,7 @@ impl EtherscanVerificationProvider {
                 &read_constructor_args_file(constructor_args_path.to_path_buf())?,
             )?
             .to_hex::<String>();
-            return Ok(Some(encoded_args[8..].into()))
+            return Ok(Some(encoded_args[8..].into()));
         }
 
         Ok(args.constructor_args.clone())
@@ -470,8 +470,8 @@ mod tests {
     use super::*;
     use crate::cmd::LoadConfig;
     use clap::Parser;
-    use orbitalis_cli_test_utils::tempfile::tempdir;
-    use orbitalis_common::fs;
+    use foxar_cli_test_utils::tempfile::tempdir;
+    use foxar_common::fs;
 
     #[test]
     fn can_extract_etherscan_verify_config() {
@@ -489,7 +489,7 @@ mod tests {
         fs::write(toml_file, config).unwrap();
 
         let args: VerifyArgs = VerifyArgs::parse_from([
-            "orbitalis-cli",
+            "foxar-cli",
             "cb94d8509bee9c9bf012282ad33aba0d87241baf5064",
             "src/Counter.sol:Counter",
             "--network",
@@ -511,7 +511,7 @@ mod tests {
         assert_eq!(client.blockindex_api_url().as_str(), "https://devin.blockindex.net/api/v2/");
 
         let args: VerifyArgs = VerifyArgs::parse_from([
-            "orbitalis-cli",
+            "foxar-cli",
             "cb94d8509bee9c9bf012282ad33aba0d87241baf5064",
             "src/Counter.sol:Counter",
             "--network",
@@ -560,7 +560,7 @@ mod tests {
 
         // No compiler argument
         let args = VerifyArgs::parse_from([
-            "orbitalis-cli",
+            "foxar-cli",
             address,
             &format!("{contract_path}:{contract_name}"),
             "--root",
@@ -571,12 +571,12 @@ mod tests {
         assert!(result.is_err());
         assert_eq!(
             result.unwrap_err().to_string(),
-            "If cache is disabled, compiler version must be either provided with `--compiler-version` option or set in orbitalis.toml"
+            "If cache is disabled, compiler version must be either provided with `--compiler-version` option or set in foxar.toml"
         );
 
         // No contract path
         let args =
-            VerifyArgs::parse_from(["orbitalis-cli", address, contract_name, "--root", root_path]);
+            VerifyArgs::parse_from(["foxar-cli", address, contract_name, "--root", root_path]);
 
         let result = etherscan.preflight_check(args).await;
         assert!(result.is_err());
@@ -587,7 +587,7 @@ mod tests {
 
         // Constructor args path
         let args = VerifyArgs::parse_from([
-            "orbitalis-cli",
+            "foxar-cli",
             address,
             &format!("{contract_path}:{contract_name}"),
             "--constructor-args-path",

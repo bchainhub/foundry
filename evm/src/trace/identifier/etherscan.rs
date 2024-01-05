@@ -7,14 +7,14 @@ use corebc::{
     prelude::{artifacts::ContractBytecodeSome, errors::BlockindexError, ArtifactId},
     types::{Network, H176},
 };
+use foxar_common::compile;
+use foxar_config::Config;
 use futures::{
     future::{join_all, Future},
     stream::{FuturesUnordered, Stream, StreamExt},
     task::{Context, Poll},
     TryFutureExt,
 };
-use orbitalis_common::compile;
-use orbitalis_config::Config;
 use std::{
     borrow::Cow,
     collections::BTreeMap,
@@ -96,6 +96,7 @@ impl EtherscanIdentifier {
 }
 
 impl TraceIdentifier for EtherscanIdentifier {
+    #[allow(unreachable_code)]
     fn identify_addresses(
         &mut self,
         addresses: Vec<(&Address, Option<&[u8]>)>,
@@ -105,12 +106,12 @@ impl TraceIdentifier for EtherscanIdentifier {
         return Vec::new();
         let Some(client) = self.client.clone() else {
             // no client was configured
-            return Vec::new()
+            return Vec::new();
         };
 
         if self.invalid_api_key.load(Ordering::Relaxed) {
             // api key was marked as invalid
-            return Vec::new()
+            return Vec::new();
         }
 
         let mut fetcher = EtherscanFetcher::new(
@@ -201,7 +202,7 @@ impl EtherscanFetcher {
                     (addr, res)
                 }));
             } else {
-                break
+                break;
             }
         }
     }
@@ -217,7 +218,7 @@ impl Stream for EtherscanFetcher {
             if let Some(mut backoff) = pin.backoff.take() {
                 if backoff.poll_tick(cx).is_pending() {
                     pin.backoff = Some(backoff);
-                    return Poll::Pending
+                    return Poll::Pending;
                 }
             }
 
@@ -232,7 +233,7 @@ impl Stream for EtherscanFetcher {
                     match res {
                         Ok(mut metadata) => {
                             if let Some(item) = metadata.items.pop() {
-                                return Poll::Ready(Some((addr, item)))
+                                return Poll::Ready(Some((addr, item)));
                             }
                         }
                         Err(BlockindexError::RateLimitExceeded) => {
@@ -244,7 +245,7 @@ impl Stream for EtherscanFetcher {
                             warn!(target: "etherscanidentifier", "blocked by cloudflare");
                             // mark key as invalid
                             pin.invalid_api_key.store(true, Ordering::Relaxed);
-                            return Poll::Ready(None)
+                            return Poll::Ready(None);
                         }
                         Err(err) => {
                             warn!(target: "etherscanidentifier", "could not get etherscan info: {:?}", err);
@@ -254,7 +255,7 @@ impl Stream for EtherscanFetcher {
             }
 
             if !made_progress_this_iter {
-                return Poll::Pending
+                return Poll::Pending;
             }
         }
     }

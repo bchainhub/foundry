@@ -6,12 +6,12 @@ use crate::{
     Address, U256,
 };
 use corebc::prelude::H256;
-pub use orbitalis_evm::executor::fork::database::ForkedDatabase;
-use orbitalis_evm::executor::{
+pub use foxar_evm::executor::fork::database::ForkedDatabase;
+use foxar_evm::executor::{
     backend::{snapshot::StateSnapshot, DatabaseResult},
     fork::database::ForkDbSnapshot,
 };
-use orbitalis_utils::types::{ToEthersU256, ToRuint};
+use foxar_utils::types::{ToEthersU256, ToRuint};
 use spark::revm::Database;
 
 /// Implement the helper for the fork database

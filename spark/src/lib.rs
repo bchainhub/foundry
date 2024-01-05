@@ -1,5 +1,5 @@
 use corebc::ylem::ProjectCompileOutput;
-use orbitalis_config::{
+use foxar_config::{
     validate_profiles, Config, FuzzConfig, InlineConfig, InlineConfigError, InlineConfigParser,
     InvariantConfig, NatSpec,
 };
@@ -24,12 +24,12 @@ mod multi_runner;
 pub use multi_runner::{MultiContractRunner, MultiContractRunnerBuilder};
 
 /// reexport
-pub use orbitalis_common::traits::TestFilter;
+pub use foxar_common::traits::TestFilter;
 
 pub mod result;
 
 /// The Forge EVM backend
-pub use orbitalis_evm::*;
+pub use foxar_evm::*;
 
 /// Metadata on how to run fuzz/invariant tests
 #[derive(Debug, Clone, Default)]

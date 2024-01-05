@@ -24,7 +24,7 @@ jobs:
                       flags: --workspace
                     - name: external-integration-tests
                       file: nextest-external-integration.tar.zst
-                      flags: -p orbitalis-cli --features external-integration-tests
+                      flags: -p foxar-cli --features external-integration-tests
         steps:
             - uses: actions/checkout@v3
             - uses: dtolnay/rust-toolchain@stable
@@ -80,7 +80,7 @@ jobs:
                   name: unit-tests
             - name: cargo nextest
               run: |
-                  # see https://github.com/orbitalis-rs/orbitalis/pull/3959
+                  # see https://github.com/foxar-rs/foxar/pull/3959
                   export LD_LIBRARY_PATH="$(rustc --print sysroot)/lib"
                   cargo nextest run --retries 3 --archive-file nextest-unit.tar.zst -E '${{ matrix.job.filter }}'
 
@@ -109,7 +109,7 @@ jobs:
               uses: actions/cache@v3
               if: matrix.job.name != 'issue-repros'
               with:
-                  path: "$HOME/.orbitalis/cache"
+                  path: "$HOME/.foxar/cache"
                   key: rpc-cache-${{ hashFiles('cli/tests/rpc-cache-keyfile') }}
             - name: Setup git config
               run: |
@@ -118,7 +118,7 @@ jobs:
 
             - name: cargo nextest
               run: |
-                  # see https://github.com/orbitalis-rs/orbitalis/pull/3959
+                  # see https://github.com/foxar-rs/foxar/pull/3959
                   export LD_LIBRARY_PATH="$(rustc --print sysroot)/lib"
                   cargo nextest run --partition count:${{ matrix.partition }}/2 --retries 3 --archive-file nextest-integration.tar.zst -E '${{ matrix.job.filter }}'
 
@@ -146,7 +146,7 @@ jobs:
               uses: actions/cache@v3
               if: matrix.job.name != 'forge-std-test'
               with:
-                  path: "$HOME/.orbitalis/cache"
+                  path: "$HOME/.foxar/cache"
                   key: rpc-cache-${{ hashFiles('cli/tests/rpc-cache-keyfile') }}
             - name: Setup git config
               run: |
@@ -155,7 +155,7 @@ jobs:
 
             - name: cargo nextest
               run: |
-                  # see https://github.com/orbitalis-rs/orbitalis/pull/3959
+                  # see https://github.com/foxar-rs/foxar/pull/3959
                   export LD_LIBRARY_PATH="$(rustc --print sysroot)/lib"
                   cargo nextest run --retries 3 --archive-file nextest-integration.tar.zst -E '${{ matrix.job.filter }}'
 
@@ -186,7 +186,7 @@ jobs:
               uses: actions/cache@v3
               if: matrix.job.name != 'non-forking'
               with:
-                  path: "$HOME/.orbitalis/cache"
+                  path: "$HOME/.foxar/cache"
                   key: rpc-cache-${{ hashFiles('cli/tests/rpc-cache-keyfile') }}
             - name: Setup git config
               run: |
@@ -195,7 +195,7 @@ jobs:
 
             - name: cargo nextest
               run: |
-                  # see https://github.com/orbitalis-rs/orbitalis/pull/3959
+                  # see https://github.com/foxar-rs/foxar/pull/3959
                   export LD_LIBRARY_PATH="$(rustc --print sysroot)/lib"
                   cargo nextest run --partition count:${{ matrix.partition }}/2 --retries 3 --archive-file nextest-integration.tar.zst -E '${{ matrix.job.filter }}'
 
@@ -225,7 +225,7 @@ jobs:
               uses: actions/cache@v3
               if: matrix.job.name != 'non-forking'
               with:
-                  path: "$HOME/.orbitalis/cache"
+                  path: "$HOME/.foxar/cache"
                   key: rpc-cache-${{ hashFiles('cli/tests/rpc-cache-keyfile') }}
 
             - name: Setup git config
@@ -238,7 +238,7 @@ jobs:
 
             - name: cargo nextest
               run: |
-                  # see https://github.com/orbitalis-rs/orbitalis/pull/3959
+                  # see https://github.com/foxar-rs/foxar/pull/3959
                   export LD_LIBRARY_PATH="$(rustc --print sysroot)/lib"
                   cargo nextest run --retries 3 --archive-file nextest-external-integration.tar.zst -E '${{ matrix.job.filter }}'
 

@@ -40,11 +40,11 @@ pub fn find_git_root_path(relative_to: impl AsRef<Path>) -> eyre::Result<PathBuf
 
 /// Returns the root path to set for the project root
 ///
-/// traverse the dir tree up and look for a `orbitalis.toml` file starting at the cwd, but only
+/// traverse the dir tree up and look for a `foxar.toml` file starting at the cwd, but only
 /// until the root dir of the current repo so that
 ///
 /// ```text
-/// -- orbitalis.toml
+/// -- foxar.toml
 ///
 /// -- repo
 ///   |__ .git
@@ -63,15 +63,15 @@ pub fn find_project_root_path() -> std::io::Result<PathBuf> {
     while cwd.starts_with(&boundary) {
         let file_path = cwd.join(Config::FILE_NAME);
         if file_path.is_file() {
-            return Ok(cwd.to_path_buf())
+            return Ok(cwd.to_path_buf());
         }
         if let Some(parent) = cwd.parent() {
             cwd = parent;
         } else {
-            break
+            break;
         }
     }
-    // no orbitalis.toml found
+    // no foxar.toml found
     Ok(boundary)
 }
 
@@ -80,7 +80,7 @@ pub fn find_project_root_path() -> std::io::Result<PathBuf> {
 /// # Example
 ///
 /// ```
-/// use orbitalis_config::remappings_from_newline;
+/// use foxar_config::remappings_from_newline;
 /// let remappings: Result<Vec<_>, _> = remappings_from_newline(
 ///     r#"
 ///              file-ds-test/=lib/ds-test/
@@ -123,7 +123,7 @@ pub fn to_array_value(val: &str) -> Result<Value, figment::Error> {
     Ok(value)
 }
 
-/// Returns a list of _unique_ paths to all folders under `root` that contain a `orbitalis.toml`
+/// Returns a list of _unique_ paths to all folders under `root` that contain a `foxar.toml`
 /// file
 ///
 /// This will also resolve symlinks
@@ -131,8 +131,8 @@ pub fn to_array_value(val: &str) -> Result<Value, figment::Error> {
 /// # Example
 ///
 /// ```no_run
-/// use orbitalis_config::utils;
-/// let dirs = utils::orbitalis_toml_dirs("./lib");
+/// use foxar_config::utils;
+/// let dirs = utils::foxar_toml_dirs("./lib");
 /// ```
 ///
 /// for following layout this will return
@@ -141,11 +141,11 @@ pub fn to_array_value(val: &str) -> Result<Value, figment::Error> {
 /// ```text
 /// lib
 /// └── dep1
-/// │   ├── orbitalis.toml
+/// │   ├── foxar.toml
 /// └── dep2
-///     ├── orbitalis.toml
+///     ├── foxar.toml
 /// ```
-pub fn orbitalis_toml_dirs(root: impl AsRef<Path>) -> Vec<PathBuf> {
+pub fn foxar_toml_dirs(root: impl AsRef<Path>) -> Vec<PathBuf> {
     walkdir::WalkDir::new(root)
         .max_depth(1)
         .into_iter()
@@ -184,7 +184,7 @@ pub fn get_available_profiles(toml_path: impl AsRef<Path>) -> eyre::Result<Vec<S
     let mut result = vec![Config::DEFAULT_PROFILE.to_string()];
 
     if !toml_path.as_ref().exists() {
-        return Ok(result)
+        return Ok(result);
     }
 
     let doc = read_toml(toml_path)?;
@@ -261,7 +261,7 @@ mod tests {
     fn get_profiles_from_toml() {
         figment::Jail::expect_with(|jail| {
             jail.create_file(
-                "orbitalis.toml",
+                "foxar.toml",
                 r#"
                 [foo.baz]
                 libs = ['node_modules', 'lib']
@@ -277,7 +277,7 @@ mod tests {
             "#,
             )?;
 
-            let path = Path::new("./orbitalis.toml");
+            let path = Path::new("./foxar.toml");
             let profiles = get_available_profiles(path).unwrap();
 
             assert_eq!(

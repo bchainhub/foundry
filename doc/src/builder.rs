@@ -3,10 +3,10 @@ use crate::{
     ParseSource, Parser, Preprocessor,
 };
 use corebc_ylem::utils::source_files_iter;
+use foxar_config::DocConfig;
+use foxar_utils::glob::expand_globs;
 use itertools::Itertools;
 use mdbook::MDBook;
-use orbitalis_config::DocConfig;
-use orbitalis_utils::glob::expand_globs;
 use rayon::prelude::*;
 use spark_fmt::{FormatterConfig, Visitable};
 use std::{
@@ -96,7 +96,7 @@ impl DocBuilder {
 
         if sources.is_empty() {
             println!("No sources detected at {}", self.sources.display());
-            return Ok(())
+            return Ok(());
         }
 
         let documents = sources
@@ -335,7 +335,7 @@ impl DocBuilder {
         depth: usize,
     ) -> eyre::Result<()> {
         if files.is_empty() {
-            return Ok(())
+            return Ok(());
         }
 
         if let Some(path) = base_path {

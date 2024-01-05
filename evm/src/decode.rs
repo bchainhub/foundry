@@ -9,10 +9,10 @@ use corebc::{
     prelude::U256,
     types::Log,
 };
+use foxar_common::{abi::format_token, SELECTOR_LEN};
+use foxar_utils::error::ERROR_PREFIX;
 use itertools::Itertools;
 use once_cell::sync::Lazy;
-use orbitalis_common::{abi::format_token, SELECTOR_LEN};
-use orbitalis_utils::error::ERROR_PREFIX;
 use revm::interpreter::{return_ok, InstructionResult};
 
 /// Decode a set of logs, only returning logs from DSTest logging events and Hardhat's `console.log`
@@ -76,7 +76,7 @@ pub fn decode_revert(
     if err.len() < SELECTOR_LEN {
         if let Some(status) = status {
             if !matches!(status, return_ok!()) {
-                return Ok(format!("EvmError: {status:?}"))
+                return Ok(format!("EvmError: {status:?}"));
             }
         }
         eyre::bail!("Not enough error data to decode")
@@ -140,10 +140,10 @@ pub fn decode_revert(
                     let actual_err = &err_data[64..64 + len];
                     if let Ok(decoded) = decode_revert(actual_err, maybe_abi, None) {
                         // check if it's a builtin
-                        return Ok(decoded)
+                        return Ok(decoded);
                     } else if let Ok(as_str) = String::from_utf8(actual_err.to_vec()) {
                         // check if it's a true string
-                        return Ok(as_str)
+                        return Ok(as_str);
                     }
                 }
             }
@@ -156,7 +156,7 @@ pub fn decode_revert(
                 let actual_err = &err_data[..SELECTOR_LEN];
                 if let Ok(decoded) = decode_revert(actual_err, maybe_abi, None) {
                     // it's a known selector
-                    return Ok(decoded)
+                    return Ok(decoded);
                 }
             }
             eyre::bail!("Unknown error selector")
@@ -164,7 +164,7 @@ pub fn decode_revert(
         _ => {
             // See if the revert is caused by a skip() call.
             if err == MAGIC_SKIP_BYTES {
-                return Ok("SKIPPED".to_string())
+                return Ok("SKIPPED".to_string());
             }
             // try to decode a custom error if provided an abi
             if let Some(abi) = maybe_abi {
@@ -175,10 +175,10 @@ pub fn decode_revert(
                         if let Ok(decoded) = abi_error.decode(&err[SELECTOR_LEN..]) {
                             let inputs = decoded
                                 .iter()
-                                .map(orbitalis_common::abi::format_token)
+                                .map(foxar_common::abi::format_token)
                                 .collect::<Vec<_>>()
                                 .join(", ");
-                            return Ok(format!("{}({inputs})", abi_error.name))
+                            return Ok(format!("{}({inputs})", abi_error.name));
                         }
                     }
                 }
@@ -228,7 +228,7 @@ pub fn decode_custom_error(err: &[u8]) -> Option<Token> {
 /// This will brute force decoding of custom errors with up to `args` arguments
 pub fn decode_custom_error_args(err: &[u8], args: usize) -> Option<Token> {
     if err.len() <= SELECTOR_LEN {
-        return None
+        return None;
     }
 
     let err = &err[SELECTOR_LEN..];
@@ -247,7 +247,7 @@ pub fn decode_custom_error_args(err: &[u8], args: usize) -> Option<Token> {
     macro_rules! try_decode {
         ($ty:ident) => {
             if let Ok(mut decoded) = decode(&[$ty], err) {
-                return Some(decoded.remove(0))
+                return Some(decoded.remove(0));
             }
         };
     }
@@ -257,14 +257,14 @@ pub fn decode_custom_error_args(err: &[u8], args: usize) -> Option<Token> {
         for ty in TYPES.iter().cloned() {
             try_decode!(ty);
         }
-        return None
+        return None;
     }
 
     // brute force decode all possible combinations
     for num in (2..=args).rev() {
         for candidate in TYPES.iter().cloned().combinations(num) {
             if let Ok(decoded) = decode(&candidate, err) {
-                return Some(Token::Tuple(decoded))
+                return Some(Token::Tuple(decoded));
             }
         }
     }

@@ -12,14 +12,14 @@ use corebc::{
     providers::{Http, Provider, RetryClient},
     types::{BlockId, BlockNumber},
 };
+use foxar_common::ProviderBuilder;
+use foxar_config::Config;
 use futures::{
     channel::mpsc::{channel, Receiver, Sender},
     stream::{Fuse, Stream},
     task::{Context, Poll},
     Future, FutureExt, StreamExt,
 };
-use orbitalis_common::ProviderBuilder;
-use orbitalis_config::Config;
 use revm::primitives::Env;
 use std::{
     collections::HashMap,
@@ -252,7 +252,7 @@ impl MultiForkHandler {
             #[allow(irrefutable_let_patterns)]
             if let ForkTask::Create(_, in_progress, _, additional) = task {
                 if in_progress == id {
-                    return Some(additional)
+                    return Some(additional);
                 }
             }
         }
@@ -270,7 +270,7 @@ impl MultiForkHandler {
             // there could already be a task for the requested fork in progress
             if let Some(in_progress) = self.find_in_progress_task(&fork_id) {
                 in_progress.push(sender);
-                return
+                return;
             }
 
             let retries = self.retries;
@@ -333,7 +333,7 @@ impl Future for MultiForkHandler {
                 Poll::Ready(None) => {
                     // channel closed, but we still need to drive the fork handlers to completion
                     trace!(target: "fork::multi", "request channel closed");
-                    break
+                    break;
                 }
                 Poll::Pending => break,
             }
@@ -394,7 +394,7 @@ impl Future for MultiForkHandler {
 
         if pin.handlers.is_empty() && pin.incoming.is_done() {
             trace!(target: "fork::multi", "completed");
-            return Poll::Ready(())
+            return Poll::Ready(());
         }
 
         // periodically flush cached RPC state
@@ -498,7 +498,7 @@ async fn create_fork(
 
     // determine the cache path if caching is enabled
     let cache_path = if fork.enable_caching {
-        Config::orbitalis_block_cache_dir(meta.cfg_env.network_id, number)
+        Config::foxar_block_cache_dir(meta.cfg_env.network_id, number)
     } else {
         None
     };

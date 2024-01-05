@@ -2,7 +2,7 @@
 
 use crate::decode;
 use corebc::abi::{Abi, Address, Function, ParamType, Token};
-use orbitalis_common::{abi::format_token, SELECTOR_LEN};
+use foxar_common::{abi::format_token, SELECTOR_LEN};
 use std::collections::HashMap;
 
 /// Returns the label for the given `token`
@@ -78,17 +78,17 @@ pub(crate) fn decode_cheatcode_outputs(
 ) -> Option<String> {
     if func.name.starts_with("env") {
         // redacts the value stored in the env var
-        return Some("<env var value>".to_string())
+        return Some("<env var value>".to_string());
     }
     if func.name == "deriveKey" {
         // redacts derived private key
-        return Some("<pk>".to_string())
+        return Some("<pk>".to_string());
     }
     if func.name == "parseJson" && verbosity != 5 {
-        return Some("<encoded JSON value>".to_string())
+        return Some("<encoded JSON value>".to_string());
     }
     if func.name == "readFile" && verbosity != 5 {
-        return Some("<file>".to_string())
+        return Some("<file>".to_string());
     }
     None
 }

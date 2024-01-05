@@ -1,7 +1,7 @@
 use corebc_ylem::Ylem;
 use criterion::{criterion_group, Criterion};
+use foxar_config::Config;
 use once_cell::sync::Lazy;
-use orbitalis_config::Config;
 use pilot::session_source::{SessionSource, SessionSourceConfig};
 use spark::executor::opts::EvmOpts;
 use std::hint::black_box;
@@ -69,7 +69,7 @@ fn get_empty_session_source() -> SessionSource {
     SessionSource::new(
         YLEM.clone(),
         SessionSourceConfig {
-            orbitalis_config: Config::default(),
+            foxar_config: Config::default(),
             evm_opts: EvmOpts::default(),
             backend: None,
             traces: false,

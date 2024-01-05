@@ -15,7 +15,7 @@ use corebc::{
     signers::{LocalWallet, Signer},
     types::{Address, Bytes, U256},
 };
-use orbitalis_config::Config;
+use foxar_config::Config;
 use revm::{
     primitives::{Bytecode, SHA3_EMPTY},
     Database, EVMData,

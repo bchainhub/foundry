@@ -4,7 +4,7 @@ pragma solidity 1.1.0;
 import "ds-test/test.sol";
 import "../cheats/Cheats.sol";
 
-// https://github.com/orbitalis-rs/orbitalis/issues/3708
+// https://github.com/foxar-rs/foxar/issues/3708
 contract Issue3708Test is DSTest {
     // https://optimistic.etherscan.io/address/0xcb914e59b44847b379578588920ca78fbf26c0b4956c#code
     address constant CREATE2_DEPLOYER =

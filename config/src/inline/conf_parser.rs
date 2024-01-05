@@ -23,7 +23,7 @@ pub enum InlineConfigParserError {
 }
 
 /// This trait is intended to parse configurations from
-/// structured text. Orbitalis users can annotate Solidity test functions,
+/// structured text. Foxar users can annotate Solidity test functions,
 /// providing special configs just for the execution of a specific test.
 ///
 /// An example:

@@ -2,7 +2,7 @@
 use clap::{ArgAction, Parser};
 use corebc_core::types::{Address, Network, U256};
 use eyre::ContextCompat;
-use orbitalis_config::{
+use foxar_config::{
     figment::{
         self,
         error::Kind::InvalidType,
@@ -19,20 +19,20 @@ pub type Breakpoints = HashMap<char, (Address, usize)>;
 
 /// `EvmArgs` and `EnvArgs` take the highest precedence in the Config/Figment hierarchy.
 /// All vars are opt-in, their default values are expected to be set by the
-/// [`orbitalis_config::Config`], and are always present ([`orbitalis_config::Config::default`])
+/// [`foxar_config::Config`], and are always present ([`foxar_config::Config::default`])
 ///
 /// Both have corresponding types in the `evm_adapters` crate which have mandatory fields.
 /// The expected workflow is
-///   1. load the [`orbitalis_config::Config`]
+///   1. load the [`foxar_config::Config`]
 ///   2. merge with `EvmArgs` into a `figment::Figment`
 ///   3. extract `evm_adapters::Opts` from the merged `Figment`
 ///
 /// # Example
 ///
 /// ```ignore
-/// use orbitalis_config::Config;
+/// use foxar_config::Config;
 /// use spark::executor::opts::EvmOpts;
-/// use orbitalis_common::evm::EvmArgs;
+/// use foxar_common::evm::EvmArgs;
 /// # fn t(args: EvmArgs) {
 /// let figment = Config::figment_with_root(".").merge(args);
 /// let opts = figment.extract::<EvmOpts>().unwrap();
@@ -251,7 +251,7 @@ mod tests {
         let config = Config::from_provider(Config::figment().merge(args));
         assert_eq!(config.network_id, Some(Network::Mainnet));
 
-        let env = EnvArgs::parse_from(["orbitalis-common", "--network-id", "3"]);
+        let env = EnvArgs::parse_from(["foxar-common", "--network-id", "3"]);
         assert_eq!(env.network_id, Some(Network::Devin));
     }
 
@@ -264,7 +264,7 @@ mod tests {
         let config = Config::from_provider(Config::figment().merge(args));
         assert_eq!(config.memory_limit, Config::default().memory_limit);
 
-        let env = EnvArgs::parse_from(["orbitalis-common", "--memory-limit", "100"]);
+        let env = EnvArgs::parse_from(["foxar-common", "--memory-limit", "100"]);
         assert_eq!(env.memory_limit, Some(100));
     }
 }

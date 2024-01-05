@@ -1,13 +1,12 @@
-//! Helper types for working with [revm](orbitalis_evm::revm)
+//! Helper types for working with [revm](foxar_evm::revm)
 use crate::{mem::state::trie_hash_db, revm::primitives::AccountInfo, U256};
 use corebc::{
     prelude::{Address, Bytes},
     types::H256,
     utils::sha3,
 };
-use hash_db::HashDB;
-use orbitalis_common::errors::FsPathError;
-use orbitalis_evm::{
+use foxar_common::errors::FsPathError;
+use foxar_evm::{
     executor::{
         backend::{snapshot::StateSnapshot, DatabaseError, DatabaseResult, MemDb},
         DatabaseRef,
@@ -19,7 +18,8 @@ use orbitalis_evm::{
     },
     HashMap,
 };
-use orbitalis_utils::types::ToRuint;
+use foxar_utils::types::ToRuint;
+use hash_db::HashDB;
 use revm::primitives::B176;
 use serde::{Deserialize, Serialize};
 use shuttle_core::eth::trie::KeccakHasher;
@@ -313,9 +313,9 @@ impl SerializableState {
     pub fn load(path: impl AsRef<Path>) -> Result<Self, FsPathError> {
         let path = path.as_ref();
         if path.is_dir() {
-            orbitalis_common::fs::read_json_file(&path.join("state.json"))
+            foxar_common::fs::read_json_file(&path.join("state.json"))
         } else {
-            orbitalis_common::fs::read_json_file(path)
+            foxar_common::fs::read_json_file(path)
         }
     }
 

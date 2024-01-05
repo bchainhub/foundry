@@ -7,8 +7,8 @@ use corebc::{
     types::{Address, Block, Network, TxHash, U256},
 };
 use eyre::WrapErr;
-use orbitalis_common::{self, ProviderBuilder, RpcUrl, ALCHEMY_FREE_TIER_CUPS};
-use orbitalis_config::Config;
+use foxar_common::{self, ProviderBuilder, RpcUrl, ALCHEMY_FREE_TIER_CUPS};
+use foxar_config::Config;
 use revm::primitives::{BlockEnv, CfgEnv, SpecId, TxEnv, U256 as rU256};
 use serde::{Deserialize, Deserializer, Serialize};
 
@@ -103,7 +103,7 @@ impl EvmOpts {
             },
             cfg: CfgEnv {
                 network_id: u64::from(
-                    self.env.network_id.unwrap_or(Network::from(orbitalis_common::DEV_CHAIN_ID)),
+                    self.env.network_id.unwrap_or(Network::from(foxar_common::DEV_CHAIN_ID)),
                 ),
                 spec_id: SpecId::LATEST,
                 limit_contract_code_size: self.env.code_size_limit.or(Some(usize::MAX)),
@@ -128,10 +128,10 @@ impl EvmOpts {
     ///   - storage is allowed (`no_storage_caching = false`)
     ///
     /// If all these criteria are met, then storage caching is enabled and storage info will be
-    /// written to [Config::orbitalis_cache_dir()]/<str(chainid)>/<block>/storage.json
+    /// written to [Config::foxar_cache_dir()]/<str(chainid)>/<block>/storage.json
     ///
     /// for `mainnet` and `--fork-block-number 14435000` on mac the corresponding storage cache will
-    /// be at `~/.orbitalis/cache/mainnet/14435000/storage.json`
+    /// be at `~/.foxar/cache/mainnet/14435000/storage.json`
     pub fn get_fork(&self, config: &Config, env: revm::primitives::Env) -> Option<CreateFork> {
         let url = self.fork_url.clone()?;
         let enable_caching = config.enable_caching(&url, env.cfg.network_id);
@@ -150,7 +150,7 @@ impl EvmOpts {
     ///   - mainnet otherwise
     pub fn get_chain_id(&self) -> u64 {
         if let Some(id) = self.env.network_id {
-            return u64::from(id)
+            return u64::from(id);
         }
         self.get_remote_chain_id().map_or(u64::from(Network::Mainnet), u64::from)
     }
@@ -163,7 +163,7 @@ impl EvmOpts {
         if self.no_rpc_rate_limit {
             u64::MAX
         } else if let Some(cups) = self.compute_units_per_second {
-            return cups
+            return cups;
         } else {
             ALCHEMY_FREE_TIER_CUPS
         }
@@ -174,7 +174,7 @@ impl EvmOpts {
         if let Some(ref url) = self.fork_url {
             if url.contains("mainnet") {
                 trace!(?url, "auto detected mainnet chain");
-                return Some(Network::Mainnet)
+                return Some(Network::Mainnet);
             }
             trace!(?url, "retrieving chain via eth_chainId");
             let provider = Provider::try_from(url.as_str())

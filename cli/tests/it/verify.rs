@@ -2,11 +2,11 @@
 //! and sourcify
 
 use crate::utils::{self, EnvExternalities};
-use orbitalis_cli_test_utils::{
+use foxar_cli_test_utils::{
     sparktest,
     util::{TestCommand, TestProject},
 };
-use orbitalis_utils::Retry;
+use foxar_utils::Retry;
 
 /// Adds a `Unique` contract to the source directory of the project that can be imported as
 /// `import {Unique} from "./unique.sol";`
@@ -52,7 +52,7 @@ fn parse_verification_result(cmd: &mut TestCommand, retries: u32) -> eyre::Resul
         let output = cmd.unchecked_output();
         let out = String::from_utf8_lossy(&output.stdout);
         if out.contains("Contract successfully verified") {
-            return Ok(())
+            return Ok(());
         }
         eyre::bail!(
             "Failed to get verification, stdout: {}, stderr: {}",

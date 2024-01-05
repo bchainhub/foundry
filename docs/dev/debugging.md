@@ -1,6 +1,6 @@
-## Debugging Orbitalis tools
+## Debugging Foxar tools
 
-This is a working document intended to outline some commands contributors can use to debug various parts of Orbitalis.
+This is a working document intended to outline some commands contributors can use to debug various parts of Foxar.
 
 ### Logs
 

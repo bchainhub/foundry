@@ -1,6 +1,6 @@
 //! blockchain Backend
 
-/// [revm](orbitalis_evm::revm) related types
+/// [revm](foxar_evm::revm) related types
 pub mod db;
 /// In-memory Backend
 pub mod mem;

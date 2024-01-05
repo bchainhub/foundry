@@ -6,23 +6,23 @@ If you are not sure, you can just run:
 rustup default stable
 ```
 
-For now the best way to install foundry is:
+For now the best way to install foxar is:
 1. Clone the repo
 ```bash
-git clone https://github.com/bchainhub/foundry.git
+git clone https://github.com/bchainhub/foxar.git
 ```
 
-2. Go to `foundry/orbitalisup/
+2. Go to `foxar/foxarup/
 ```bash
-cd foundry/orbitalisup/
+cd foxar/foxarup/
 ```
 
-3. Run orbitalisup
+3. Run foxarup
 ```bash
-./orbitalisup --path ../
+./foxarup --path 
 ```
 
-This will compile the entire project and will install all your binaries to ~/.orbitalis.
+This will compile the entire project and will install all your binaries to ~/.foxar.
 Now just restart your terminal and you can use one of the binaries. For reference here are the changed names:
 
 forge: spark

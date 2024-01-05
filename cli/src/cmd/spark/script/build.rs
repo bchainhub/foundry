@@ -13,8 +13,8 @@ use corebc::{
     },
 };
 use eyre::{Context, ContextCompat};
-use orbitalis_common::compile;
-use orbitalis_utils::PostLinkInput;
+use foxar_common::compile;
+use foxar_utils::PostLinkInput;
 use std::{collections::BTreeMap, fs, str::FromStr};
 use tracing::{trace, warn};
 
@@ -116,7 +116,7 @@ impl ScriptArgs {
         let network_config = self.evm_opts.env.network_id.unwrap();
         let network = network_config;
 
-        orbitalis_utils::link_with_nonce_or_address(
+        foxar_utils::link_with_nonce_or_address(
             contracts.clone(),
             &mut highlevel_known_contracts,
             libs,
@@ -138,7 +138,7 @@ impl ScriptArgs {
                     let mut seen = HashSet::new();
                     for (dep, bytes) in deps {
                         if !seen.insert(dep.clone()) {
-                            continue
+                            continue;
                         }
                         filtered.push((dep, bytes));
                     }
@@ -221,11 +221,11 @@ impl ScriptArgs {
                 self.verify,
                 filters,
             )?;
-            return Ok((project, output))
+            return Ok((project, output));
         }
 
         if !project.paths.has_input_files() {
-            eyre::bail!("The project doesn't have any input files. Make sure the `script` directory is configured properly in orbitalis.toml. Otherwise, provide the path to the file.")
+            eyre::bail!("The project doesn't have any input files. Make sure the `script` directory is configured properly in foxar.toml. Otherwise, provide the path to the file.")
         }
 
         let contract = ContractInfo::from_str(&self.path)?;
@@ -243,7 +243,7 @@ impl ScriptArgs {
                 filters,
             )?;
             self.path = path.to_string_lossy().to_string();
-            return Ok((project, output))
+            return Ok((project, output));
         }
 
         // We received `contract_name`, and need to find its file path.

@@ -45,7 +45,7 @@ async fn test_cheats_fork() {
 /// Tests that we can launch in forking mode
 #[tokio::test(flavor = "multi_thread")]
 async fn test_launch_fork() {
-    let rpc_url = orbitalis_utils::rpc::next_http_archive_rpc_endpoint();
+    let rpc_url = foxar_utils::rpc::next_http_archive_rpc_endpoint();
     let runner = forked_runner(&rpc_url).await;
     let filter = Filter::new(".*", ".*", &format!(".*fork{RE_PATH_SEPARATOR}Launch"));
     TestConfig::with_filter(runner, filter).run().await;

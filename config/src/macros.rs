@@ -14,10 +14,10 @@
 /// ```rust
 /// use std::path::PathBuf;
 /// use serde::Serialize;
-/// use orbitalis_config::{Config, impl_figment_convert};
-/// use orbitalis_config::figment::*;
-/// use orbitalis_config::figment::error::Kind::InvalidType;
-/// use orbitalis_config::figment::value::*;
+/// use foxar_config::{Config, impl_figment_convert};
+/// use foxar_config::figment::*;
+/// use foxar_config::figment::error::Kind::InvalidType;
+/// use foxar_config::figment::value::*;
 /// #[derive(Default, Serialize)]
 /// struct MyArgs {
 ///     #[serde(skip_serializing_if = "Option::is_none")]
@@ -122,9 +122,9 @@ macro_rules! impl_figment_convert {
 ///
 /// ```rust
 /// use std::path::PathBuf;
-/// use orbitalis_config::{Config, merge_impl_figment_convert, impl_figment_convert};
-/// use orbitalis_config::figment::*;
-/// use orbitalis_config::figment::value::*;
+/// use foxar_config::{Config, merge_impl_figment_convert, impl_figment_convert};
+/// use foxar_config::figment::*;
+/// use foxar_config::figment::value::*;
 ///
 /// #[derive(Default)]
 /// struct MyArgs {

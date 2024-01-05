@@ -1,15 +1,15 @@
 [package]
-name = "orbitalis-binder"
+name = "foxar-binder"
 version = "0.1.0"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 readme = "./README.md"
 description = "Generate rust bindings for solidity projects"
-repository = "https://github.com/orbitalis-rs/orbitalis"
+repository = "https://github.com/bchainhub/foxar"
 keywords = ["ethereum", "web3", "solidity"]
 
 [dependencies]
-orbitalis-config = { path = "../config" }
+foxar-config = { path = "../config" }
 corebc-ylem = { workspace = true, features = ["async", "yvm-ylem", "project-util"]}
 corebc-contract = { workspace = true, features = ["abigen"]}
 curl = { version = "0.4", default-features = false, features = ["http2"] }

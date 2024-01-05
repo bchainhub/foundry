@@ -36,7 +36,7 @@ pub struct Opts {
 #[derive(Debug, Subcommand)]
 #[clap(
     about = "Build, test, fuzz, debug and deploy Solidity contracts.",
-    after_help = "Find more information in the book: http://book.getorbitalis.sh/reference/spark/spark.html",
+    after_help = "Find more information in the book: http://book.getfoxar.sh/reference/spark/spark.html",
     next_display_order = None
 )]
 #[allow(clippy::large_enum_variant)]
@@ -120,7 +120,7 @@ pub enum Subcommands {
         root: Option<PathBuf>,
     },
 
-    /// Manage the Orbitalis cache.
+    /// Manage the Foxar cache.
     Cache(CacheArgs),
 
     /// Create a snapshot of each test's gas usage.
@@ -166,7 +166,7 @@ pub enum Subcommands {
 }
 
 // A set of ylem compiler settings that can be set via command line arguments, which are intended
-// to be merged into an existing `orbitalis_config::Config`.
+// to be merged into an existing `foxar_config::Config`.
 //
 // See also [`BuildArgs`]
 #[derive(Default, Debug, Clone, Parser, Serialize)]
@@ -211,18 +211,14 @@ mod tests {
     #[test]
     fn can_parse_evm_version() {
         let args: CompilerArgs =
-            CompilerArgs::parse_from(["orbitalis-cli", "--cvm-version", "nucleus"]);
+            CompilerArgs::parse_from(["foxar-cli", "--cvm-version", "nucleus"]);
         assert_eq!(args.cvm_version, Some(CvmVersion::Nucleus));
     }
 
     #[test]
     fn can_parse_extra_output() {
-        let args: CompilerArgs = CompilerArgs::parse_from([
-            "orbitalis-cli",
-            "--extra-output",
-            "metadata",
-            "ir-optimized",
-        ]);
+        let args: CompilerArgs =
+            CompilerArgs::parse_from(["foxar-cli", "--extra-output", "metadata", "ir-optimized"]);
         assert_eq!(
             args.extra_output,
             vec![ContractOutputSelection::Metadata, ContractOutputSelection::IrOptimized]
@@ -232,7 +228,7 @@ mod tests {
     #[test]
     fn can_parse_extra_output_files() {
         let args: CompilerArgs = CompilerArgs::parse_from([
-            "orbitalis-cli",
+            "foxar-cli",
             "--extra-output-files",
             "metadata",
             "ir-optimized",

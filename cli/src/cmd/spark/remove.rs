@@ -4,7 +4,7 @@ use crate::{
     utils::Git,
 };
 use clap::{Parser, ValueHint};
-use orbitalis_config::impl_figment_convert_basic;
+use foxar_config::impl_figment_convert_basic;
 use std::path::PathBuf;
 
 /// CLI arguments for `spark remove`.

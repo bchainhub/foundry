@@ -1,10 +1,10 @@
 # Architecture
 
-This document describes the high-level architecture of orbitalis.
+This document describes the high-level architecture of foxar.
 
 ### `evm/`
 
-orbitalis's evm tooling. This is built around [`revm`](https://github.com/bluealloy/revm) and has additional
+foxar's evm tooling. This is built around [`revm`](https://github.com/bluealloy/revm) and has additional
 implementation of
 
 -   [cheatcodes](./cheatcodes.md) a set of solidity calls dedicated to testing which can manipulate the environment in
@@ -12,7 +12,7 @@ implementation of
 
 ### `config/`
 
-Includes all of orbitalis's settings and how to get them
+Includes all of foxar's settings and how to get them
 
 ### `cli/`
 

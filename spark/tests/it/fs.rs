@@ -4,7 +4,7 @@ use crate::{
     config::*,
     test_helpers::{filter::Filter, PROJECT},
 };
-use orbitalis_config::{fs_permissions::PathPermission, Config, FsPermissions};
+use foxar_config::{fs_permissions::PathPermission, Config, FsPermissions};
 
 #[tokio::test(flavor = "multi_thread")]
 async fn test_fs_disabled() {

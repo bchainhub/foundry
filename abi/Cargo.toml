@@ -1,11 +1,11 @@
 [package]
-name = "orbitalis-abi"
+name = "foxar-abi"
 version = "0.1.0"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 readme = "README.md"
-description = "Orbitalis's Solidity ABI bindings"
-repository = "https://github.com/orbitalis-rs/orbitalis"
+description = "Foxar's Solidity ABI bindings"
+repository = "https://github.com/bchainhub/foxar"
 exclude = ["abi", "build.rs"]
 
 [build-dependencies]
@@ -14,7 +14,7 @@ eyre = "0.6"
 syn = "2.0"
 
 [dependencies]
-orbitalis-macros = { path = "../macros" }
+foxar-macros = { path = "../macros" }
 
 corebc-core = { workspace = true}
 corebc-contract = { workspace = true, features = ["abigen"]}

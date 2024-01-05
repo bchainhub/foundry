@@ -1,7 +1,7 @@
 use std::path::Path;
 
 use corebc_ylem::CvmVersion;
-use orbitalis_config::Config;
+use foxar_config::Config;
 use pilot::session::PilotSession;
 use serial_test::serial;
 use spark::executor::opts::EvmOpts;
@@ -10,12 +10,12 @@ use spark::executor::opts::EvmOpts;
 #[serial]
 fn test_cache_directory() {
     // Get the cache dir
-    // Should be ~/.orbitalis/cache/pilot
+    // Should be ~/.foxar/cache/pilot
     let cache_dir = PilotSession::cache_dir().unwrap();
 
     // Validate the cache directory
     let home_dir = dirs::home_dir().unwrap();
-    assert_eq!(cache_dir, format!("{}/.orbitalis/cache/pilot/", home_dir.to_str().unwrap()));
+    assert_eq!(cache_dir, format!("{}/.foxar/cache/pilot/", home_dir.to_str().unwrap()));
 }
 
 #[test]
@@ -39,11 +39,11 @@ fn test_write_session() {
     PilotSession::create_cache_dir().unwrap();
 
     // Force the ylem version to be 1.1.0
-    let orbitalis_config = Config { cvm_version: CvmVersion::Nucleus, ..Default::default() };
+    let foxar_config = Config { cvm_version: CvmVersion::Nucleus, ..Default::default() };
 
     // Create a new session
     let mut env = PilotSession::new(pilot::session_source::SessionSourceConfig {
-        orbitalis_config,
+        foxar_config,
         evm_opts: EvmOpts::default(),
         backend: None,
         traces: false,
@@ -70,11 +70,11 @@ fn test_write_session_with_name() {
     PilotSession::create_cache_dir().unwrap();
 
     // Force the ylem version to be 1.1.0
-    let orbitalis_config = Config { cvm_version: CvmVersion::Nucleus, ..Default::default() };
+    let foxar_config = Config { cvm_version: CvmVersion::Nucleus, ..Default::default() };
 
     // Create a new session
     let mut env = PilotSession::new(pilot::session_source::SessionSourceConfig {
-        orbitalis_config,
+        foxar_config,
         ..Default::default()
     })
     .unwrap_or_else(|e| panic!("Failed to create PilotSession! {}", e));
@@ -94,11 +94,11 @@ fn test_clear_cache() {
     let cache_dir = PilotSession::cache_dir().unwrap();
 
     // Force the ylem version to be 1.1.0
-    let orbitalis_config = Config { cvm_version: CvmVersion::Nucleus, ..Default::default() };
+    let foxar_config = Config { cvm_version: CvmVersion::Nucleus, ..Default::default() };
 
     PilotSession::create_cache_dir().unwrap();
     let mut env = PilotSession::new(pilot::session_source::SessionSourceConfig {
-        orbitalis_config,
+        foxar_config,
         ..Default::default()
     })
     .unwrap_or_else(|_| panic!("Failed to create PilotSession!"));
@@ -120,11 +120,11 @@ fn test_list_sessions() {
     PilotSession::clear_cache().unwrap();
 
     // Force the ylem version to be 1.1.0
-    let orbitalis_config = Config { cvm_version: CvmVersion::Nucleus, ..Default::default() };
+    let foxar_config = Config { cvm_version: CvmVersion::Nucleus, ..Default::default() };
 
     // Create a new session
     let mut env = PilotSession::new(pilot::session_source::SessionSourceConfig {
-        orbitalis_config,
+        foxar_config,
         ..Default::default()
     })
     .unwrap_or_else(|e| panic!("Failed to create PilotSession! {}", e));
@@ -147,11 +147,11 @@ fn test_load_cache() {
     PilotSession::clear_cache().unwrap();
 
     // Force the ylem version to be 1.1.0
-    let orbitalis_config = Config { cvm_version: CvmVersion::Nucleus, ..Default::default() };
+    let foxar_config = Config { cvm_version: CvmVersion::Nucleus, ..Default::default() };
 
     // Create a new session
     let mut env = PilotSession::new(pilot::session_source::SessionSourceConfig {
-        orbitalis_config,
+        foxar_config,
         ..Default::default()
     })
     .unwrap_or_else(|e| panic!("Failed to create PilotSession! {}", e));
@@ -178,11 +178,11 @@ fn test_write_same_session_multiple_times() {
     PilotSession::clear_cache().unwrap();
 
     // Force the ylem version to be 1.1.0
-    let orbitalis_config = Config { cvm_version: CvmVersion::Nucleus, ..Default::default() };
+    let foxar_config = Config { cvm_version: CvmVersion::Nucleus, ..Default::default() };
 
     // Create a new session
     let mut env = PilotSession::new(pilot::session_source::SessionSourceConfig {
-        orbitalis_config,
+        foxar_config,
         ..Default::default()
     })
     .unwrap_or_else(|e| panic!("Failed to create PilotSession! {}", e));
@@ -201,11 +201,11 @@ fn test_load_latest_cache() {
     PilotSession::clear_cache().unwrap();
 
     // Force the ylem version to be 1.1.0
-    let orbitalis_config = Config { cvm_version: CvmVersion::Nucleus, ..Default::default() };
+    let foxar_config = Config { cvm_version: CvmVersion::Nucleus, ..Default::default() };
 
     // Create sessions
     let mut env = PilotSession::new(pilot::session_source::SessionSourceConfig {
-        orbitalis_config: orbitalis_config.clone(),
+        foxar_config: foxar_config.clone(),
         ..Default::default()
     })
     .unwrap_or_else(|e| panic!("Failed to create PilotSession! {}", e));
@@ -215,7 +215,7 @@ fn test_load_latest_cache() {
     std::thread::sleep(wait_time);
 
     let mut env2 = PilotSession::new(pilot::session_source::SessionSourceConfig {
-        orbitalis_config,
+        foxar_config,
         ..Default::default()
     })
     .unwrap_or_else(|e| panic!("Failed to create PilotSession! {}", e));

@@ -135,7 +135,7 @@ async fn test_solc_revert_example() {
     }
 }
 
-// <https://github.com/orbitalis-rs/orbitalis/issues/1871>
+// <https://github.com/foxar-rs/foxar/issues/1871>
 #[tokio::test(flavor = "multi_thread")]
 async fn test_another_revert_message() {
     let prj = TempProject::dapptools().unwrap();

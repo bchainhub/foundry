@@ -11,7 +11,7 @@ use corebc::{
     types::{Address, U256},
 };
 use eyre::{Result, WrapErr};
-use orbitalis_common::contracts::{ContractsByAddress, ContractsByArtifact};
+use foxar_common::contracts::{ContractsByAddress, ContractsByArtifact};
 use proptest::test_runner::TestError;
 
 #[derive(Debug, Clone)]
@@ -146,7 +146,7 @@ impl InvariantFuzzError {
                     .expect("bad call to evm");
 
                 if error_call_result.reverted {
-                    break
+                    break;
                 }
             }
         }
@@ -165,7 +165,7 @@ impl InvariantFuzzError {
     ) -> Result<Vec<&'a BasicTxDetails>, ()> {
         let calls = calls.iter().enumerate().filter_map(|(index, element)| {
             if anchor > index || removed_calls.contains(&index) {
-                return None
+                return None;
             }
             Some(element)
         });
@@ -187,7 +187,7 @@ impl InvariantFuzzError {
                     .expect("bad call to evm");
 
                 if error_call_result.reverted {
-                    return Ok(new_sequence)
+                    return Ok(new_sequence);
                 }
             }
         }
@@ -238,7 +238,7 @@ impl InvariantFuzzError {
                 if next_removed > calls.len() - 1 {
                     anchor += 1;
                     removed_calls = vec![];
-                    continue
+                    continue;
                 }
 
                 removed_calls.push(next_removed);

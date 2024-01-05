@@ -4,7 +4,7 @@ use crate::cmd::Cmd;
 use clap::Parser;
 use corebc::ylem::Graph;
 
-orbitalis_config::impl_figment_convert!(TreeArgs, opts);
+foxar_config::impl_figment_convert!(TreeArgs, opts);
 use crate::cmd::{spark::build::ProjectPathsArgs, LoadConfig};
 use corebc::ylem::resolver::{Charset, TreeOptions};
 

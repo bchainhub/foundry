@@ -16,9 +16,9 @@ use corebc::{
     ylem::{artifacts::contract::CompactContractBytecode, sourcemap::SourceMap},
 };
 use eyre::Context;
-use orbitalis_common::{compile::ProjectCompiler, evm::EvmArgs, fs};
-use orbitalis_config::Config;
-use orbitalis_evm::utils::evm_spec;
+use foxar_common::{compile::ProjectCompiler, evm::EvmArgs, fs};
+use foxar_config::Config;
+use foxar_evm::utils::evm_spec;
 use semver::Version;
 use spark::{
     coverage::{
@@ -35,7 +35,7 @@ use std::{collections::HashMap, sync::mpsc::channel};
 use tracing::trace;
 
 // Loads project's figment and merges the build cli arguments into it
-orbitalis_config::impl_figment_convert!(CoverageArgs, opts, evm_opts);
+foxar_config::impl_figment_convert!(CoverageArgs, opts, evm_opts);
 
 /// CLI arguments for `spark coverage`.
 #[derive(Debug, Clone, Parser)]
@@ -131,7 +131,7 @@ impl CoverageArgs {
         for (path, mut source_file, version) in sources.into_sources_with_version() {
             // Filter out dependencies
             if project_paths.has_library_ancestor(std::path::Path::new(&path)) {
-                continue
+                continue;
             }
 
             if let Some(ast) = source_file.ast.take() {

@@ -1,6 +1,6 @@
 use crate::{cmd::Cmd, opts::GH_REPO_PREFIX_REGEX};
 use clap::{Parser, ValueHint};
-use orbitalis_config::{find_project_root_path, load_config_with_root};
+use foxar_config::{find_project_root_path, load_config_with_root};
 use spark_doc::{ContractInheritance, Deployments, DocBuilder, GitSource, Inheritdoc, Server};
 use std::{path::PathBuf, process::Command};
 

@@ -2,7 +2,7 @@ use corebc::types::{Address, Selector, H176};
 use once_cell::sync::Lazy;
 use std::collections::HashMap;
 
-pub use orbitalis_abi::{
+pub use foxar_abi::{
     console::{self, ConsoleEvents, CONSOLE_ABI},
     hardhat_console::{self, HardhatConsoleCalls, HARDHATCONSOLE_ABI as HARDHAT_CONSOLE_ABI},
     hevm::{self, HEVMCalls, HEVM_ABI},
@@ -30,7 +30,7 @@ pub const HARDHAT_CONSOLE_ADDRESS: Address = H176([
 /// it with the selector `abigen!` bindings expect.
 pub fn patch_hardhat_console_selector(input: &mut [u8]) {
     if input.len() < 4 {
-        return
+        return;
     }
 
     // SAFETY: length checked above; see [<[T]>::split_array_mut].

@@ -9,9 +9,9 @@ If you are looking into how to consume the software as an end user, check the
 For more context on how the package works under the hood, look in the
 [code docs](./src/lib.rs).
 
-**Need help with Forge? Read the [📖 Orbitalis Book (Forge Guide)][orbitalis-book-spark-guide] (WIP)!**
+**Need help with Forge? Read the [📖 Foxar Book (Forge Guide)][foxar-book-spark-guide] (WIP)!**
 
-[orbitalis-book-spark-guide]: https://book.getorbitalis.sh/spark/
+[foxar-book-spark-guide]: https://book.getfoxar.sh/spark/
 
 ## Why?
 
@@ -102,7 +102,7 @@ function testDoubleWithFuzzing(uint256 x) public {
 
 ### Gas Report
 
-Orbitalis will show you a comprehensive gas report about your contracts. It returns the `min`, `average`, `median` and, `max` gas cost for every function.
+Foxar will show you a comprehensive gas report about your contracts. It returns the `min`, `average`, `median` and, `max` gas cost for every function.
 
 It looks at **all** the tests that make a call to a given function and records the associated gas costs. For example, if something calls a function and it reverts, that's probably the `min` value. Another example is the `max` value that is generated usually during the first call of the function (as it has to initialise storage, variables, etc.)
 
@@ -404,7 +404,7 @@ For example, if you have `@openzeppelin` imports, you would
 
 ## Github Actions CI
 
-We recommend using the [Github Actions CI setup](https://book.getorbitalis.sh/config/continous-integration.html) from the [📖 Orbitalis Book](https://book.getorbitalis.sh/index.html).
+We recommend using the [Github Actions CI setup](https://book.getfoxar.sh/config/continous-integration.html) from the [📖 Foxar Book](https://book.getfoxar.sh/index.html).
 
 ## Future Features
 

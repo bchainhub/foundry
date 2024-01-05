@@ -1,4 +1,4 @@
-//! Common utilities for building and using orbitalis's tools.
+//! Common utilities for building and using foxar's tools.
 #![deny(missing_docs, unused_crate_dependencies)]
 
 pub mod abi;

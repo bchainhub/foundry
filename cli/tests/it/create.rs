@@ -8,11 +8,11 @@ use corebc::{
     types::Address,
     ylem::{artifacts::BytecodeHash, remappings::Remapping},
 };
-use orbitalis_cli_test_utils::{
+use foxar_cli_test_utils::{
     sparktest, sparktest_async,
     util::{OutputExt, TestCommand, TestProject},
 };
-use orbitalis_config::Config;
+use foxar_config::Config;
 use shuttle::{spawn, NodeConfig};
 use std::{path::PathBuf, str::FromStr};
 

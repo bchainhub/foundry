@@ -7,7 +7,7 @@ use corebc::{
     prelude::Signer,
     types::{transaction::eip2718::TypedTransaction, Network, U256},
 };
-use orbitalis_common::{contracts::flatten_contracts, try_get_http_provider};
+use foxar_common::{contracts::flatten_contracts, try_get_http_provider};
 use std::sync::Arc;
 use tracing::trace;
 
@@ -33,7 +33,7 @@ impl ScriptArgs {
         if let Some(ref fork_url) = script_config.evm_opts.fork_url {
             // when forking, override the sender's nonce to the onchain value
             script_config.sender_nonce =
-                orbitalis_utils::next_nonce(script_config.evm_opts.sender, fork_url, None).await?
+                foxar_utils::next_nonce(script_config.evm_opts.sender, fork_url, None).await?
         } else {
             // if not forking, then ignore any pre-deployed library addresses
             script_config.config.libraries = Default::default();
@@ -78,7 +78,7 @@ impl ScriptArgs {
                     result,
                     verify,
                 )
-                .await
+                .await;
         }
 
         let known_contracts = flatten_contracts(&highlevel_known_contracts, true);
@@ -92,7 +92,7 @@ impl ScriptArgs {
                 project,
                 highlevel_known_contracts,
                 breakpoints,
-            )
+            );
         }
 
         if let Some((new_traces, updated_libraries, updated_contracts)) = self
@@ -162,7 +162,7 @@ impl ScriptArgs {
                 &flatten_contracts(&highlevel_known_contracts, true),
             )?;
 
-            return Ok(Some((new_traces, libraries, highlevel_known_contracts)))
+            return Ok(Some((new_traces, libraries, highlevel_known_contracts)));
         }
 
         // Add predeploy libraries to the list of broadcastable transactions.
@@ -209,7 +209,7 @@ impl ScriptArgs {
                     result.script_wallets,
                     verify,
                 )
-                .await
+                .await;
         }
         self.resume_single_deployment(
             script_config,
@@ -303,7 +303,7 @@ impl ScriptArgs {
     ) -> eyre::Result<(Libraries, ArtifactContracts<ContractBytecodeSome>)> {
         // if we had a new sender that requires relinking, we need to
         // get the nonce mainnet for accurate addresses for predeploy libs
-        let nonce = orbitalis_utils::next_nonce(
+        let nonce = foxar_utils::next_nonce(
             new_sender,
             script_config.evm_opts.fork_url.as_ref().ok_or_else(|| {
                 eyre::eyre!("You must provide an RPC URL (see --fork-url) when broadcasting.")

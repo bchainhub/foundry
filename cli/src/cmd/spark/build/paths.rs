@@ -1,6 +1,6 @@
 use clap::{Parser, ValueHint};
 use corebc::ylem::remappings::Remapping;
-use orbitalis_config::{
+use foxar_config::{
     figment,
     figment::{
         error::Kind::InvalidType,
@@ -82,7 +82,7 @@ impl ProjectPathsArgs {
     }
 }
 
-orbitalis_config::impl_figment_convert!(ProjectPathsArgs);
+foxar_config::impl_figment_convert!(ProjectPathsArgs);
 
 // Make this args a `figment::Provider` so that it can be merged into the `Config`
 impl Provider for ProjectPathsArgs {

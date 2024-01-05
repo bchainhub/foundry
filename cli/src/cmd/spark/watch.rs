@@ -2,10 +2,10 @@
 
 use crate::{
     cmd::spark::{build::BuildArgs, snapshot::SnapshotArgs, test::TestArgs},
-    utils::{self, OrbitalisPathExt},
+    utils::{self, FoxarPathExt},
 };
 use clap::Parser;
-use orbitalis_config::Config;
+use foxar_config::Config;
 use std::{collections::HashSet, convert::Infallible, path::PathBuf, sync::Arc};
 use tracing::trace;
 use watchexec::{
@@ -173,7 +173,7 @@ fn on_test(action: OnActionState<WatchTestState>) {
 
     if no_reconfigure {
         // nothing to reconfigure
-        return
+        return;
     }
 
     let mut cmd = cmd.clone();
@@ -214,7 +214,7 @@ fn on_test(action: OnActionState<WatchTestState>) {
             },
             on_test,
         );
-        return
+        return;
     }
 
     if changed_sol_test_files.is_empty() {
@@ -323,7 +323,7 @@ fn on_action<F, T>(
 
         if signals.contains(&MainSignal::Terminate) || signals.contains(&MainSignal::Interrupt) {
             action.outcome(Outcome::both(Outcome::Stop, Outcome::Exit));
-            return fut
+            return fut;
         }
 
         if !has_paths {
@@ -334,7 +334,7 @@ fn on_action<F, T>(
                 }
 
                 action.outcome(out);
-                return fut
+                return fut;
             }
 
             let completion = action.events.iter().flat_map(|e| e.completions()).next();
@@ -358,7 +358,7 @@ fn on_action<F, T>(
                 };
 
                 action.outcome(Outcome::DoNothing);
-                return fut
+                return fut;
             }
         }
 

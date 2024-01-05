@@ -4,7 +4,7 @@ use corebc::{
     prelude::{Middleware, NameOrAddress, U256},
     utils::hex,
 };
-use orbitalis_common::{get_http_provider, RetryProvider};
+use foxar_common::{get_http_provider, RetryProvider};
 use std::{collections::BTreeMap, path::Path, str::FromStr};
 
 pub const BROADCAST_TEST_PATH: &str = "src/Broadcast.t.sol";
@@ -260,7 +260,7 @@ impl ScriptOutcome {
             ScriptOutcome::OkSimulation => "SIMULATION COMPLETE. To broadcast these",
             ScriptOutcome::OkBroadcast => "ONCHAIN EXECUTION COMPLETE & SUCCESSFUL",
             ScriptOutcome::WarnSpecifyDeployer => "You have more than one deployer who could predeploy libraries. Using `--sender` instead.",
-            ScriptOutcome::MissingSender => "You seem to be using Orbitalis's default sender. Be sure to set your own --sender",
+            ScriptOutcome::MissingSender => "You seem to be using Foxar's default sender. Be sure to set your own --sender",
             ScriptOutcome::MissingWallet => "No associated wallet",
             ScriptOutcome::StaticCallNotAllowed => "Staticcalls are not allowed after vm.broadcast. Either remove it, or use vm.startBroadcast instead.",
             ScriptOutcome::FailedScript => "Script failed.",

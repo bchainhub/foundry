@@ -3,7 +3,7 @@ pragma solidity 1.1.0;
 
 import "ds-test/test.sol";
 
-// See https://github.com/orbitalis-rs/orbitalis/pull/735 for context
+// See https://github.com/foxar-rs/foxar/pull/735 for context
 contract FuzzNumbersTest is DSTest {
     function testPositive(int256) public {
         assertTrue(true);

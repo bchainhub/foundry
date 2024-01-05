@@ -6,7 +6,7 @@ use crate::{
 use clap::Parser;
 use corebc::types::{NameOrAddress, U256};
 use eyre::Result;
-use orbitalis_config::{figment::Figment, Config};
+use foxar_config::{figment::Figment, Config};
 use probe::{Cast, TxBuilder};
 use std::str::FromStr;
 

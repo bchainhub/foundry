@@ -1,13 +1,13 @@
 [package]
-name = "orbitalis-macros"
+name = "foxar-macros"
 version = "0.1.0"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 readme = "README.md"
-repository = "https://github.com/orbitalis-rs/orbitalis"
+repository = "https://github.com/bchainhub/foxar"
 
 [dependencies]
-orbitalis-macros-impl = { path = "./impl" }
+foxar-macros-impl = { path = "./impl" }
 
 corebc-core = { workspace = true}
 serde = "1.0"

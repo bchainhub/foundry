@@ -1,8 +1,8 @@
 # `probe`
 
-**Need help with Cast? Read the [📖 Orbitalis Book (Cast Guide)][orbitalis-book-probe-guide] (WIP)!**
+**Need help with Cast? Read the [📖 Foxar Book (Cast Guide)][foxar-book-probe-guide] (WIP)!**
 
-[orbitalis-book-probe-guide]: https://book.getorbitalis.sh/probe/index.html
+[foxar-book-probe-guide]: https://book.getfoxar.sh/probe/index.html
 
 ## Features
 

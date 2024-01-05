@@ -99,7 +99,7 @@ pub type ContractsByAddress = BTreeMap<Address, (String, Abi)>;
 pub fn diff_score(a: &[u8], b: &[u8]) -> f64 {
     let cutoff_len = usize::min(a.len(), b.len());
     if cutoff_len == 0 {
-        return 1.0
+        return 1.0;
     }
 
     let a = &a[..cutoff_len];
@@ -129,7 +129,7 @@ pub fn flatten_contracts(
                 };
 
                 if let Some(bytecode) = bytecode {
-                    return Some((id.clone(), (c.abi.clone(), bytecode.to_vec())))
+                    return Some((id.clone(), (c.abi.clone(), bytecode.to_vec())));
                 }
                 None
             })
@@ -147,7 +147,7 @@ pub fn flatten_contracts(
 /// # Example
 ///
 /// ```
-/// use orbitalis_common::*;
+/// use foxar_common::*;
 /// assert_eq!(
 ///     "SafeTransferLibTest",
 ///     get_contract_name("SafeTransferLibTest.json:SafeTransferLibTest")
@@ -162,7 +162,7 @@ pub fn get_contract_name(id: &str) -> &str {
 /// # Example
 ///
 /// ```
-/// use orbitalis_common::*;
+/// use foxar_common::*;
 /// assert_eq!(
 ///     "SafeTransferLibTest.json",
 ///     get_file_name("SafeTransferLibTest.json:SafeTransferLibTest")
@@ -224,7 +224,6 @@ mod tests {
     use super::*;
     use corebc_core::{abi, abi::ParamType};
 
-    // <https://github.com/orbitalis-rs/orbitalis/issues/3053>
     #[test]
     fn test_find_constructor_args() {
         let code = "6080604052348015600f57600080fd5b50604051610121380380610121833981016040819052602c91606e565b600080546001600160a01b0319166001600160a01b0396909616959095179094556001929092556002556003556004805460ff191691151591909117905560d4565b600080600080600060a08688031215608557600080fd5b85516001600160a01b0381168114609b57600080fd5b809550506020860151935060408601519250606086015191506080860151801515811460c657600080fd5b809150509295509295909350565b603f806100e26000396000f3fe6080604052600080fdfea264697066735822122089f2c61beace50d105ec1b6a56a1204301b5595e850e7576f6f3aa8e76f12d0b64736f6c6343000810003300000000000000000000cb5400a329c0648769a73afac7f9381e08fb43dbea720000000000000000000000000000000000000000000000000000000100000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000b10e2d527612073b26eecdfd717e6a320cf44b4afac2b0732d9fcbe2b7fa0cf60000000000000000000000000000000000000000000000000000000000000001";

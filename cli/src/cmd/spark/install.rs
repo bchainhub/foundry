@@ -7,9 +7,9 @@ use crate::{
 };
 use clap::{Parser, ValueHint};
 use eyre::{Context, Result};
+use foxar_common::fs;
+use foxar_config::{impl_figment_convert_basic, Config};
 use once_cell::sync::Lazy;
-use orbitalis_common::fs;
-use orbitalis_config::{impl_figment_convert_basic, Config};
 use regex::Regex;
 use semver::Version;
 use std::{
@@ -163,7 +163,7 @@ impl DependencyInstallOpts {
                     }
 
                     // update .gitmodules which is at the root of the repo,
-                    // not necessarily at the root of the current Orbitalis project
+                    // not necessarily at the root of the current Foxar project
                     let root = Git::root_of(git.root)?;
                     git.root(&root).add(Some(".gitmodules"))?;
                 }
@@ -275,7 +275,7 @@ impl Installer<'_> {
             for &prefix in common_prefixes {
                 if let Some(rem) = tag.strip_prefix(prefix) {
                     maybe_semver = rem;
-                    break
+                    break;
                 }
             }
             match Version::parse(maybe_semver) {
@@ -334,7 +334,7 @@ impl Installer<'_> {
             if e.to_string().contains("did not match any file(s) known to git") {
                 e = eyre::eyre!("Tag: \"{tag}\" not found for repo \"{url}\"!")
             }
-            return Err(e)
+            return Err(e);
         }
 
         if is_branch {
@@ -348,7 +348,7 @@ impl Installer<'_> {
     fn match_tag(self, tag: &str, path: &Path) -> Result<String> {
         // only try to match if it looks like a version tag
         if !DEPENDENCY_VERSION_TAG_REGEX.is_match(tag) {
-            return Ok(tag.into())
+            return Ok(tag.into());
         }
 
         // generate candidate list by filtering `git tag` output, valid ones are those "starting
@@ -366,13 +366,13 @@ impl Installer<'_> {
 
         // no match found, fall back to the user-provided tag
         if candidates.is_empty() {
-            return Ok(tag.into())
+            return Ok(tag.into());
         }
 
         // have exact match
         for candidate in candidates.iter() {
             if candidate == tag {
-                return Ok(tag.into())
+                return Ok(tag.into());
             }
         }
 
@@ -382,7 +382,7 @@ impl Installer<'_> {
             let input = prompt!(
                 "Found a similar version tag: {matched_tag}, do you want to use this instead? [Y/n] "
             )?;
-            return if match_yn(input) { Ok(matched_tag.clone()) } else { Ok(tag.into()) }
+            return if match_yn(input) { Ok(matched_tag.clone()) } else { Ok(tag.into()) };
         }
 
         // multiple candidates, ask the user to choose one or skip
@@ -405,7 +405,7 @@ impl Installer<'_> {
                 Ok(i) if (1..=n_candidates).contains(&i) => {
                     let c = &candidates[i];
                     println!("[{i}] {c} selected");
-                    return Ok(c.clone())
+                    return Ok(c.clone());
                 }
                 _ => continue,
             }
@@ -428,13 +428,13 @@ impl Installer<'_> {
 
         // no match found, fall back to the user-provided tag
         if candidates.is_empty() {
-            return Ok(None)
+            return Ok(None);
         }
 
         // have exact match
         for candidate in candidates.iter() {
             if candidate == tag {
-                return Ok(Some(tag.to_string()))
+                return Ok(Some(tag.to_string()));
             }
         }
 
@@ -444,7 +444,7 @@ impl Installer<'_> {
             let input = prompt!(
                 "Found a similar branch: {matched_tag}, do you want to use this instead? [Y/n] "
             )?;
-            return if match_yn(input) { Ok(Some(matched_tag.clone())) } else { Ok(None) }
+            return if match_yn(input) { Ok(Some(matched_tag.clone())) } else { Ok(None) };
         }
 
         // multiple candidates, ask the user to choose one or skip
@@ -464,7 +464,7 @@ impl Installer<'_> {
         // default selection, return None
         if input.is_empty() {
             println!("Canceled branch matching");
-            return Ok(None)
+            return Ok(None);
         }
 
         // match user input, 0 indicates skipping and use original tag
@@ -491,7 +491,7 @@ fn match_yn(input: String) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use orbitalis_cli_test_utils::tempfile::tempdir;
+    use foxar_cli_test_utils::tempfile::tempdir;
 
     #[test]
     fn get_oz_tags() {

@@ -3,7 +3,7 @@
 use crate::{eth::macros::node_info, revm::Database};
 use bytes::Bytes;
 use corebc::types::Log;
-use orbitalis_evm::{
+use foxar_evm::{
     call_inspectors,
     decode::decode_console_logs,
     executor::inspector::{LogCollector, Tracer},

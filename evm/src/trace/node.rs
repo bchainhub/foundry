@@ -11,7 +11,7 @@ use corebc::{
     abi::{Abi, Function},
     types::{Action, Address, Call, CallResult, Create, CreateResult, Res, Suicide},
 };
-use orbitalis_common::SELECTOR_LEN;
+use foxar_common::SELECTOR_LEN;
 use revm::interpreter::InstructionResult;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
@@ -70,7 +70,7 @@ impl CallTraceNode {
                 // TODO deserialize from calldata here?
                 refund_address: Default::default(),
                 balance: self.trace.value,
-            })
+            });
         }
         match self.kind() {
             CallKind::Call | CallKind::StaticCall | CallKind::CallCode | CallKind::DelegateCall => {
@@ -142,7 +142,7 @@ impl CallTraceNode {
                             .find_map(|func| decode_cheatcode_outputs(func, bytes, verbosity))
                         {
                             self.trace.output = RawOrDecodedReturnData::Decoded(decoded);
-                            return
+                            return;
                         }
                     }
 

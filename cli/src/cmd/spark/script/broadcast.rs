@@ -13,8 +13,8 @@ use corebc::{
     utils::format_units,
 };
 use eyre::{bail, ContextCompat, Result, WrapErr};
+use foxar_common::{shell, try_get_http_provider, RetryProvider};
 use futures::StreamExt;
-use orbitalis_common::{shell, try_get_http_provider, RetryProvider};
 use std::{cmp::min, collections::HashSet, ops::Mul, sync::Arc};
 use tracing::trace;
 
@@ -208,7 +208,7 @@ impl ScriptArgs {
         let from = tx.from().expect("no sender");
 
         if sequential_broadcast {
-            let nonce = orbitalis_utils::next_nonce(*from, fork_url, None)
+            let nonce = foxar_utils::next_nonce(*from, fork_url, None)
                 .await
                 .map_err(|_| eyre::eyre!("Not able to query the EOA nonce."))?;
 
@@ -325,7 +325,7 @@ impl ScriptArgs {
         self.send_transactions(deployment_sequence, &rpc, &result.script_wallets).await?;
 
         if self.verify {
-            return deployment_sequence.verify_contracts(&script_config.config, verify).await
+            return deployment_sequence.verify_contracts(&script_config.config, verify).await;
         }
         Ok(())
     }
@@ -357,7 +357,7 @@ impl ScriptArgs {
                     &mut script_config.config,
                     returns,
                 )
-                .await
+                .await;
         } else if self.broadcast {
             eyre::bail!("No onchain transactions generated in script");
         }
@@ -463,7 +463,7 @@ impl ScriptArgs {
             // transactions.
             if let Some(next_tx) = txes_iter.peek() {
                 if next_tx.rpc == Some(tx_rpc) {
-                    continue
+                    continue;
                 }
             }
 

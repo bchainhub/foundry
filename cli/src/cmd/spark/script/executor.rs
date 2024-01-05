@@ -11,9 +11,9 @@ use corebc::{
     types::{transaction::eip2718::TypedTransaction, Address, U256},
     ylem::artifacts::CompactContractBytecode,
 };
+use foxar_common::{shell, RpcUrl};
+use foxar_evm::utils::evm_spec;
 use futures::future::join_all;
-use orbitalis_common::{shell, RpcUrl};
-use orbitalis_evm::utils::evm_spec;
 use parking_lot::RwLock;
 use spark::{
     executor::{
@@ -127,7 +127,7 @@ impl ScriptArgs {
                         abi,
                         code,
                     };
-                    return Some((*addr, info))
+                    return Some((*addr, info));
                 }
                 None
             })
@@ -156,7 +156,7 @@ impl ScriptArgs {
                     .expect("Internal EVM error");
 
                 if !result.success || result.traces.is_empty() {
-                    return Ok((None, result.traces))
+                    return Ok((None, result.traces));
                 }
 
                 let created_contracts = result
@@ -169,7 +169,7 @@ impl ScriptArgs {
                                     opcode: node.kind(),
                                     address: node.trace.address,
                                     init_code: node.trace.data.to_raw(),
-                                })
+                                });
                             }
                             None
                         })

@@ -11,10 +11,10 @@ use corebc::{
         U256,
     },
 };
+use foxar_common::get_http_provider;
+use foxar_config::Config;
+use foxar_utils::{rpc, rpc::next_http_rpc_endpoint, types::ToRuint};
 use futures::StreamExt;
-use orbitalis_common::get_http_provider;
-use orbitalis_config::Config;
-use orbitalis_utils::{rpc, rpc::next_http_rpc_endpoint, types::ToRuint};
 use shuttle::{eth::EthApi, spawn, NodeConfig, NodeHandle};
 use shuttle_core::{eth::transaction::EthTransactionRequest, types::Forking};
 use spark::utils::h176_to_b176;
@@ -81,7 +81,7 @@ async fn test_fork_eth_get_balance() {
     }
 }
 
-// <https://github.com/orbitalis-rs/orbitalis/issues/4082>
+// <https://github.com/foxar-rs/foxar/issues/4082>
 #[tokio::test(flavor = "multi_thread")]
 #[ignore = "Forking is disabled"]
 async fn test_fork_eth_get_balance_after_mine() {
@@ -106,7 +106,7 @@ async fn test_fork_eth_get_balance_after_mine() {
         .unwrap();
 }
 
-// <https://github.com/orbitalis-rs/orbitalis/issues/4082>
+// <https://github.com/foxar-rs/foxar/issues/4082>
 #[tokio::test(flavor = "multi_thread")]
 #[ignore = "Forking is disabled"]
 async fn test_fork_eth_get_code_after_mine() {
@@ -443,7 +443,7 @@ async fn test_fork_can_send_tx() {
     assert_eq!(balance, val.into());
 }
 
-// <https://github.com/orbitalis-rs/orbitalis/issues/1920>
+// <https://github.com/foxar-rs/foxar/issues/1920>
 #[tokio::test(flavor = "multi_thread")]
 #[ignore = "Forking is disabled"]
 async fn test_fork_nft_set_approve_all() {
@@ -491,7 +491,7 @@ async fn test_fork_nft_set_approve_all() {
     assert_eq!(real_onwer, wallet.address());
 }
 
-// <https://github.com/orbitalis-rs/orbitalis/issues/2261>
+// <https://github.com/foxar-rs/foxar/issues/2261>
 #[tokio::test(flavor = "multi_thread")]
 #[ignore = "Forking is disabled"]
 async fn test_fork_with_custom_chain_id() {
@@ -517,7 +517,7 @@ async fn test_fork_with_custom_chain_id() {
     assert_eq!(config_chain_id, Some(3145u64));
 }
 
-// <https://github.com/orbitalis-rs/orbitalis/issues/1920>
+// <https://github.com/foxar-rs/foxar/issues/1920>
 #[tokio::test(flavor = "multi_thread")]
 #[ignore = "Forking is disabled"]
 async fn test_fork_can_send_opensea_tx() {
@@ -727,7 +727,7 @@ async fn test_fork_block_transaction_count() {
     assert_eq!(count_txs.as_usize(), 3);
 }
 
-// <https://github.com/orbitalis-rs/orbitalis/issues/2931>
+// <https://github.com/foxar-rs/foxar/issues/2931>
 #[tokio::test(flavor = "multi_thread")]
 #[ignore = "Forking is disabled"]
 async fn can_impersonate_in_fork() {

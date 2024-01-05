@@ -7,12 +7,12 @@ use corebc::{
     types::{Address, Bytes, U256},
 };
 use eyre::Result;
-use orbitalis_common::{
+use foxar_common::{
     contracts::{ContractsByAddress, ContractsByArtifact},
     TestFunctionExt,
 };
-use orbitalis_config::{FuzzConfig, InvariantConfig};
-use orbitalis_evm::{
+use foxar_config::{FuzzConfig, InvariantConfig};
+use foxar_evm::{
     decode::decode_console_logs,
     executor::{CallResult, EvmError, ExecutionErr, Executor},
     fuzz::{

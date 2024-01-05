@@ -17,7 +17,7 @@ use corebc::{
         utils::canonicalize,
     },
 };
-use orbitalis_common::compile;
+use foxar_common::compile;
 use serde_json::{to_value, Value};
 use std::fmt;
 use tracing::trace;
@@ -214,7 +214,7 @@ pub fn print_storage_layout(
 
     if !pretty {
         println!("{}", serde_json::to_string_pretty(&to_value(storage_layout)?)?);
-        return Ok(())
+        return Ok(());
     }
 
     let mut table = Table::new();

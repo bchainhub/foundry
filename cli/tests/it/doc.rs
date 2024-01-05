@@ -1,4 +1,4 @@
-use orbitalis_cli_test_utils::util::{setup_spark_remote, RemoteProject};
+use foxar_cli_test_utils::util::{setup_spark_remote, RemoteProject};
 
 #[test]
 fn can_generate_solmate_docs() {

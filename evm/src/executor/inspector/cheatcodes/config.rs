@@ -1,8 +1,8 @@
 use super::{ensure, fmt_err, Result};
 use crate::executor::opts::EvmOpts;
 use corebc::ylem::{utils::canonicalize, ProjectPathsConfig};
-use orbitalis_common::fs::normalize_path;
-use orbitalis_config::{
+use foxar_common::fs::normalize_path;
+use foxar_config::{
     cache::StorageCachingConfig, fs_permissions::FsAccessKind, Config, FsPermissions,
     ResolvedRpcEndpoints,
 };
@@ -93,23 +93,23 @@ impl CheatsConfig {
         Ok(normalized)
     }
 
-    /// Returns true if the given `path` is the project's orbitalis.toml file
+    /// Returns true if the given `path` is the project's foxar.toml file
     ///
     /// Note: this should be called with normalized path
-    pub fn is_orbitalis_toml(&self, path: impl AsRef<Path>) -> bool {
+    pub fn is_foxar_toml(&self, path: impl AsRef<Path>) -> bool {
         // path methods that do not access the filesystem are such as [`Path::starts_with`], are
         // case-sensitive no matter the platform or filesystem. to make this case-sensitive
         // we convert the underlying `OssStr` to lowercase checking that `path` and
-        // `orbitalis.toml` are the same file by comparing the FD, because it may not exist
-        let orbitalis_toml = self.root.join(Config::FILE_NAME);
-        Path::new(&orbitalis_toml.to_string_lossy().to_lowercase())
+        // `foxar.toml` are the same file by comparing the FD, because it may not exist
+        let foxar_toml = self.root.join(Config::FILE_NAME);
+        Path::new(&foxar_toml.to_string_lossy().to_lowercase())
             .starts_with(Path::new(&path.as_ref().to_string_lossy().to_lowercase()))
     }
 
-    /// Same as [`Self::is_orbitalis_toml`] but returns an `Err` if [`Self::is_orbitalis_toml`]
+    /// Same as [`Self::is_foxar_toml`] but returns an `Err` if [`Self::is_foxar_toml`]
     /// returns true
-    pub fn ensure_not_orbitalis_toml(&self, path: impl AsRef<Path>) -> Result<()> {
-        ensure!(!self.is_orbitalis_toml(path), "Access to orbitalis.toml is not allowed.");
+    pub fn ensure_not_foxar_toml(&self, path: impl AsRef<Path>) -> Result<()> {
+        ensure!(!self.is_foxar_toml(path), "Access to foxar.toml is not allowed.");
         Ok(())
     }
 
@@ -161,7 +161,7 @@ impl Default for CheatsConfig {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use orbitalis_config::fs_permissions::PathPermission;
+    use foxar_config::fs_permissions::PathPermission;
 
     fn config(root: &str, fs_permissions: FsPermissions) -> CheatsConfig {
         CheatsConfig::new(
@@ -184,17 +184,17 @@ mod tests {
     }
 
     #[test]
-    fn test_is_orbitalis_toml() {
+    fn test_is_foxar_toml() {
         let root = "/my/project/root/";
         let config = config(root, FsPermissions::new(vec![PathPermission::read_write("./")]));
 
-        let f = format!("{root}orbitalis.toml");
-        assert!(config.is_orbitalis_toml(f));
+        let f = format!("{root}foxar.toml");
+        assert!(config.is_foxar_toml(f));
 
-        let f = format!("{root}Orbitalis.toml");
-        assert!(config.is_orbitalis_toml(f));
+        let f = format!("{root}Foxar.toml");
+        assert!(config.is_foxar_toml(f));
 
-        let f = format!("{root}lib/other/orbitalis.toml");
-        assert!(!config.is_orbitalis_toml(f));
+        let f = format!("{root}lib/other/foxar.toml");
+        assert!(!config.is_foxar_toml(f));
     }
 }

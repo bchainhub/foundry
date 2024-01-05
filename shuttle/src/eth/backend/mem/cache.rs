@@ -1,6 +1,6 @@
 use crate::config::shuttle_tmp_dir;
 use corebc::prelude::H256;
-use orbitalis_evm::executor::backend::snapshot::StateSnapshot;
+use foxar_evm::executor::backend::snapshot::StateSnapshot;
 use std::{
     io,
     path::{Path, PathBuf},
@@ -60,7 +60,7 @@ impl DiskStateCache {
     pub fn write(&mut self, hash: H256, state: StateSnapshot) {
         self.with_cache_file(hash, |file| {
             tokio::task::spawn(async move {
-                match orbitalis_common::fs::write_json_file(&file, &state) {
+                match foxar_common::fs::write_json_file(&file, &state) {
                     Ok(_) => {
                         trace!(target: "backend", ?hash, "wrote state json file");
                     }
@@ -77,7 +77,7 @@ impl DiskStateCache {
     /// Returns None if it doesn't exist or deserialization failed
     pub fn read(&mut self, hash: H256) -> Option<StateSnapshot> {
         self.with_cache_file(hash, |file| {
-            match orbitalis_common::fs::read_json_file::<StateSnapshot>(&file) {
+            match foxar_common::fs::read_json_file::<StateSnapshot>(&file) {
                 Ok(state) => {
                     trace!(target: "backend", ?hash,"loaded cached state");
                     Some(state)
@@ -94,7 +94,7 @@ impl DiskStateCache {
     /// Removes the cache file for the given hash, if it exists
     pub fn remove(&mut self, hash: H256) {
         self.with_cache_file(hash, |file| {
-            orbitalis_common::fs::remove_file(file).map_err(|err| {
+            foxar_common::fs::remove_file(file).map_err(|err| {
                 error!(target: "backend", ?err, ?hash, "Failed to remove state snapshot");
             })
         });

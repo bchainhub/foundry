@@ -3,7 +3,7 @@ pragma solidity 1.1.0;
 
 import "ds-test/test.sol";
 
-// https://github.com/orbitalis-rs/orbitalis/issues/3661
+// https://github.com/foxar-rs/foxar/issues/3661
 contract Issue3661Test is DSTest {
     address sender;
 

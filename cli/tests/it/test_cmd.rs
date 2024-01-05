@@ -1,11 +1,11 @@
 //! Contains various tests for checking `spark test`
 use corebc::types::Network;
-use orbitalis_cli_test_utils::{
+use foxar_cli_test_utils::{
     sparktest, sparktest_init,
     util::{OutputExt, TestCommand, TestProject},
 };
-use orbitalis_config::Config;
-use orbitalis_utils::rpc;
+use foxar_config::Config;
+use foxar_utils::rpc;
 use std::{path::PathBuf, str::FromStr};
 
 // tests that test filters are handled correctly

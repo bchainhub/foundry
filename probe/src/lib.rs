@@ -20,8 +20,8 @@ use corebc_core::{
 use corebc_providers::{Middleware, PendingTransaction};
 use evm_disassembler::{disassemble_bytes, disassemble_str, format_operations};
 use eyre::{Context, Result};
-use orbitalis_common::{abi::encode_args, fmt::*, TransactionReceiptWithRevertReason};
-pub use orbitalis_evm::*;
+use foxar_common::{abi::encode_args, fmt::*, TransactionReceiptWithRevertReason};
+pub use foxar_evm::*;
 use rayon::prelude::*;
 pub use rusoto_core::{
     credential::ChainProvider as AwsChainProvider, region::Region as AwsRegion,
@@ -1185,7 +1185,7 @@ impl SimpleCast {
         let base_in = Base::unwrap_or_detect(base_in, value)?;
         let base_out: Base = base_out.parse()?;
         if base_in == base_out {
-            return Ok(value.to_string())
+            return Ok(value.to_string());
         }
 
         let mut n = NumberWithBase::parse_int(value, Some(base_in.to_string()))?;
@@ -1255,7 +1255,7 @@ impl SimpleCast {
         let s = if let Some(stripped) = s.strip_prefix("00000000000000000000") {
             stripped
         } else {
-            return Err(eyre::eyre!("Not convertible to address, there are non-zero bytes"))
+            return Err(eyre::eyre!("Not convertible to address, there are non-zero bytes"));
         };
         Ok(s.to_string())
     }
@@ -1294,7 +1294,7 @@ impl SimpleCast {
     /// }
     /// ```
     pub fn abi_decode(sig: &str, calldata: &str, input: bool) -> Result<Vec<Token>> {
-        orbitalis_common::abi::abi_decode(sig, calldata, input, false)
+        foxar_common::abi::abi_decode(sig, calldata, input, false)
     }
 
     /// Decodes calldata-encoded hex input or output
@@ -1330,7 +1330,7 @@ impl SimpleCast {
     /// }
     /// ```
     pub fn calldata_decode(sig: &str, calldata: &str, input: bool) -> Result<Vec<Token>> {
-        orbitalis_common::abi::abi_decode(sig, calldata, input, true)
+        foxar_common::abi::abi_decode(sig, calldata, input, true)
     }
 
     /// Performs ABI encoding based off of the function signature. Does not include
@@ -1467,7 +1467,7 @@ impl SimpleCast {
             .iter()
             .zip(contract_names)
             .map(|(contract_abi, name)| {
-                let source = orbitalis_utils::abi::abi_to_solidity(contract_abi, &name)?;
+                let source = foxar_utils::abi::abi_to_solidity(contract_abi, &name)?;
                 Ok(InterfaceSource { name, source })
             })
             .collect::<Result<Vec<InterfaceSource>>>()
@@ -1720,7 +1720,7 @@ impl SimpleCast {
         }
         if optimize == 0 {
             let selector = HumanReadableParser::parse_function(signature)?.short_signature();
-            return Ok((format!("0x{}", hex::encode(selector)), String::from(signature)))
+            return Ok((format!("0x{}", hex::encode(selector)), String::from(signature)));
         }
         let Some((name, params)) = signature.split_once('(') else {
             eyre::bail!("Invalid signature");
@@ -1742,7 +1742,7 @@ impl SimpleCast {
 
                     if selector.iter().take_while(|&&byte| byte == 0).count() == optimize {
                         found.store(true, Ordering::Relaxed);
-                        return Some((nonce, format!("0x{}", hex::encode(selector)), input))
+                        return Some((nonce, format!("0x{}", hex::encode(selector)), input));
                     }
 
                     nonce += nonce_step;
@@ -1773,7 +1773,7 @@ mod tests {
         );
     }
 
-    // <https://github.com/orbitalis-rs/orbitalis/issues/2681>
+    // <https://github.com/foxar-rs/foxar/issues/2681>
     #[test]
     fn calldata_array() {
         assert_eq!(

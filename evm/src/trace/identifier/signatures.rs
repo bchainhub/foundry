@@ -1,10 +1,10 @@
 use corebc::abi::{Event, Function};
-use hashbrown::HashSet;
-use orbitalis_common::{
+use foxar_common::{
     abi::{get_event, get_func},
     fs,
     selectors::{SelectorType, SignEthClient},
 };
+use hashbrown::HashSet;
 use serde::{Deserialize, Serialize};
 use std::{collections::BTreeMap, path::PathBuf, sync::Arc};
 use tokio::sync::RwLock;
@@ -94,7 +94,7 @@ impl SignaturesIdentifier {
     ) -> Option<T> {
         // Exit early if we have unsuccessfully queried it before.
         if self.unavailable.contains(identifier) {
-            return None
+            return None;
         }
 
         let map = match selector_type {
@@ -115,7 +115,7 @@ impl SignaturesIdentifier {
         }
 
         if let Some(signature) = map.get(&hex_identifier) {
-            return get_type(signature).ok()
+            return get_type(signature).ok();
         }
 
         self.unavailable.insert(identifier.to_vec());

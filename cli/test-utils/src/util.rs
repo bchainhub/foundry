@@ -4,8 +4,8 @@ use corebc_ylem::{
     ArtifactOutput, ConfigurableArtifacts, PathStyle, ProjectPathsConfig, Ylem,
 };
 use eyre::WrapErr;
+use foxar_config::Config;
 use once_cell::sync::Lazy;
-use orbitalis_config::Config;
 use parking_lot::Mutex;
 use regex::Regex;
 use std::{
@@ -250,7 +250,7 @@ impl TestProject {
         self.inner().paths()
     }
 
-    /// Returns the path to the project's `orbitalis.toml` file
+    /// Returns the path to the project's `foxar.toml` file
     pub fn config_path(&self) -> PathBuf {
         self.root().join(Config::FILE_NAME)
     }
@@ -260,13 +260,13 @@ impl TestProject {
         &self.paths().cache
     }
 
-    /// Writes the given config as toml to `orbitalis.toml`
+    /// Writes the given config as toml to `foxar.toml`
     pub fn write_config(&self, config: Config) {
         let file = self.config_path();
         pretty_err(&file, fs::write(&file, config.to_string_pretty().unwrap()));
     }
 
-    /// Asserts that the `<root>/orbitalis.toml` file exits
+    /// Asserts that the `<root>/foxar.toml` file exits
     pub fn assert_config_exists(&self) {
         assert!(self.config_path().exists());
     }
@@ -817,7 +817,7 @@ pub fn tty_fixture_path(path: impl AsRef<Path>) -> PathBuf {
             path.with_extension(format!("tty.{ext}"))
         } else {
             path.with_extension("tty")
-        }
+        };
     }
     path.to_path_buf()
 }

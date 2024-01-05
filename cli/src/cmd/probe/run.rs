@@ -6,9 +6,9 @@ use corebc::{
     types::H176,
 };
 use eyre::WrapErr;
-use orbitalis_config::{find_project_root_path, Config};
-use orbitalis_evm::utils::evm_spec;
-use orbitalis_utils::types::ToRuint;
+use foxar_config::{find_project_root_path, Config};
+use foxar_evm::utils::evm_spec;
+use foxar_utils::types::ToRuint;
 use probe::{
     executor::{EvmError, ExecutionErr},
     trace::{identifier::SignaturesIdentifier, CallTraceDecoder, Traces},
@@ -128,10 +128,10 @@ impl RunArgs {
                     // and energy limit 0 which causes reverts, so we skip it
                     if tx.from == ARBITRUM_SENDER {
                         update_progress!(pb, index);
-                        continue
+                        continue;
                     }
                     if tx.hash().eq(&tx_hash) {
-                        break
+                        break;
                     }
 
                     configure_tx_env(&mut env, &tx);
@@ -214,7 +214,7 @@ impl RunArgs {
 
             if let Some(addr) = iter.next() {
                 if let (Ok(address), Some(label)) = (Address::from_str(addr), iter.next()) {
-                    return Some((address, label.to_string()))
+                    return Some((address, label.to_string()));
                 }
             }
             None
@@ -223,7 +223,7 @@ impl RunArgs {
         let mut decoder = CallTraceDecoderBuilder::new().with_labels(labeled_addresses).build();
 
         decoder.add_signature_identifier(SignaturesIdentifier::new(
-            Config::orbitalis_cache_dir(),
+            Config::foxar_cache_dir(),
             config.offline,
         )?);
 
@@ -275,7 +275,7 @@ async fn print_traces(
     verbose: bool,
 ) -> eyre::Result<()> {
     if result.traces.is_empty() {
-        eyre::bail!("Unexpected error: No traces. Please report this as a bug: https://github.com/orbitalis-rs/orbitalis/issues/new?assignees=&labels=T-bug&template=BUG-FORM.yml");
+        eyre::bail!("Unexpected error: No traces. Please report this as a bug: https://github.com/bchainhub/foxar/issues/new?assignees=&labels=T-bug&template=BUG-FORM.yml");
     }
 
     println!("Traces:");

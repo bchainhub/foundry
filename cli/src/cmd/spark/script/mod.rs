@@ -17,12 +17,12 @@ use corebc::{
 };
 use dialoguer::Confirm;
 use eyre::{ContextCompat, WrapErr};
-use orbitalis_common::{
+use foxar_common::{
     abi::format_token,
     evm::{Breakpoints, EvmArgs},
     shell, ContractsByArtifact, RpcUrl, CONTRACT_MAX_SIZE, SELECTOR_LEN,
 };
-use orbitalis_config::{figment, Config};
+use foxar_config::{figment, Config};
 use probe::{
     decode,
     executor::inspector::{
@@ -52,8 +52,8 @@ use yansi::Paint;
 
 mod build;
 use build::{filter_sources_and_artifacts, BuildOutput};
-use orbitalis_common::{abi::encode_args, contracts::get_contract_name, errors::UnlinkedByteCode};
-use orbitalis_config::figment::{
+use foxar_common::{abi::encode_args, contracts::get_contract_name, errors::UnlinkedByteCode};
+use foxar_config::figment::{
     value::{Dict, Map},
     Metadata, Profile, Provider,
 };
@@ -78,7 +78,7 @@ use crate::cmd::retry::RetryArgs;
 pub use transaction::TransactionWithMetadata;
 
 // Loads project's figment and merges the build cli arguments into it
-orbitalis_config::merge_impl_figment_convert!(ScriptArgs, opts, evm_opts);
+foxar_config::merge_impl_figment_convert!(ScriptArgs, opts, evm_opts);
 
 /// CLI arguments for `spark script`.
 #[derive(Debug, Clone, Parser, Default)]
@@ -102,7 +102,7 @@ pub struct ScriptArgs {
         long,
         short,
         default_value = "run()",
-        value_parser = orbitalis_common::clap_helpers::strip_0x_prefix
+        value_parser = foxar_common::clap_helpers::strip_0x_prefix
     )]
     pub sig: String,
 
@@ -214,7 +214,7 @@ impl ScriptArgs {
             .build();
 
         decoder.add_signature_identifier(SignaturesIdentifier::new(
-            Config::orbitalis_cache_dir(),
+            Config::foxar_cache_dir(),
             script_config.config.offline,
         )?);
 
@@ -279,7 +279,7 @@ impl ScriptArgs {
 
         if !result.success || verbosity > 3 {
             if result.traces.is_empty() {
-                eyre::bail!("Unexpected error: No traces despite verbosity level. Please report this as a bug: https://github.com/orbitalis-rs/orbitalis/issues/new?assignees=&labels=T-bug&template=BUG-FORM.yml");
+                eyre::bail!("Unexpected error: No traces despite verbosity level. Please report this as a bug: https://github.com/bchainhub/foxar/issues/new?assignees=&labels=T-bug&template=BUG-FORM.yml");
             }
 
             shell::println("Traces:")?;
@@ -388,7 +388,7 @@ impl ScriptArgs {
                                 if let Some(ns) = new_sender {
                                     if sender != ns {
                                         shell::println("You have more than one deployer who could predeploy libraries. Using `--sender` instead.")?;
-                                        return Ok(None)
+                                        return Ok(None);
                                     }
                                 } else if sender != evm_opts.sender {
                                     new_sender = Some(sender);
@@ -520,13 +520,13 @@ impl ScriptArgs {
         // From artifacts
         for (artifact, bytecode) in known_contracts.iter() {
             if bytecode.bytecode.object.is_unlinked() {
-                return Err(UnlinkedByteCode::Bytecode(artifact.identifier()).into())
+                return Err(UnlinkedByteCode::Bytecode(artifact.identifier()).into());
             }
             let init_code = bytecode.bytecode.object.as_bytes().unwrap();
             // Ignore abstract contracts
             if let Some(ref deployed_code) = bytecode.deployed_bytecode.bytecode {
                 if deployed_code.object.is_unlinked() {
-                    return Err(UnlinkedByteCode::DeployedBytecode(artifact.identifier()).into())
+                    return Err(UnlinkedByteCode::DeployedBytecode(artifact.identifier()).into());
                 }
                 let deployed_code = deployed_code.object.as_bytes().unwrap();
                 bytecodes.push((artifact.name.clone(), init_code, deployed_code));
@@ -551,7 +551,7 @@ impl ScriptArgs {
                         bytecodes.push((format!("Unknown{unknown_c}"), init_code, deployed_code));
                         unknown_c += 1;
                     }
-                    continue
+                    continue;
                 }
             }
             // Both should be raw and not decoded since it's just bytecode
@@ -576,7 +576,7 @@ impl ScriptArgs {
                     offset = 32;
                 }
             } else if to.is_some() {
-                continue
+                continue;
             }
 
             // Find artifact with a deployment code same as the data.
@@ -597,8 +597,8 @@ impl ScriptArgs {
             }
         }
 
-        if prompt_user &&
-            !Confirm::new().with_prompt("Do you wish to continue?".to_string()).interact()?
+        if prompt_user
+            && !Confirm::new().with_prompt("Do you wish to continue?".to_string()).interact()?
         {
             eyre::bail!("User canceled the script.");
         }
@@ -706,14 +706,14 @@ impl ScriptConfig {
 mod tests {
     use super::*;
     use crate::cmd::LoadConfig;
-    use orbitalis_cli_test_utils::tempfile::tempdir;
-    use orbitalis_config::UnresolvedEnvVarError;
+    use foxar_cli_test_utils::tempfile::tempdir;
+    use foxar_config::UnresolvedEnvVarError;
     use std::fs;
 
     #[test]
     fn can_parse_sig() {
         let args: ScriptArgs = ScriptArgs::parse_from([
-            "orbitalis-cli",
+            "foxar-cli",
             "Contract.sol",
             "--sig",
             "0x522bb70400000000000000000000cb58e5dd06163a480c22d540ec763325a0b5860fb56c",
@@ -727,7 +727,7 @@ mod tests {
     #[test]
     fn can_parse_unlocked() {
         let args: ScriptArgs = ScriptArgs::parse_from([
-            "orbitalis-cli",
+            "foxar-cli",
             "Contract.sol",
             "--sender",
             "cb914e59b44847b379578588920ca78fbf26c0b4956c",
@@ -737,7 +737,7 @@ mod tests {
 
         let key = U256::zero();
         let args = ScriptArgs::try_parse_from([
-            "orbitalis-cli",
+            "foxar-cli",
             "Contract.sol",
             "--sender",
             "cb914e59b44847b379578588920ca78fbf26c0b4956c",
@@ -751,7 +751,7 @@ mod tests {
     #[test]
     fn can_merge_script_config() {
         let args: ScriptArgs =
-            ScriptArgs::parse_from(["orbitalis-cli", "Contract.sol", "--cvm-version", "nucleus"]);
+            ScriptArgs::parse_from(["foxar-cli", "Contract.sol", "--cvm-version", "nucleus"]);
         let config = args.load_config();
         assert_eq!(config.cvm_version.to_string(), "nucleus".to_string());
     }
@@ -759,7 +759,7 @@ mod tests {
     #[test]
     fn can_parse_verifier_url() {
         let args: ScriptArgs = ScriptArgs::parse_from([
-            "orbitalis-cli",
+            "foxar-cli",
             "script",
             "script/Test.s.sol:TestScript",
             "--fork-url",
@@ -791,7 +791,7 @@ mod tests {
         let toml_file = root.join(Config::FILE_NAME);
         fs::write(toml_file, config).unwrap();
         let args: ScriptArgs = ScriptArgs::parse_from([
-            "orbitalis-cli",
+            "foxar-cli",
             "DeployV1",
             "--rpc-url",
             "devin",

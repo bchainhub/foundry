@@ -2,7 +2,7 @@
 use proptest::test_runner::Reason;
 
 /// Magic return code for the `assume` cheatcode
-pub const ASSUME_MAGIC_RETURN_CODE: &[u8] = b"ORBITALIS::ASSUME";
+pub const ASSUME_MAGIC_RETURN_CODE: &[u8] = b"FOXAR::ASSUME";
 
 /// Possible errors when running fuzz tests
 #[derive(Debug, thiserror::Error)]

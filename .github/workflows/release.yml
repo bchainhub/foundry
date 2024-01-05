@@ -141,18 +141,18 @@ jobs:
                   VERSION_NAME: ${{ (env.IS_NIGHTLY && 'nightly') || needs.prepare.outputs.tag_name }}
               run: |
                   if [ "$PLATFORM_NAME" == "linux" ]; then
-                    tar -czvf "orbitalis_${VERSION_NAME}_${PLATFORM_NAME}_${ARCH}.tar.gz" -C ./target/${TARGET}/release spark probe shuttle pilot
-                    echo "::set-output name=file_name::orbitalis_${VERSION_NAME}_${PLATFORM_NAME}_${ARCH}.tar.gz"
+                    tar -czvf "foxar_${VERSION_NAME}_${PLATFORM_NAME}_${ARCH}.tar.gz" -C ./target/${TARGET}/release spark probe shuttle pilot
+                    echo "::set-output name=file_name::foxar_${VERSION_NAME}_${PLATFORM_NAME}_${ARCH}.tar.gz"
                   elif [ "$PLATFORM_NAME" == "darwin" ]; then
                     # We need to use gtar here otherwise the archive is corrupt.
                     # See: https://github.com/actions/virtual-environments/issues/2619
-                    gtar -czvf "orbitalis_${VERSION_NAME}_${PLATFORM_NAME}_${ARCH}.tar.gz" -C ./target/${TARGET}/release spark probe shuttle pilot
-                    echo "::set-output name=file_name::orbitalis_${VERSION_NAME}_${PLATFORM_NAME}_${ARCH}.tar.gz"
+                    gtar -czvf "foxar_${VERSION_NAME}_${PLATFORM_NAME}_${ARCH}.tar.gz" -C ./target/${TARGET}/release spark probe shuttle pilot
+                    echo "::set-output name=file_name::foxar_${VERSION_NAME}_${PLATFORM_NAME}_${ARCH}.tar.gz"
                   else
                     cd ./target/${TARGET}/release
-                    7z a -tzip "orbitalis_${VERSION_NAME}_${PLATFORM_NAME}_${ARCH}.zip" spark.exe probe.exe shuttle.exe pilot.exe
-                    mv "orbitalis_${VERSION_NAME}_${PLATFORM_NAME}_${ARCH}.zip" ../../../
-                    echo "::set-output name=file_name::orbitalis_${VERSION_NAME}_${PLATFORM_NAME}_${ARCH}.zip"
+                    7z a -tzip "foxar_${VERSION_NAME}_${PLATFORM_NAME}_${ARCH}.zip" spark.exe probe.exe shuttle.exe pilot.exe
+                    mv "foxar_${VERSION_NAME}_${PLATFORM_NAME}_${ARCH}.zip" ../../../
+                    echo "::set-output name=file_name::foxar_${VERSION_NAME}_${PLATFORM_NAME}_${ARCH}.zip"
                   fi
               shell: bash
 
@@ -173,8 +173,8 @@ jobs:
                   gzip probe.1
                   gzip shuttle.1
                   gzip pilot.1
-                  tar -czvf "orbitalis_man_${VERSION_NAME}.tar.gz" spark.1.gz probe.1.gz shuttle.1.gz pilot.1.gz
-                  echo "::set-output name=orbitalis_man::orbitalis_man_${VERSION_NAME}.tar.gz"
+                  tar -czvf "foxar_man_${VERSION_NAME}.tar.gz" spark.1.gz probe.1.gz shuttle.1.gz pilot.1.gz
+                  echo "::set-output name=foxar_man::foxar_man_${VERSION_NAME}.tar.gz"
               shell: bash
 
             # Creates the release for this specific version
@@ -187,10 +187,10 @@ jobs:
                   body: ${{ needs.prepare.outputs.changelog }}
                   files: |
                       ${{ steps.artifacts.outputs.file_name }}
-                      ${{ steps.man.outputs.orbitalis_man }}
+                      ${{ steps.man.outputs.foxar_man }}
 
             # If this is a nightly release, it also updates the release
-            # tagged `nightly` for compatibility with `orbitalisup`
+            # tagged `nightly` for compatibility with `foxarup`
             - name: Update nightly release
               if: ${{ env.IS_NIGHTLY }}
               uses: softprops/action-gh-release@v1
@@ -201,7 +201,7 @@ jobs:
                   body: ${{ needs.prepare.outputs.changelog }}
                   files: |
                       ${{ steps.artifacts.outputs.file_name }}
-                      ${{ steps.man.outputs.orbitalis_man }}
+                      ${{ steps.man.outputs.foxar_man }}
 
             # If any of the steps fail, this will create a high-priority issue
             # to signal so.

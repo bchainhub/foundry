@@ -74,7 +74,7 @@ impl TomlFile {
             return Err(InsertProfileError {
                 message: format!("Expected [{profile_str}] to be a Table"),
                 value,
-            })
+            });
         }
         // get or create the profile section
         let profile_map = if let Some(map) = self.get_mut(Config::PROFILE_SECTION) {
@@ -94,7 +94,7 @@ impl TomlFile {
             return Err(InsertProfileError {
                 message: format!("Expected [{}] to be a Table", Config::PROFILE_SECTION),
                 value,
-            })
+            });
         };
         // check the profile map for structure and existing keys
         if let Some(profile) = profile_map.get(profile_str) {
@@ -107,7 +107,7 @@ impl TomlFile {
                             profile_str
                         ),
                         value,
-                    })
+                    });
                 }
             } else {
                 return Err(InsertProfileError {
@@ -117,7 +117,7 @@ impl TomlFile {
                         profile_str
                     ),
                     value,
-                })
+                });
             }
         }
         // insert the profile
@@ -156,18 +156,18 @@ fn fix_toml_non_strict_profiles(
     results
 }
 
-/// Fix orbitalis.toml files. Making sure any implicit profile `[name]` becomes
+/// Fix foxar.toml files. Making sure any implicit profile `[name]` becomes
 /// `[profile.name]`. Return any warnings
 pub fn fix_tomls() -> Vec<Warning> {
     let mut warnings = vec![];
 
     let tomls = {
         let mut tomls = vec![];
-        if let Some(global_toml) = Config::orbitalis_dir_toml().filter(|p| p.exists()) {
+        if let Some(global_toml) = Config::foxar_dir_toml().filter(|p| p.exists()) {
             tomls.push(global_toml);
         }
         let local_toml = PathBuf::from(
-            Env::var("ORBITALIS_CONFIG").unwrap_or_else(|| Config::FILE_NAME.to_string()),
+            Env::var("FOXAR_CONFIG").unwrap_or_else(|| Config::FILE_NAME.to_string()),
         );
         if local_toml.exists() {
             tomls.push(local_toml);
@@ -182,7 +182,7 @@ pub fn fix_tomls() -> Vec<Warning> {
             Ok(toml_file) => toml_file,
             Err(err) => {
                 warnings.push(Warning::CouldNotReadToml { path: toml, err: err.to_string() });
-                continue
+                continue;
             }
         };
 
@@ -227,7 +227,7 @@ mod tests {
                     // setup home directory,
                     // **Note** this only has an effect on unix, as [`dirs_next::home_dir()`] on windows uses `FOLDERID_Profile`
                     jail.set_env("HOME", jail.directory().display().to_string());
-                    std::fs::create_dir(jail.directory().join(".orbitalis")).unwrap();
+                    std::fs::create_dir(jail.directory().join(".foxar")).unwrap();
 
                     // define function type to allow implicit params / return
                     let f: Box<dyn FnOnce(&mut Jail) -> Result<(), figment::Error>> = Box::new($fun);
@@ -241,7 +241,7 @@ mod tests {
 
     fix_test!(test_implicit_profile_name_changed, |jail| {
         jail.create_file(
-            "orbitalis.toml",
+            "foxar.toml",
             r#"
                 [default]
                 src = "src"
@@ -253,7 +253,7 @@ mod tests {
         )?;
         fix_tomls();
         assert_eq!(
-            fs::read_to_string("orbitalis.toml").unwrap(),
+            fs::read_to_string("foxar.toml").unwrap(),
             r#"
                 [profile.default]
                 src = "src"
@@ -268,7 +268,7 @@ mod tests {
 
     fix_test!(test_leave_standalone_sections_alone, |jail| {
         jail.create_file(
-            "orbitalis.toml",
+            "foxar.toml",
             r#"
                 [default]
                 src = "src"
@@ -282,7 +282,7 @@ mod tests {
         )?;
         fix_tomls();
         assert_eq!(
-            fs::read_to_string("orbitalis.toml").unwrap(),
+            fs::read_to_string("foxar.toml").unwrap(),
             r#"
                 [profile.default]
                 src = "src"
@@ -303,14 +303,14 @@ mod tests {
         test_global_toml_is_edited,
         |jail| {
             jail.create_file(
-                "orbitalis.toml",
+                "foxar.toml",
                 r#"
                 [other]
                 src = "other-src"
             "#,
             )?;
             jail.create_file(
-                ".orbitalis/orbitalis.toml",
+                ".foxar/foxar.toml",
                 r#"
                 [default]
                 src = "src"
@@ -318,14 +318,14 @@ mod tests {
             )?;
             fix_tomls();
             assert_eq!(
-                fs::read_to_string("orbitalis.toml").unwrap(),
+                fs::read_to_string("foxar.toml").unwrap(),
                 r#"
                 [profile.other]
                 src = "other-src"
             "#
             );
             assert_eq!(
-                fs::read_to_string(".orbitalis/orbitalis.toml").unwrap(),
+                fs::read_to_string(".foxar/foxar.toml").unwrap(),
                 r#"
                 [profile.default]
                 src = "src"

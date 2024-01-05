@@ -1,9 +1,9 @@
 [package]
-name = "orbitalis-macros-impl"
+name = "foxar-macros-impl"
 version = "0.0.0"
 edition = "2021"
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/orbitalis-rs/orbitalis"
+repository = "https://github.com/bchainhub/foxar"
 publish = false
 
 [lib]

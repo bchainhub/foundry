@@ -6,13 +6,13 @@ use corebc::{
     types::{Address, Network},
     utils::sha3,
 };
-use orbitalis_cli::{
+use foxar_cli::{
     cmd::Cmd,
     handler,
     opts::probe::{Opts, Subcommands, ToBaseArgs},
     prompt, stdin, utils,
 };
-use orbitalis_common::{
+use foxar_common::{
     abi::{format_tokens, get_event},
     fs,
     selectors::{
@@ -20,7 +20,7 @@ use orbitalis_common::{
         parse_signatures, pretty_calldata, ParsedSignatures, SelectorImportData,
     },
 };
-use orbitalis_config::Config;
+use foxar_config::Config;
 use probe::{Cast, SimpleCast};
 use rustc_hex::ToHex;
 use std::time::Instant;

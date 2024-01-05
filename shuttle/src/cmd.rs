@@ -7,8 +7,8 @@ use crate::{
 use clap::Parser;
 use core::fmt;
 use corebc::{core::types::Network, utils::WEI_IN_CORE};
+use foxar_config::Config;
 use futures::FutureExt;
-use orbitalis_config::Config;
 use shuttle_server::ServerConfig;
 use std::{
     future::Future,
@@ -489,7 +489,7 @@ impl PeriodicStateDumper {
         trace!(path=?dump_state, "Dumping state on shutdown");
         match api.serialized_state().await {
             Ok(state) => {
-                if let Err(err) = orbitalis_common::fs::write_json_file(&dump_state, &state) {
+                if let Err(err) = foxar_common::fs::write_json_file(&dump_state, &state) {
                     error!(?err, "Failed to dump state");
                 } else {
                     trace!(path=?dump_state, "Dumped state on shutdown");
@@ -509,7 +509,7 @@ impl Future for PeriodicStateDumper {
     fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {
         let this = self.get_mut();
         if this.dump_state.is_none() {
-            return Poll::Pending
+            return Poll::Pending;
         }
 
         loop {
@@ -520,7 +520,7 @@ impl Future for PeriodicStateDumper {
                     }
                     Poll::Pending => {
                         this.in_progress_dump = Some(flush);
-                        return Poll::Pending
+                        return Poll::Pending;
                     }
                 }
             }
@@ -530,7 +530,7 @@ impl Future for PeriodicStateDumper {
                 let path = this.dump_state.clone().expect("exists; see above");
                 this.in_progress_dump = Some(Box::pin(PeriodicStateDumper::dump_state(api, path)));
             } else {
-                break
+                break;
             }
         }
 
@@ -555,7 +555,7 @@ impl StateFile {
         }
         let mut state = Self { path, state: None };
         if !state.path.exists() {
-            return Ok(state)
+            return Ok(state);
         }
 
         state.state = Some(SerializableState::load(&state.path).map_err(|err| err.to_string())?);
@@ -590,14 +590,14 @@ impl FromStr for ForkUrl {
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         if let Some((url, block)) = s.rsplit_once('@') {
             if block == "latest" {
-                return Ok(ForkUrl { url: url.to_string(), block: None })
+                return Ok(ForkUrl { url: url.to_string(), block: None });
             }
             // this will prevent false positives for auths `user:password@example.com`
             if !block.is_empty() && !block.contains(':') && !block.contains('.') {
                 let block: u64 = block
                     .parse()
                     .map_err(|_| format!("Failed to parse block number: `{block}`"))?;
-                return Ok(ForkUrl { url: url.to_string(), block: Some(block) })
+                return Ok(ForkUrl { url: url.to_string(), block: Some(block) });
             }
         }
         Ok(ForkUrl { url: s.to_string(), block: None })

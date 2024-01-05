@@ -8,12 +8,12 @@ use crate::{
 };
 use clap::Parser;
 use corebc::types::U256;
-use orbitalis_common::{
+use foxar_common::{
     compile::{self, ProjectCompiler},
     evm::EvmArgs,
     get_contract_name, get_file_name,
 };
-use orbitalis_config::{figment, get_available_profiles, Config};
+use foxar_config::{figment, get_available_profiles, Config};
 use probe::fuzz::CounterExample;
 use regex::Regex;
 use spark::{
@@ -34,15 +34,15 @@ use yansi::Paint;
 mod filter;
 use crate::cmd::spark::test::filter::ProjectPathsAwareFilter;
 pub use filter::FilterArgs;
-use orbitalis_common::shell;
-use orbitalis_config::figment::{
+use foxar_common::shell;
+use foxar_config::figment::{
     value::{Dict, Map},
     Metadata, Profile, Provider,
 };
-use orbitalis_evm::utils::evm_spec;
+use foxar_evm::utils::evm_spec;
 
 // Loads project's figment and merges the build cli arguments into it
-orbitalis_config::merge_impl_figment_convert!(TestArgs, opts, evm_opts);
+foxar_config::merge_impl_figment_convert!(TestArgs, opts, evm_opts);
 
 /// CLI arguments for `spark test`.
 #[derive(Debug, Clone, Parser)]
@@ -106,7 +106,7 @@ pub struct TestArgs {
     #[clap(long, value_parser = utils::parse_u256)]
     pub fuzz_seed: Option<U256>,
 
-    #[clap(long, env = "ORBITALIS_FUZZ_RUNS", value_name = "RUNS")]
+    #[clap(long, env = "FOXAR_FUZZ_RUNS", value_name = "RUNS")]
     pub fuzz_runs: Option<u64>,
 }
 
@@ -376,7 +376,7 @@ impl TestOutcome {
     pub fn ensure_ok(&self) -> eyre::Result<()> {
         let failures = self.failures().count();
         if self.allow_failure || failures == 0 {
-            return Ok(())
+            return Ok(());
         }
 
         if !shell::verbosity().is_normal() {
@@ -389,7 +389,7 @@ impl TestOutcome {
         for (suite_name, suite) in self.results.iter() {
             let failures = suite.failures().count();
             if failures == 0 {
-                continue
+                continue;
             }
 
             let term = if failures > 1 { "tests" } else { "test" };
@@ -555,8 +555,7 @@ async fn test(
 
         let mut results: BTreeMap<String, SuiteResult> = BTreeMap::new();
         let mut gas_report = GasReport::new(config.energy_reports, config.energy_reports_ignore);
-        let sig_identifier =
-            SignaturesIdentifier::new(Config::orbitalis_cache_dir(), config.offline)?;
+        let sig_identifier = SignaturesIdentifier::new(Config::foxar_cache_dir(), config.offline)?;
 
         let mut total_passed = 0;
         let mut total_failed = 0;
@@ -579,7 +578,7 @@ async fn test(
 
                 // If the test failed, we want to stop processing the rest of the tests
                 if fail_fast && result.status == TestStatus::Failure {
-                    break 'outer
+                    break 'outer;
                 }
 
                 // We only display logs at level 2 and above

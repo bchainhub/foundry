@@ -98,13 +98,13 @@ impl SignEthClient {
     fn on_reqwest_err(&self, err: &reqwest::Error) {
         fn is_connectivity_err(err: &reqwest::Error) -> bool {
             if err.is_timeout() || err.is_connect() {
-                return true
+                return true;
             }
             // Error HTTP codes (5xx) are considered connectivity issues and will prompt retry
             if let Some(status) = err.status() {
                 let code = status.as_u16();
                 if (500..600).contains(&code) {
-                    return true
+                    return true;
                 }
             }
             false
@@ -164,7 +164,6 @@ impl SignEthClient {
         }
 
         // using samczsun signature database over 4byte
-        // see https://github.com/orbitalis-rs/orbitalis/issues/1672
         let url = match selector_type {
             SelectorType::Function => format!("{SELECTOR_DATABASE_URL}?function={selector}"),
             SelectorType::Event => format!("{SELECTOR_DATABASE_URL}?event={selector}"),
@@ -242,8 +241,8 @@ impl SignEthClient {
     /// Pretty print calldata and if available, fetch possible function signatures
     ///
     /// ```no_run
-    /// 
-    /// use orbitalis_common::selectors::SignEthClient;
+    ///
+    /// use foxar_common::selectors::SignEthClient;
     ///
     /// # async fn foo() -> eyre::Result<()> {
     ///   let pretty_data = SignEthClient::new()?.pretty_calldata("0x70a08231000000000000000000000000d0074f4e6490ae3f888d1d4f7e3e43326bd3f0f5".to_string(), false).await?;
@@ -378,8 +377,8 @@ pub async fn decode_event_topic(topic: &str) -> eyre::Result<Vec<String>> {
 /// Pretty print calldata and if available, fetch possible function signatures
 ///
 /// ```no_run
-/// 
-/// use orbitalis_common::selectors::pretty_calldata;
+///
+/// use foxar_common::selectors::pretty_calldata;
 ///
 /// # async fn foo() -> eyre::Result<()> {
 ///   let pretty_data = pretty_calldata("0x70a08231000000000000000000000000d0074f4e6490ae3f888d1d4f7e3e43326bd3f0f5".to_string(), false).await?;

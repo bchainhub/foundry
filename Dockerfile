@@ -12,10 +12,10 @@ RUN apk add clang lld curl build-base linux-headers git \
 
 RUN [[ "$TARGETARCH" = "arm64" ]] && echo "export CFLAGS=-mno-outline-atomics" >> $HOME/.profile || true
 
-WORKDIR /opt/orbitalis
+WORKDIR /opt/foxar
 COPY . .
 
-RUN --mount=type=cache,target=/root/.cargo/registry --mount=type=cache,target=/root/.cargo/git --mount=type=cache,target=/opt/orbitalis/target \
+RUN --mount=type=cache,target=/root/.cargo/registry --mount=type=cache,target=/root/.cargo/git --mount=type=cache,target=/opt/foxar/target \
     source $HOME/.profile && cargo build --release \
     && mkdir out \
     && mv target/release/spark out/spark \
@@ -27,26 +27,26 @@ RUN --mount=type=cache,target=/root/.cargo/registry --mount=type=cache,target=/r
     && strip out/pilot \
     && strip out/shuttle;
 
-FROM docker.io/frolvlad/alpine-glibc:alpine-3.16_glibc-2.34 as orbitalis-client
+FROM docker.io/frolvlad/alpine-glibc:alpine-3.16_glibc-2.34 as foxar-client
 
 RUN apk add --no-cache linux-headers git
 
-COPY --from=build-environment /opt/orbitalis/out/spark /usr/local/bin/spark
-COPY --from=build-environment /opt/orbitalis/out/probe /usr/local/bin/probe
-COPY --from=build-environment /opt/orbitalis/out/shuttle /usr/local/bin/shuttle
-COPY --from=build-environment /opt/orbitalis/out/pilot /usr/local/bin/pilot
+COPY --from=build-environment /opt/foxar/out/spark /usr/local/bin/spark
+COPY --from=build-environment /opt/foxar/out/probe /usr/local/bin/probe
+COPY --from=build-environment /opt/foxar/out/shuttle /usr/local/bin/shuttle
+COPY --from=build-environment /opt/foxar/out/pilot /usr/local/bin/pilot
 
-RUN adduser -Du 1000 orbitalis
+RUN adduser -Du 1000 foxar
 
 ENTRYPOINT ["/bin/sh", "-c"]
 
 
 LABEL org.label-schema.build-date=$BUILD_DATE \
-    org.label-schema.name="Orbitalis" \
-    org.label-schema.description="Orbitalis" \
-    org.label-schema.url="https://getorbitalis.sh" \
+    org.label-schema.name="Foxar" \
+    org.label-schema.description="Foxar" \
+    org.label-schema.url="https://getfoxar.sh" \
     org.label-schema.vcs-ref=$VCS_REF \
-    org.label-schema.vcs-url="https://github.com/orbitalis-rs/orbitalis.git" \
-    org.label-schema.vendor="Orbitalis-rs" \
+    org.label-schema.vcs-url="https://github.com/bchainhub/foxar.git" \
+    org.label-schema.vendor="Foxar-rs" \
     org.label-schema.version=$VERSION \
     org.label-schema.schema-version="1.0"

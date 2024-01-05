@@ -8,15 +8,15 @@ contract EnvTest is DSTest {
     Cheats constant cheats = Cheats(HEVM_ADDRESS);
 
     function testSetEnv() public {
-        string memory key = "_orbitalisCheatcodeSetEnvTestKey";
-        string memory val = "_orbitalisCheatcodeSetEnvTestVal";
+        string memory key = "_foxarCheatcodeSetEnvTestKey";
+        string memory val = "_foxarCheatcodeSetEnvTestVal";
         cheats.setEnv(key, val);
     }
 
     uint256 constant numEnvBoolTests = 4;
 
     function testEnvBool() public {
-        string memory key = "_orbitalisCheatcodeEnvBoolTestKey";
+        string memory key = "_foxarCheatcodeEnvBoolTestKey";
         string[numEnvBoolTests] memory values = [
             "true",
             "false",
@@ -34,7 +34,7 @@ contract EnvTest is DSTest {
     uint256 constant numEnvUintTests = 6;
 
     function testEnvUint() public {
-        string memory key = "_orbitalisCheatcodeEnvUintTestKey";
+        string memory key = "_foxarCheatcodeEnvUintTestKey";
         string[numEnvUintTests] memory values = [
             "0",
             "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -61,7 +61,7 @@ contract EnvTest is DSTest {
     uint256 constant numEnvIntTests = 4;
 
     function testEnvInt() public {
-        string memory key = "_orbitalisCheatcodeEnvIntTestKey";
+        string memory key = "_foxarCheatcodeEnvIntTestKey";
         string[numEnvIntTests] memory values = [
             "-57896044618658097711785492504343953926634992332820282019728792003956564819968",
             "57896044618658097711785492504343953926634992332820282019728792003956564819967",
@@ -84,7 +84,7 @@ contract EnvTest is DSTest {
     uint256 constant numEnvAddressTests = 2;
 
     function testEnvAddress() public {
-        string memory key = "_orbitalisCheatcodeEnvAddressTestKey";
+        string memory key = "_foxarCheatcodeEnvAddressTestKey";
         string[numEnvAddressTests] memory values = [
             "0xcb69fc06a12b7a6f30e2a3c16a3b5d502cd71c20f2f8",
             "0xcb540000000000000000000000000000000000000000"
@@ -103,7 +103,7 @@ contract EnvTest is DSTest {
     uint256 constant numEnvBytes32Tests = 2;
 
     function testEnvBytes32() public {
-        string memory key = "_orbitalisCheatcodeEnvBytes32TestKey";
+        string memory key = "_foxarCheatcodeEnvBytes32TestKey";
         string[numEnvBytes32Tests] memory values = [
             "0xcb69fc06a12b7a6f30e2a3c16a3b5d502cd71c20f2f8",
             "0x00"
@@ -126,7 +126,7 @@ contract EnvTest is DSTest {
     uint256 constant numEnvStringTests = 2;
 
     function testEnvString() public {
-        string memory key = "_orbitalisCheatcodeEnvStringTestKey";
+        string memory key = "_foxarCheatcodeEnvStringTestKey";
         string[numEnvStringTests] memory values = [
             "hello, world!",
             "0xcb69fc06a12b7a6f30e2a3c16a3b5d502cd71c20f2f8"
@@ -145,7 +145,7 @@ contract EnvTest is DSTest {
     uint256 constant numEnvBytesTests = 2;
 
     function testEnvBytes() public {
-        string memory key = "_orbitalisCheatcodeEnvBytesTestKey";
+        string memory key = "_foxarCheatcodeEnvBytesTestKey";
         string[numEnvBytesTests] memory values = [
             "0xcb69fc06a12b7a6f30e2a3c16a3b5d502cd71c20f2f8",
             "0x00"
@@ -165,7 +165,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvBoolArr() public {
-        string memory key = "_orbitalisCheatcodeEnvBoolArrTestKey";
+        string memory key = "_foxarCheatcodeEnvBoolArrTestKey";
         string memory value = "true, false, True, False";
         bool[4] memory expected = [true, false, true, false];
 
@@ -180,7 +180,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvUintArr() public {
-        string memory key = "_orbitalisCheatcodeEnvUintArrTestKey";
+        string memory key = "_foxarCheatcodeEnvUintArrTestKey";
         string memory value = "0,"
         "115792089237316195423570985008687907853269984665640564039457584007913129639935,"
         "0x0000000000000000000000000000000000000000000000000000000000000000,"
@@ -203,7 +203,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvIntArr() public {
-        string memory key = "_orbitalisCheatcodeEnvIntArrTestKey";
+        string memory key = "_foxarCheatcodeEnvIntArrTestKey";
         string memory value = "-57896044618658097711785492504343953926634992332820282019728792003956564819968,"
         "57896044618658097711785492504343953926634992332820282019728792003956564819967,"
         "-0x8000000000000000000000000000000000000000000000000000000000000000,"
@@ -226,7 +226,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvAddressArr() public {
-        string memory key = "_orbitalisCheatcodeEnvAddressArrTestKey";
+        string memory key = "_foxarCheatcodeEnvAddressArrTestKey";
         string memory value = "0xcb69fc06a12b7a6f30e2a3c16a3b5d502cd71c20f2f8,"
         "0xcb540000000000000000000000000000000000000000";
         address[2] memory expected = [
@@ -245,7 +245,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvBytes32Arr() public {
-        string memory key = "_orbitalisCheatcodeEnvBytes32ArrTestKey";
+        string memory key = "_foxarCheatcodeEnvBytes32ArrTestKey";
         string memory value = "0xcb69fc06a12b7a6f30e2a3c16a3b5d502cd71c20f2f8,"
         "0x00";
         bytes32[2] memory expected = [
@@ -268,7 +268,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvStringArr() public {
-        string memory key = "_orbitalisCheatcodeEnvStringArrTestKey";
+        string memory key = "_foxarCheatcodeEnvStringArrTestKey";
         string memory value = "hello, world!|"
         "0xcb69fc06a12b7a6f30e2a3c16a3b5d502cd71c20f2f8";
         string[2] memory expected = [
@@ -289,7 +289,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvBytesArr() public {
-        string memory key = "_orbitalisCheatcodeEnvBytesArrTestKey";
+        string memory key = "_foxarCheatcodeEnvBytesArrTestKey";
         string memory value = "0xcb69fc06a12b7a6f30e2a3c16a3b5d502cd71c20f2f8,"
         "0x00";
         bytes[] memory expected = new bytes[](numEnvBytesTests);
@@ -309,7 +309,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvBoolEmptyArr() public {
-        string memory key = "_orbitalisCheatcodeEnvBoolEmptyArrTestKey";
+        string memory key = "_foxarCheatcodeEnvBoolEmptyArrTestKey";
         string memory value = "";
         bool[] memory expected = new bool[](0);
 
@@ -324,7 +324,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvUintEmptyArr() public {
-        string memory key = "_orbitalisCheatcodeEnvUintEmptyArrTestKey";
+        string memory key = "_foxarCheatcodeEnvUintEmptyArrTestKey";
         string memory value = "";
         uint256[] memory expected = new uint256[](0);
 
@@ -339,7 +339,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvIntEmptyArr() public {
-        string memory key = "_orbitalisCheatcodeEnvIntEmptyArrTestKey";
+        string memory key = "_foxarCheatcodeEnvIntEmptyArrTestKey";
         string memory value = "";
         int256[] memory expected = new int256[](0);
 
@@ -354,7 +354,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvAddressEmptyArr() public {
-        string memory key = "_orbitalisCheatcodeEnvAddressEmptyArrTestKey";
+        string memory key = "_foxarCheatcodeEnvAddressEmptyArrTestKey";
         string memory value = "";
         address[] memory expected = new address[](0);
 
@@ -369,7 +369,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvBytes32EmptyArr() public {
-        string memory key = "_orbitalisCheatcodeEnvBytes32EmptyArrTestKey";
+        string memory key = "_foxarCheatcodeEnvBytes32EmptyArrTestKey";
         string memory value = "";
         bytes32[] memory expected = new bytes32[](0);
 
@@ -384,7 +384,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvStringEmptyArr() public {
-        string memory key = "_orbitalisCheatcodeEnvStringEmptyArrTestKey";
+        string memory key = "_foxarCheatcodeEnvStringEmptyArrTestKey";
         string memory value = "";
         string[] memory expected = new string[](0);
 
@@ -401,7 +401,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvBytesEmptyArr() public {
-        string memory key = "_orbitalisCheatcodeEnvBytesEmptyArrTestKey";
+        string memory key = "_foxarCheatcodeEnvBytesEmptyArrTestKey";
         string memory value = "";
         bytes[] memory expected = new bytes[](0);
 
@@ -418,7 +418,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrBoolKey() public {
-        string memory key = "_orbitalisCheatcodeEnvOrBoolTestKey";
+        string memory key = "_foxarCheatcodeEnvOrBoolTestKey";
         string[numEnvBoolTests] memory values = [
             "true",
             "false",
@@ -434,7 +434,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrBoolDefault() public {
-        string memory key = "_orbitalisCheatcodeEnvOrBoolTestDefault";
+        string memory key = "_foxarCheatcodeEnvOrBoolTestDefault";
         bool[numEnvBoolTests] memory expected = [true, false, true, false];
         for (uint256 i = 0; i < numEnvBoolTests; ++i) {
             bool output = cheats.envOr(key, expected[i]);
@@ -443,7 +443,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrUintKey() public {
-        string memory key = "_orbitalisCheatcodeEnvOrUintTestKey";
+        string memory key = "_foxarCheatcodeEnvOrUintTestKey";
         string[numEnvUintTests] memory values = [
             "0",
             "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -468,7 +468,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrUintDefault() public {
-        string memory key = "_orbitalisCheatcodeEnvOrUintTestDefault";
+        string memory key = "_foxarCheatcodeEnvOrUintTestDefault";
         uint256[numEnvUintTests] memory expected = [
             type(uint256).min,
             type(uint256).max,
@@ -484,7 +484,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrIntKey() public {
-        string memory key = "_orbitalisCheatcodeEnvOrIntTestKey";
+        string memory key = "_foxarCheatcodeEnvOrIntTestKey";
         string[numEnvIntTests] memory values = [
             "-57896044618658097711785492504343953926634992332820282019728792003956564819968",
             "57896044618658097711785492504343953926634992332820282019728792003956564819967",
@@ -505,7 +505,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrIntDefault() public {
-        string memory key = "_orbitalisCheatcodeEnvOrIntTestDefault";
+        string memory key = "_foxarCheatcodeEnvOrIntTestDefault";
         int256[numEnvIntTests] memory expected = [
             type(int256).min,
             type(int256).max,
@@ -519,7 +519,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrAddressKey() public {
-        string memory key = "_orbitalisCheatcodeEnvOrAddressTestKey";
+        string memory key = "_foxarCheatcodeEnvOrAddressTestKey";
         string[numEnvAddressTests] memory values = [
             "0xcb69fc06a12b7a6f30e2a3c16a3b5d502cd71c20f2f8",
             "0xcb540000000000000000000000000000000000000000"
@@ -536,7 +536,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrAddressDefault() public {
-        string memory key = "_orbitalisCheatcodeEnvOrAddressTestDefault";
+        string memory key = "_foxarCheatcodeEnvOrAddressTestDefault";
         address[numEnvAddressTests] memory expected = [
             0xcb69fc06a12b7a6f30e2a3c16a3b5d502cd71c20f2f8,
             0xcb540000000000000000000000000000000000000000
@@ -548,7 +548,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrBytes32Key() public {
-        string memory key = "_orbitalisCheatcodeEnvOrBytes32TestKey";
+        string memory key = "_foxarCheatcodeEnvOrBytes32TestKey";
         string[numEnvBytes32Tests] memory values = [
             "0xcb69fc06a12b7a6f30e2a3c16a3b5d502cd71c20f2f8",
             "0x00"
@@ -569,7 +569,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrBytes32Default() public {
-        string memory key = "_orbitalisCheatcodeEnvOrBytes32TestDefault";
+        string memory key = "_foxarCheatcodeEnvOrBytes32TestDefault";
         bytes32[numEnvBytes32Tests] memory expected = [
             bytes32(
                 0xcb69fc06a12b7a6f30e2a3c16a3b5d502cd71c20f2f800000000000000000000
@@ -585,7 +585,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrStringKey() public {
-        string memory key = "_orbitalisCheatcodeEnvOrStringTestKey";
+        string memory key = "_foxarCheatcodeEnvOrStringTestKey";
         string[numEnvStringTests] memory values = [
             "hello, world!",
             "0xcb69fc06a12b7a6f30e2a3c16a3b5d502cd71c20f2f8"
@@ -602,7 +602,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrStringDefault() public {
-        string memory key = "_orbitalisCheatcodeEnvOrStringTestDefault";
+        string memory key = "_foxarCheatcodeEnvOrStringTestDefault";
         string[numEnvStringTests] memory expected = [
             "hello, world!",
             "0xcb69fc06a12b7a6f30e2a3c16a3b5d502cd71c20f2f8"
@@ -614,7 +614,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrBytesKey() public {
-        string memory key = "_orbitalisCheatcodeEnvOrBytesTestKey";
+        string memory key = "_foxarCheatcodeEnvOrBytesTestKey";
         string[numEnvBytesTests] memory values = [
             "0xcb69fc06a12b7a6f30e2a3c16a3b5d502cd71c20f2f8",
             "0x00"
@@ -634,7 +634,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrBytesDefault() public {
-        string memory key = "_orbitalisCheatcodeEnvOrBytesTestDefault";
+        string memory key = "_foxarCheatcodeEnvOrBytesTestDefault";
         bytes[] memory expected = new bytes[](numEnvBytesTests);
         expected[0] = hex"7109709ECfa91a80626fF3989D68f67F5b1DD12D";
         expected[1] = hex"00";
@@ -649,8 +649,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrBoolArrKey() public {
-        string
-            memory key = "_orbitalisCheatcodeEnvBoolWithDefaultBoolArrTestKey";
+        string memory key = "_foxarCheatcodeEnvBoolWithDefaultBoolArrTestKey";
         string memory value = "true, false, True, False";
         bool[4] memory expected = [true, false, true, false];
         bool[] memory defaultValues = new bool[](4);
@@ -671,7 +670,7 @@ contract EnvTest is DSTest {
 
     function testEnvOrBoolArrDefault() public {
         string
-            memory key = "_orbitalisCheatcodeEnvBoolWithDefaultBoolArrTestDefault";
+            memory key = "_foxarCheatcodeEnvBoolWithDefaultBoolArrTestDefault";
         string memory value = "true, false, True, False";
         bool[4] memory expected = [true, false, true, false];
         bool[] memory defaultValues = new bool[](4);
@@ -690,7 +689,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrUintArrKey() public {
-        string memory key = "_orbitalisCheatcodeEnvOrUintArrTestKey";
+        string memory key = "_foxarCheatcodeEnvOrUintArrTestKey";
         string memory value = "0,"
         "115792089237316195423570985008687907853269984665640564039457584007913129639935,"
         "0x0000000000000000000000000000000000000000000000000000000000000000,"
@@ -718,7 +717,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrUintArrDefault() public {
-        string memory key = "_orbitalisCheatcodeEnvOrUintArrTestDefault";
+        string memory key = "_foxarCheatcodeEnvOrUintArrTestDefault";
         string memory value = "0,"
         "115792089237316195423570985008687907853269984665640564039457584007913129639935,"
         "0x0000000000000000000000000000000000000000000000000000000000000000,"
@@ -745,7 +744,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrIntArrKey() public {
-        string memory key = "_orbitalisCheatcodeEnvOrIntArrTestKey";
+        string memory key = "_foxarCheatcodeEnvOrIntArrTestKey";
         string memory value = "-57896044618658097711785492504343953926634992332820282019728792003956564819968,"
         "57896044618658097711785492504343953926634992332820282019728792003956564819967,"
         "-0x8000000000000000000000000000000000000000000000000000000000000000,"
@@ -773,7 +772,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrIntArrDefault() public {
-        string memory key = "_orbitalisCheatcodeEnvOrIntArrTestDefault";
+        string memory key = "_foxarCheatcodeEnvOrIntArrTestDefault";
         string memory value = "-57896044618658097711785492504343953926634992332820282019728792003956564819968,"
         "57896044618658097711785492504343953926634992332820282019728792003956564819967,"
         "-0x8000000000000000000000000000000000000000000000000000000000000000,"
@@ -800,7 +799,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrAddressArrKey() public {
-        string memory key = "_orbitalisCheatcodeEnvOrAddressArrTestKey";
+        string memory key = "_foxarCheatcodeEnvOrAddressArrTestKey";
         string memory value = "0xcb69fc06a12b7a6f30e2a3c16a3b5d502cd71c20f2f8,"
         "0xcb540000000000000000000000000000000000000000";
         address[2] memory expected = [
@@ -822,7 +821,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrAddressArrDefault() public {
-        string memory key = "_orbitalisCheatcodeEnvOrAddressArrTestDefault";
+        string memory key = "_foxarCheatcodeEnvOrAddressArrTestDefault";
         string memory value = "0xcb69fc06a12b7a6f30e2a3c16a3b5d502cd71c20f2f8,"
         "0xcb540000000000000000000000000000000000000000";
         address[2] memory expected = [
@@ -843,7 +842,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrBytes32ArrKey() public {
-        string memory key = "_orbitalisCheatcodeEnvOrBytes32ArrTestKey";
+        string memory key = "_foxarCheatcodeEnvOrBytes32ArrTestKey";
         string memory value = "0xcb69fc06a12b7a6f30e2a3c16a3b5d502cd71c20f2f8,"
         "0x00";
         bytes32[2] memory expected = [
@@ -873,7 +872,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrBytes32ArrDefault() public {
-        string memory key = "_orbitalisCheatcodeEnvOrBytes32ArrTestDefault";
+        string memory key = "_foxarCheatcodeEnvOrBytes32ArrTestDefault";
         string memory value = "0xcb69fc06a12b7a6f30e2a3c16a3b5d502cd71c20f2f8,"
         "0x00";
         bytes32[2] memory expected = [
@@ -902,7 +901,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrStringArrKey() public {
-        string memory key = "_orbitalisCheatcodeEnvOrStringArrTestKey";
+        string memory key = "_foxarCheatcodeEnvOrStringArrTestKey";
         string memory value = "hello, world!|"
         "0xcb69fc06a12b7a6f30e2a3c16a3b5d502cd71c20f2f8";
         string[2] memory expected = [
@@ -926,7 +925,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrStringArrDefault() public {
-        string memory key = "_orbitalisCheatcodeEnvOrStringArrTestDefault";
+        string memory key = "_foxarCheatcodeEnvOrStringArrTestDefault";
         string memory value = "hello, world!|"
         "0xcb69fc06a12b7a6f30e2a3c16a3b5d502cd71c20f2f8";
         string[2] memory expected = [
@@ -949,7 +948,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrBytesArrKey() public {
-        string memory key = "_orbitalisCheatcodeEnvOrBytesArrTestKey";
+        string memory key = "_foxarCheatcodeEnvOrBytesArrTestKey";
         string memory value = "0xcb69fc06a12b7a6f30e2a3c16a3b5d502cd71c20f2f8,"
         "0x00";
         bytes[] memory expected = new bytes[](2);
@@ -969,7 +968,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrBytesArrDefault() public {
-        string memory key = "_orbitalisCheatcodeEnvOrBytesArrTestDefault";
+        string memory key = "_foxarCheatcodeEnvOrBytesArrTestDefault";
         string memory value = "0xcb69fc06a12b7a6f30e2a3c16a3b5d502cd71c20f2f8,"
         "0x00";
         bytes[] memory expected = new bytes[](2);
@@ -989,7 +988,7 @@ contract EnvTest is DSTest {
 
     function testEnvOrBoolEmptyArrKey() public {
         string
-            memory key = "_orbitalisCheatcodeEnvBoolWithDefaultBoolEmptyArrTestKey";
+            memory key = "_foxarCheatcodeEnvBoolWithDefaultBoolEmptyArrTestKey";
         string memory value = "";
         bool[] memory expected = new bool[](0);
         bool[] memory defaultValues = new bool[](0);
@@ -1006,7 +1005,7 @@ contract EnvTest is DSTest {
 
     function testEnvOrBoolEmptyArrDefault() public {
         string
-            memory key = "_orbitalisCheatcodeEnvBoolWithDefaultBoolEmptyArrTestDefault";
+            memory key = "_foxarCheatcodeEnvBoolWithDefaultBoolEmptyArrTestDefault";
         string memory value = "";
         bool[] memory expected = new bool[](0);
         bool[] memory defaultValues = new bool[](0);
@@ -1021,7 +1020,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrUintEmptyArrKey() public {
-        string memory key = "_orbitalisCheatcodeEnvOrUintEmptyArrTestKey";
+        string memory key = "_foxarCheatcodeEnvOrUintEmptyArrTestKey";
         string memory value = "";
         uint256[] memory expected = new uint256[](0);
         uint256[] memory defaultValues = new uint256[](0);
@@ -1037,7 +1036,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrUintEmptyArrDefault() public {
-        string memory key = "_orbitalisCheatcodeEnvOrUintEmptyArrTestDefault";
+        string memory key = "_foxarCheatcodeEnvOrUintEmptyArrTestDefault";
         string memory value = "";
         uint256[] memory expected = new uint256[](0);
         uint256[] memory defaultValues = new uint256[](0);
@@ -1052,7 +1051,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrIntEmptyArrKey() public {
-        string memory key = "_orbitalisCheatcodeEnvOrIntEmptyArrTestKey";
+        string memory key = "_foxarCheatcodeEnvOrIntEmptyArrTestKey";
         string memory value = "";
         int256[] memory expected = new int256[](0);
         int256[] memory defaultValues = new int256[](0);
@@ -1068,7 +1067,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrIntEmptyArrDefault() public {
-        string memory key = "_orbitalisCheatcodeEnvOrIntEmptyArrTestDefault";
+        string memory key = "_foxarCheatcodeEnvOrIntEmptyArrTestDefault";
         string memory value = "";
         int256[] memory expected = new int256[](0);
         int256[] memory defaultValues = new int256[](0);
@@ -1083,7 +1082,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrAddressEmptyArrKey() public {
-        string memory key = "_orbitalisCheatcodeEnvOrAddressEmptyArrTestKey";
+        string memory key = "_foxarCheatcodeEnvOrAddressEmptyArrTestKey";
         string memory value = "";
         address[] memory expected = new address[](0);
         address[] memory defaultValues = new address[](0);
@@ -1099,8 +1098,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrAddressEmptyArrDefault() public {
-        string
-            memory key = "_orbitalisCheatcodeEnvOrAddressEmptyArrTestDefault";
+        string memory key = "_foxarCheatcodeEnvOrAddressEmptyArrTestDefault";
         string memory value = "";
         address[] memory expected = new address[](0);
         address[] memory defaultValues = new address[](0);
@@ -1115,7 +1113,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrBytes32EmptyArrKey() public {
-        string memory key = "_orbitalisCheatcodeEnvOrBytes32EmptyArrTestKey";
+        string memory key = "_foxarCheatcodeEnvOrBytes32EmptyArrTestKey";
         string memory value = "";
         bytes32[] memory expected = new bytes32[](0);
         bytes32[] memory defaultValues = new bytes32[](0);
@@ -1131,8 +1129,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrBytes32EmptyArrDefault() public {
-        string
-            memory key = "_orbitalisCheatcodeEnvOrBytes32EmptyArrTestDefault";
+        string memory key = "_foxarCheatcodeEnvOrBytes32EmptyArrTestDefault";
         string memory value = "";
         bytes32[] memory expected = new bytes32[](0);
         bytes32[] memory defaultValues = new bytes32[](0);
@@ -1147,7 +1144,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrStringEmptyArrKey() public {
-        string memory key = "_orbitalisCheatcodeEnvOrStringEmptyArrTestKey";
+        string memory key = "_foxarCheatcodeEnvOrStringEmptyArrTestKey";
         string memory value = "";
         string[] memory expected = new string[](0);
         string[] memory defaultValues = new string[](0);
@@ -1165,7 +1162,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvOrStringEmptyArrDefault() public {
-        string memory key = "_orbitalisCheatcodeEnvOrStringEmptyArrTestDefault";
+        string memory key = "_foxarCheatcodeEnvOrStringEmptyArrTestDefault";
         string memory value = "";
         string[] memory expected = new string[](0);
         string[] memory defaultValues = new string[](0);
@@ -1182,8 +1179,7 @@ contract EnvTest is DSTest {
     }
 
     function testEnvWithDefaulBytesEmptyArrKey() public {
-        string
-            memory key = "_orbitalisCheatcodeEnvWithDefaulBytesEmptyArrTestKey";
+        string memory key = "_foxarCheatcodeEnvWithDefaulBytesEmptyArrTestKey";
         string memory value = "";
         bytes[] memory expected = new bytes[](0);
         bytes[] memory defaultValues = new bytes[](0);
@@ -1202,7 +1198,7 @@ contract EnvTest is DSTest {
 
     function testEnvWithDefaulBytesEmptyArrDefault() public {
         string
-            memory key = "_orbitalisCheatcodeEnvWithDefaulBytesEmptyArrTestDefault";
+            memory key = "_foxarCheatcodeEnvWithDefaulBytesEmptyArrTestDefault";
         string memory value = "";
         bytes[] memory expected = new bytes[](0);
         bytes[] memory defaultValues = new bytes[](0);

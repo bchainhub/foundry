@@ -15,8 +15,8 @@ use corebc::{
     core::types::Network,
     ylem::{info::ContractInfo, Project},
 };
-use orbitalis_common::ContractsByArtifact;
-use orbitalis_config::Config;
+use foxar_common::ContractsByArtifact;
+use foxar_config::Config;
 use semver::Version;
 
 /// Data struct to help `ScriptSequence` verify contracts on `etherscan`.
@@ -115,7 +115,7 @@ impl VerifyBundle {
                     show_standard_json_input: false,
                 };
 
-                return Some(verify)
+                return Some(verify);
             }
         }
         None

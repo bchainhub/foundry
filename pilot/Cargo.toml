@@ -7,12 +7,12 @@ authors = [
   "asnared <https://github.com/abigger87>",
 ]
 description = "Solidity REPL"
-repository = "https://github.com/orbitalis-rs/orbitalis/tree/main/pilot"
+repository = "https://github.com/bchainhub/foxar/tree/main/pilot"
 license = "MIT"
 keywords = [
   "Rust",
   "Ethereum",
-  "Orbitalis",
+  "Foxar",
   "Pilot",
   "REPL",
   "Solidity",
@@ -30,11 +30,11 @@ path = "src/bin/pilot.rs"
 
 [dependencies]
 # spark
-orbitalis-evm = { path = "../evm" }
+foxar-evm = { path = "../evm" }
 spark = { path = "../spark" }
-orbitalis-config = { path = "../config" }
-orbitalis-cli = { path = "../cli" }
-orbitalis-common = { path = "../common" }
+foxar-config = { path = "../config" }
+foxar-cli = { path = "../cli" }
+foxar-common = { path = "../common" }
 spark-fmt = { path = "../fmt" }
 
 # corebc

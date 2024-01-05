@@ -8,11 +8,11 @@ use crate::cmd::{
 };
 use clap::Parser;
 use corebc::ylem::{Project, ProjectCompileOutput};
-use orbitalis_common::{
+use foxar_common::{
     compile,
     compile::{ProjectCompiler, SkipBuildFilter},
 };
-use orbitalis_config::{
+use foxar_config::{
     figment::{
         self,
         error::Kind::InvalidType,
@@ -30,19 +30,19 @@ pub use self::core::CoreBuildArgs;
 mod paths;
 pub use self::paths::ProjectPathsArgs;
 
-orbitalis_config::merge_impl_figment_convert!(BuildArgs, args);
+foxar_config::merge_impl_figment_convert!(BuildArgs, args);
 
 /// CLI arguments for `spark build`.
 ///
 /// CLI arguments take the highest precedence in the Config/Figment hierarchy.
-/// In order to override them in the orbitalis `Config` they need to be merged into an existing
-/// `figment::Provider`, like `orbitalis_config::Config` is.
+/// In order to override them in the foxar `Config` they need to be merged into an existing
+/// `figment::Provider`, like `foxar_config::Config` is.
 ///
 /// # Example
 ///
 /// ```
-/// use orbitalis_cli::cmd::spark::build::BuildArgs;
-/// use orbitalis_config::Config;
+/// use foxar_cli::cmd::spark::build::BuildArgs;
+/// use foxar_config::Config;
 /// # fn t(args: BuildArgs) {
 /// let config = Config::from(&args);
 /// # }
@@ -110,9 +110,9 @@ impl Cmd for BuildArgs {
 impl BuildArgs {
     /// Returns the `Project` for the current workspace
     ///
-    /// This loads the `orbitalis_config::Config` for the current workspace (see
+    /// This loads the `foxar_config::Config` for the current workspace (see
     /// [`utils::find_project_root_path`] and merges the cli `BuildArgs` into it before returning
-    /// [`orbitalis_config::Config::project()`]
+    /// [`foxar_config::Config::project()`]
     pub fn project(&self) -> eyre::Result<Project> {
         self.args.project()
     }
@@ -162,18 +162,17 @@ mod tests {
 
     #[test]
     fn can_parse_build_filters() {
-        let args: BuildArgs = BuildArgs::parse_from(["orbitalis-cli", "--skip", "tests"]);
+        let args: BuildArgs = BuildArgs::parse_from(["foxar-cli", "--skip", "tests"]);
         assert_eq!(args.skip, Some(vec![SkipBuildFilter::Tests]));
 
-        let args: BuildArgs = BuildArgs::parse_from(["orbitalis-cli", "--skip", "scripts"]);
+        let args: BuildArgs = BuildArgs::parse_from(["foxar-cli", "--skip", "scripts"]);
         assert_eq!(args.skip, Some(vec![SkipBuildFilter::Scripts]));
 
         let args: BuildArgs =
-            BuildArgs::parse_from(["orbitalis-cli", "--skip", "tests", "--skip", "scripts"]);
+            BuildArgs::parse_from(["foxar-cli", "--skip", "tests", "--skip", "scripts"]);
         assert_eq!(args.skip, Some(vec![SkipBuildFilter::Tests, SkipBuildFilter::Scripts]));
 
-        let args: BuildArgs =
-            BuildArgs::parse_from(["orbitalis-cli", "--skip", "tests", "scripts"]);
+        let args: BuildArgs = BuildArgs::parse_from(["foxar-cli", "--skip", "tests", "scripts"]);
         assert_eq!(args.skip, Some(vec![SkipBuildFilter::Tests, SkipBuildFilter::Scripts]));
     }
 }

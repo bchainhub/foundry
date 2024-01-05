@@ -5,7 +5,7 @@ import "ds-test/test.sol";
 import "../cheats/Cheats.sol";
 import "../logs/console.sol";
 
-// https://github.com/orbitalis-rs/orbitalis/issues/3685
+// https://github.com/foxar-rs/foxar/issues/3685
 contract Issue3685Test is DSTest {
     Cheats constant vm = Cheats(HEVM_ADDRESS);
     Actor a;

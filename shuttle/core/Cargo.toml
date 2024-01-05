@@ -5,9 +5,9 @@ edition = "2021"
 license = "MIT OR Apache-2.0"
 
 [dependencies]
-# orbitalis internal
-orbitalis-evm = { path = "../../evm" }
-orbitalis-utils = { path = "../../utils" }
+# foxar internal
+foxar-evm = { path = "../../evm" }
+foxar-utils = { path = "../../utils" }
 revm = { workspace = true, default-features = false, features = ["std", "serde", "memory_limit"] }
 
 corebc-core = { workspace = true}

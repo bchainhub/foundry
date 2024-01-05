@@ -3,17 +3,17 @@ name = "spark-doc"
 version = "0.1.0"
 edition = "2021"
 description = """
-Orbitalis's solidity doc parsing
+Foxar's solidity doc parsing
 """
 license = "MIT OR Apache-2.0"
 readme = "README.md"
 
 [dependencies]
-# orbitalis internal
-orbitalis-common = { path = "../common" }
+# foxar internal
+foxar-common = { path = "../common" }
 spark-fmt = { path = "../fmt" }
-orbitalis-config = { path = "../config" }
-orbitalis-utils = { path = "../utils" }
+foxar-config = { path = "../config" }
+foxar-utils = { path = "../utils" }
 
 # corebc
 corebc-ylem = { workspace = true, features = ["async"]}

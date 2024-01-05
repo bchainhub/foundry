@@ -6,13 +6,13 @@ import "./Cheats.sol";
 
 contract FsTest is DSTest {
     Cheats constant cheats = Cheats(HEVM_ADDRESS);
-    bytes constant ORBITALIS_TOML_ACCESS_ERR =
-        "Access to orbitalis.toml is not allowed.";
-    bytes constant ORBITALIS_READ_ERR =
+    bytes constant FOXAR_TOML_ACCESS_ERR =
+        "Access to foxar.toml is not allowed.";
+    bytes constant FOXAR_READ_ERR =
         'The path "/etc/hosts" is not allowed to be accessed for read operations.';
-    bytes constant ORBITALIS_READ_DIR_ERR =
+    bytes constant FOXAR_READ_DIR_ERR =
         'The path "/etc" is not allowed to be accessed for read operations.';
-    bytes constant ORBITALIS_WRITE_ERR =
+    bytes constant FOXAR_WRITE_ERR =
         'The path "/etc/hosts" is not allowed to be accessed for write operations.';
 
     function assertEntry(
@@ -34,10 +34,10 @@ contract FsTest is DSTest {
             "hello readable world\nthis is the second line!"
         );
 
-        cheats.expectRevert(ORBITALIS_READ_ERR);
+        cheats.expectRevert(FOXAR_READ_ERR);
         cheats.readFile("/etc/hosts");
 
-        cheats.expectRevert(ORBITALIS_READ_ERR);
+        cheats.expectRevert(FOXAR_READ_ERR);
         cheats.readFileBinary("/etc/hosts");
     }
 
@@ -48,7 +48,7 @@ contract FsTest is DSTest {
         assertEq(cheats.readLine(path), "this is the second line!");
         assertEq(cheats.readLine(path), "");
 
-        cheats.expectRevert(ORBITALIS_READ_ERR);
+        cheats.expectRevert(FOXAR_READ_ERR);
         cheats.readLine("/etc/hosts");
     }
 
@@ -61,9 +61,9 @@ contract FsTest is DSTest {
 
         cheats.removeFile(path);
 
-        cheats.expectRevert(ORBITALIS_WRITE_ERR);
+        cheats.expectRevert(FOXAR_WRITE_ERR);
         cheats.writeFile("/etc/hosts", "malicious stuff");
-        cheats.expectRevert(ORBITALIS_WRITE_ERR);
+        cheats.expectRevert(FOXAR_WRITE_ERR);
         cheats.writeFileBinary("/etc/hosts", "malicious stuff");
     }
 
@@ -90,7 +90,7 @@ contract FsTest is DSTest {
 
         cheats.removeFile(path);
 
-        cheats.expectRevert(ORBITALIS_WRITE_ERR);
+        cheats.expectRevert(FOXAR_WRITE_ERR);
         cheats.writeLine("/etc/hosts", "malicious stuff");
     }
 
@@ -115,50 +115,50 @@ contract FsTest is DSTest {
 
         cheats.removeFile(path);
 
-        cheats.expectRevert(ORBITALIS_WRITE_ERR);
+        cheats.expectRevert(FOXAR_WRITE_ERR);
         cheats.removeFile("/etc/hosts");
     }
 
-    function testWriteLineOrbitalistoml() public {
+    function testWriteLineFoxartoml() public {
         string memory root = cheats.projectRoot();
-        string memory orbitalisToml = string(
-            bytes.concat(bytes(root), bytes("/"), bytes("orbitalis.toml"))
+        string memory foxarToml = string(
+            bytes.concat(bytes(root), bytes("/"), bytes("foxar.toml"))
         );
-        cheats.expectRevert(ORBITALIS_TOML_ACCESS_ERR);
-        cheats.writeLine(orbitalisToml, "\nffi = true\n");
+        cheats.expectRevert(FOXAR_TOML_ACCESS_ERR);
+        cheats.writeLine(foxarToml, "\nffi = true\n");
 
-        cheats.expectRevert(ORBITALIS_TOML_ACCESS_ERR);
-        cheats.writeLine("orbitalis.toml", "\nffi = true\n");
+        cheats.expectRevert(FOXAR_TOML_ACCESS_ERR);
+        cheats.writeLine("foxar.toml", "\nffi = true\n");
 
-        cheats.expectRevert(ORBITALIS_TOML_ACCESS_ERR);
-        cheats.writeLine("./orbitalis.toml", "\nffi = true\n");
+        cheats.expectRevert(FOXAR_TOML_ACCESS_ERR);
+        cheats.writeLine("./foxar.toml", "\nffi = true\n");
 
-        cheats.expectRevert(ORBITALIS_TOML_ACCESS_ERR);
-        cheats.writeLine("./Orbitalis.toml", "\nffi = true\n");
+        cheats.expectRevert(FOXAR_TOML_ACCESS_ERR);
+        cheats.writeLine("./Foxar.toml", "\nffi = true\n");
 
-        cheats.expectRevert(ORBITALIS_TOML_ACCESS_ERR);
-        cheats.writeLine("./../orbitalis.toml", "\nffi = true\n");
+        cheats.expectRevert(FOXAR_TOML_ACCESS_ERR);
+        cheats.writeLine("./../foxar.toml", "\nffi = true\n");
     }
 
-    function testWriteOrbitalistoml() public {
+    function testWriteFoxartoml() public {
         string memory root = cheats.projectRoot();
-        string memory orbitalisToml = string(
-            bytes.concat(bytes(root), bytes("/"), bytes("orbitalis.toml"))
+        string memory foxarToml = string(
+            bytes.concat(bytes(root), bytes("/"), bytes("foxar.toml"))
         );
-        cheats.expectRevert(ORBITALIS_TOML_ACCESS_ERR);
-        cheats.writeFile(orbitalisToml, "\nffi = true\n");
+        cheats.expectRevert(FOXAR_TOML_ACCESS_ERR);
+        cheats.writeFile(foxarToml, "\nffi = true\n");
 
-        cheats.expectRevert(ORBITALIS_TOML_ACCESS_ERR);
-        cheats.writeFile("orbitalis.toml", "\nffi = true\n");
+        cheats.expectRevert(FOXAR_TOML_ACCESS_ERR);
+        cheats.writeFile("foxar.toml", "\nffi = true\n");
 
-        cheats.expectRevert(ORBITALIS_TOML_ACCESS_ERR);
-        cheats.writeFile("./orbitalis.toml", "\nffi = true\n");
+        cheats.expectRevert(FOXAR_TOML_ACCESS_ERR);
+        cheats.writeFile("./foxar.toml", "\nffi = true\n");
 
-        cheats.expectRevert(ORBITALIS_TOML_ACCESS_ERR);
-        cheats.writeFile("./Orbitalis.toml", "\nffi = true\n");
+        cheats.expectRevert(FOXAR_TOML_ACCESS_ERR);
+        cheats.writeFile("./Foxar.toml", "\nffi = true\n");
 
-        cheats.expectRevert(ORBITALIS_TOML_ACCESS_ERR);
-        cheats.writeFile("./../orbitalis.toml", "\nffi = true\n");
+        cheats.expectRevert(FOXAR_TOML_ACCESS_ERR);
+        cheats.writeFile("./../foxar.toml", "\nffi = true\n");
     }
 
     function testReadDir() public {
@@ -192,7 +192,7 @@ contract FsTest is DSTest {
             assertEntry(entries[4], 3, true);
         }
 
-        cheats.expectRevert(ORBITALIS_READ_DIR_ERR);
+        cheats.expectRevert(FOXAR_READ_DIR_ERR);
         cheats.readDir("/etc");
     }
 
@@ -247,7 +247,7 @@ contract FsTest is DSTest {
         cheats.expectRevert();
         cheats.fsMetadata("../not-found");
 
-        cheats.expectRevert(ORBITALIS_READ_ERR);
+        cheats.expectRevert(FOXAR_READ_ERR);
         cheats.fsMetadata("/etc/hosts");
     }
 
@@ -259,7 +259,7 @@ contract FsTest is DSTest {
         } catch (bytes memory err) {
             assertEq(
                 err,
-                abi.encodeWithSignature("CheatCodeError", ORBITALIS_READ_ERR)
+                abi.encodeWithSignature("CheatCodeError", FOXAR_READ_ERR)
             );
         }
     }

@@ -2,9 +2,9 @@
 set -e
 
 BASE_DIR=${XDG_CONFIG_HOME:-$HOME}
-ORBITALIS_DIR=${ORBITALIS_DIR:-"$BASE_DIR/.orbitalis"}
-ORBITALIS_BIN_DIR="$ORBITALIS_DIR/bin"
-ORBITALIS_MAN_DIR="$ORBITALIS_DIR/share/man/man1"
+FOXAR_DIR=${FOXAR_DIR:-"$BASE_DIR/.foxar"}
+FOXAR_BIN_DIR="$FOXAR_DIR/bin"
+FOXAR_MAN_DIR="$FOXAR_DIR/share/man/man1"
 
 BINS=(spark probe shuttle pilot)
 
@@ -18,12 +18,12 @@ main() {
     case $1 in
       --)               shift; break;;
 
-      -r|--repo)        shift; ORBITALISUP_REPO=$1;;
-      -b|--branch)      shift; ORBITALISUP_BRANCH=$1;;
-      -v|--version)     shift; ORBITALISUP_VERSION=$1;;
-      -p|--path)        shift; ORBITALISUP_LOCAL_REPO=$1;;
-      -P|--pr)          shift; ORBITALISUP_PR=$1;;
-      -C|--commit)      shift; ORBITALISUP_COMMIT=$1;;
+      -r|--repo)        shift; FOXARUP_REPO=$1;;
+      -b|--branch)      shift; FOXARUP_BRANCH=$1;;
+      -v|--version)     shift; FOXARUP_VERSION=$1;;
+      -p|--path)        shift; FOXARUP_LOCAL_REPO=$1;;
+      -P|--pr)          shift; FOXARUP_PR=$1;;
+      -C|--commit)      shift; FOXARUP_COMMIT=$1;;
       -h|--help)
         usage
         exit 0
@@ -38,65 +38,65 @@ main() {
   # Print the banner after successfully parsing args
   banner
 
-  if [ -n "$ORBITALISUP_PR" ]; then
-    if [ -z "$ORBITALISUP_BRANCH" ]; then
-      ORBITALISUP_BRANCH="refs/pull/$ORBITALISUP_PR/head"
+  if [ -n "$FOXARUP_PR" ]; then
+    if [ -z "$FOXARUP_BRANCH" ]; then
+      FOXARUP_BRANCH="refs/pull/$FOXARUP_PR/head"
     else
       err "can't use --pr and --branch at the same time"
     fi
   fi
 
-  # Installs orbitalis from a local repository if --path parameter is provided
-  if [[ -n "$ORBITALISUP_LOCAL_REPO" ]]; then
+  # Installs foxar from a local repository if --path parameter is provided
+  if [[ -n "$FOXARUP_LOCAL_REPO" ]]; then
     need_cmd cargo
 
     # Ignore branches/versions as we do not want to modify local git state
-    if [ -n "$ORBITALISUP_REPO" ] || [ -n "$ORBITALISUP_BRANCH" ] || [ -n "$ORBITALISUP_VERSION" ]; then
+    if [ -n "$FOXARUP_REPO" ] || [ -n "$FOXARUP_BRANCH" ] || [ -n "$FOXARUP_VERSION" ]; then
       warn "--branch, --version, and --repo arguments are ignored during local install"
     fi
 
     # Enter local repo and build
-    say "installing from $ORBITALISUP_LOCAL_REPO"
-    cd "$ORBITALISUP_LOCAL_REPO"
+    say "installing from $FOXARUP_LOCAL_REPO"
+    cd "$FOXARUP_LOCAL_REPO"
     ensure cargo build --release # need 4 speed
 
     for bin in "${BINS[@]}"; do
       # Remove prior installations if they exist
-      rm -f "$ORBITALIS_BIN_DIR/$bin"
+      rm -f "$FOXAR_BIN_DIR/$bin"
       # Symlink from local repo binaries to bin dir
-      ensure ln -s "$PWD/target/release/$bin" "$ORBITALIS_BIN_DIR/$bin"
+      ensure ln -s "$PWD/target/release/$bin" "$FOXAR_BIN_DIR/$bin"
     done
 
     say "done"
     exit 0
   fi
 
-  ORBITALISUP_REPO=${ORBITALISUP_REPO:-bchainhub/foundry}
+  FOXARUP_REPO=${FOXARUP_REPO:-bchainhub/foxar}
 
   # Install by downloading binaries
-  if [[ "$ORBITALISUP_REPO" == "bchainhub/foundry" && -z "$ORBITALISUP_BRANCH" && -z "$ORBITALISUP_COMMIT" ]]; then
-    ORBITALISUP_VERSION=${ORBITALISUP_VERSION:-nightly}
-    ORBITALISUP_TAG=$ORBITALISUP_VERSION
+  if [[ "$FOXARUP_REPO" == "bchainhub/foxar" && -z "$FOXARUP_BRANCH" && -z "$FOXARUP_COMMIT" ]]; then
+    FOXARUP_VERSION=${FOXARUP_VERSION:-nightly}
+    FOXARUP_TAG=$FOXARUP_VERSION
 
     # Normalize versions (handle channels, versions without v prefix
-    if [[ "$ORBITALISUP_VERSION" == "nightly" ]]; then
+    if [[ "$FOXARUP_VERSION" == "nightly" ]]; then
       # Locate real nightly tag
-      SHA=$(ensure curl -sSf "https://api.github.com/repos/$ORBITALISUP_REPO/git/refs/tags/nightly" \
+      SHA=$(ensure curl -sSf "https://api.github.com/repos/$FOXARUP_REPO/git/refs/tags/nightly" \
         | grep -Eo '"sha"[^,]*' \
         | grep -Eo '[^:]*$' \
         | tr -d '"' \
         | tr -d ' ' \
         | cut -d ':' -f2 )
-      ORBITALISUP_TAG="nightly-${SHA}"
-    elif [[ "$ORBITALISUP_VERSION" == nightly* ]]; then
-      ORBITALISUP_VERSION="nightly"
-    elif [[ "$ORBITALISUP_VERSION" == [[:digit:]]* ]]; then
+      FOXARUP_TAG="nightly-${SHA}"
+    elif [[ "$FOXARUP_VERSION" == nightly* ]]; then
+      FOXARUP_VERSION="nightly"
+    elif [[ "$FOXARUP_VERSION" == [[:digit:]]* ]]; then
       # Add v prefix
-      ORBITALISUP_VERSION="v${ORBITALISUP_VERSION}"
-      ORBITALISUP_TAG="${ORBITALISUP_VERSION}"
+      FOXARUP_VERSION="v${FOXARUP_VERSION}"
+      FOXARUP_TAG="${FOXARUP_VERSION}"
     fi
 
-    say "installing orbitalis (version ${ORBITALISUP_VERSION}, tag ${ORBITALISUP_TAG})"
+    say "installing foxar (version ${FOXARUP_VERSION}, tag ${FOXARUP_TAG})"
 
     PLATFORM="$(uname -s)"
     EXT="tar.gz"
@@ -130,38 +130,38 @@ main() {
       ARCHITECTURE="amd64" # Amd.
     fi
 
-    # Compute the URL of the release tarball in the Orbitalis repository.
-    RELEASE_URL="https://github.com/${ORBITALISUP_REPO}/releases/download/${ORBITALISUP_TAG}/"
-    BIN_ARCHIVE_URL="${RELEASE_URL}orbitalis_${ORBITALISUP_VERSION}_${PLATFORM}_${ARCHITECTURE}.$EXT"
-    MAN_TARBALL_URL="${RELEASE_URL}orbitalis_man_${ORBITALISUP_VERSION}.tar.gz"
+    # Compute the URL of the release tarball in the Foxar repository.
+    RELEASE_URL="https://github.com/${FOXARUP_REPO}/releases/download/${FOXARUP_TAG}/"
+    BIN_ARCHIVE_URL="${RELEASE_URL}foxar_${FOXARUP_VERSION}_${PLATFORM}_${ARCHITECTURE}.$EXT"
+    MAN_TARBALL_URL="${RELEASE_URL}foxar_man_${FOXARUP_VERSION}.tar.gz"
 
     # Download and extract the binaries archive
     say "downloading latest spark, probe, shuttle, and pilot"
     if [ "$PLATFORM" = "win32" ]; then
-      tmp="$(mktemp -d 2>/dev/null || echo ".")/orbitalis.zip"
+      tmp="$(mktemp -d 2>/dev/null || echo ".")/foxar.zip"
       ensure download "$BIN_ARCHIVE_URL" "$tmp"
-      ensure unzip "$tmp" -d "$ORBITALIS_BIN_DIR"
+      ensure unzip "$tmp" -d "$FOXAR_BIN_DIR"
       rm -f "$tmp"
     else
-      ensure download "$BIN_ARCHIVE_URL" | ensure tar -xzC "$ORBITALIS_BIN_DIR"
+      ensure download "$BIN_ARCHIVE_URL" | ensure tar -xzC "$FOXAR_BIN_DIR"
     fi
 
     # Optionally download the manuals
     if check_cmd tar; then
       say "downloading manpages"
-      mkdir -p "$ORBITALIS_MAN_DIR"
-      download "$MAN_TARBALL_URL" | tar -xzC "$ORBITALIS_MAN_DIR"
+      mkdir -p "$FOXAR_MAN_DIR"
+      download "$MAN_TARBALL_URL" | tar -xzC "$FOXAR_MAN_DIR"
     else
       say 'skipping manpage download: missing "tar"'
     fi
 
     for bin in "${BINS[@]}"; do
-      bin_path="$ORBITALIS_BIN_DIR/$bin"
+      bin_path="$FOXAR_BIN_DIR/$bin"
 
       # Print installed msg
       say "installed - $(ensure "$bin_path" --version)"
 
-      # Check if the default path of the binary is not in ORBITALIS_BIN_DIR
+      # Check if the default path of the binary is not in FOXAR_BIN_DIR
       which_path="$(which "$bin")"
       if [ "$which_path" != "$bin_path" ]; then
         warn ""
@@ -169,7 +169,7 @@ main() {
 There are multiple binaries with the name '$bin' present in your 'PATH'.
 This may be the result of installing '$bin' using another method,
 like Cargo or other package managers.
-You may need to run 'rm $which_path' or move '$ORBITALIS_BIN_DIR'
+You may need to run 'rm $which_path' or move '$FOXAR_BIN_DIR'
 in your 'PATH' to allow the newly installed version to take precedence!
 
 EOF
@@ -181,40 +181,40 @@ EOF
   # Install by cloning the repo with the provided branch/tag
   else
     need_cmd cargo
-    ORBITALISUP_BRANCH=${ORBITALISUP_BRANCH:-master}
-    REPO_PATH="$ORBITALIS_DIR/$ORBITALISUP_REPO"
+    FOXARUP_BRANCH=${FOXARUP_BRANCH:-master}
+    REPO_PATH="$FOXAR_DIR/$FOXARUP_REPO"
 
-    # If repo path does not exist, grab the author from the repo, make a directory in .orbitalis, cd to it and clone.
+    # If repo path does not exist, grab the author from the repo, make a directory in .foxar, cd to it and clone.
     if [ ! -d "$REPO_PATH" ]; then
-      AUTHOR="$(echo "$ORBITALISUP_REPO" | cut -d'/' -f1 -)"
-      ensure mkdir -p "$ORBITALIS_DIR/$AUTHOR"
-      cd "$ORBITALIS_DIR/$AUTHOR"
-      ensure git clone "https://github.com/$ORBITALISUP_REPO"
+      AUTHOR="$(echo "$FOXARUP_REPO" | cut -d'/' -f1 -)"
+      ensure mkdir -p "$FOXAR_DIR/$AUTHOR"
+      cd "$FOXAR_DIR/$AUTHOR"
+      ensure git clone "https://github.com/$FOXARUP_REPO"
     fi
 
     # Force checkout, discarding any local changes
     cd "$REPO_PATH"
-    ensure git fetch origin "${ORBITALISUP_BRANCH}:remotes/origin/${ORBITALISUP_BRANCH}"
-    ensure git checkout "origin/${ORBITALISUP_BRANCH}"
+    ensure git fetch origin "${FOXARUP_BRANCH}:remotes/origin/${FOXARUP_BRANCH}"
+    ensure git checkout "origin/${FOXARUP_BRANCH}"
 
     # If set, checkout specific commit from branch
-    if [ -n "$ORBITALISUP_COMMIT" ]; then
-      say "installing at commit $ORBITALISUP_COMMIT"
-      ensure git checkout "$ORBITALISUP_COMMIT"
+    if [ -n "$FOXARUP_COMMIT" ]; then
+      say "installing at commit $FOXARUP_COMMIT"
+      ensure git checkout "$FOXARUP_COMMIT"
     fi
 
-    # Build the repo and install the binaries locally to the .orbitalis bin directory.
-    # --root appends /bin to the directory it is given, so we pass ORBITALIS_DIR.
-    ensure cargo install --path ./cli --bins --locked --force --root "$ORBITALIS_DIR"
+    # Build the repo and install the binaries locally to the .foxar bin directory.
+    # --root appends /bin to the directory it is given, so we pass FOXAR_DIR.
+    ensure cargo install --path ./cli --bins --locked --force --root "$FOXAR_DIR"
     # install shuttle
-    ensure cargo install --path ./shuttle --bin shuttle --locked --force --root "$ORBITALIS_DIR"
+    ensure cargo install --path ./shuttle --bin shuttle --locked --force --root "$FOXAR_DIR"
     # install pilot
-    ensure cargo install --path ./pilot --bin pilot --locked --force --root "$ORBITALIS_DIR"
+    ensure cargo install --path ./pilot --bin pilot --locked --force --root "$FOXAR_DIR"
 
-    # If help2man is installed, use it to add Orbitalis man pages.
+    # If help2man is installed, use it to add Foxar man pages.
     if check_cmd help2man; then
       for bin in "${BINS[@]}"; do
-        help2man -N "$ORBITALIS_BIN_DIR/$bin" > "$ORBITALIS_MAN_DIR/$bin.1"
+        help2man -N "$FOXAR_BIN_DIR/$bin" > "$FOXAR_MAN_DIR/$bin.1"
       done
     fi
 
@@ -224,12 +224,12 @@ EOF
 
 usage() {
   cat 1>&2 <<EOF
-The installer for Orbitalis.
+The installer for Foxar.
 
-Update or revert to a specific Orbitalis version with ease.
+Update or revert to a specific Foxar version with ease.
 
 USAGE:
-    orbitalisup <OPTIONS>
+    foxarup <OPTIONS>
 
 OPTIONS:
     -h, --help      Print help information
@@ -243,7 +243,7 @@ EOF
 }
 
 say() {
-  printf "orbitalisup: %s\n" "$1"
+  printf "foxarup: %s\n" "$1"
 }
 
 warn() {
@@ -291,10 +291,10 @@ download() {
   fi
 }
 
-# Banner Function for Orbitalis 
+# Banner Function for Foxar 
 banner() {
   printf '
-  ORBITALIS INSTALLED
+  FOXAR INSTALLED
 '
 }
 

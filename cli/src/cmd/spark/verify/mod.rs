@@ -10,7 +10,7 @@ use crate::{
 };
 use clap::{Parser, ValueHint};
 use corebc::{abi::Address, types::Network, ylem::info::ContractInfo};
-use orbitalis_config::{figment, impl_figment_convert, impl_figment_convert_probe, Config};
+use foxar_config::{figment, impl_figment_convert, impl_figment_convert_probe, Config};
 use provider::VerificationProviderType;
 use reqwest::Url;
 use std::path::PathBuf;
@@ -143,7 +143,7 @@ impl VerifyArgs {
             let args =
                 EtherscanVerificationProvider::default().create_verify_request(&self, None).await?;
             println!("{}", args.source);
-            return Ok(())
+            return Ok(());
         }
 
         let verifier_url = self.verifier.verifier_url.clone();

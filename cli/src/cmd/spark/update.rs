@@ -6,7 +6,7 @@ use crate::{
 };
 use clap::{Parser, ValueHint};
 use eyre::{Context, Result};
-use orbitalis_config::{impl_figment_convert_basic, Config};
+use foxar_config::{impl_figment_convert_basic, Config};
 use std::path::PathBuf;
 
 /// CLI arguments for `spark update`.

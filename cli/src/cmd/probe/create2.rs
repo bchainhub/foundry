@@ -181,7 +181,7 @@ mod tests {
     #[test]
     fn basic_create2() {
         let args =
-            Create2Args::parse_from(["orbitalis-cli", "--starts-with", "babe", "--network", "1"]);
+            Create2Args::parse_from(["foxar-cli", "--starts-with", "babe", "--network", "1"]);
         let create2_out = args.run().unwrap();
         let address = create2_out.address;
         let address = format!("{address:x}");
@@ -192,7 +192,7 @@ mod tests {
     #[test]
     fn matches_pattern() {
         let args = Create2Args::parse_from([
-            "orbitalis-cli",
+            "foxar-cli",
             "--matching",
             "babeXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
             "--network",
@@ -209,7 +209,7 @@ mod tests {
     fn create2_init_code() {
         let init_code = "00";
         let args = Create2Args::parse_from([
-            "orbitalis-cli",
+            "foxar-cli",
             "--starts-with",
             "babe",
             "--init-code",
@@ -231,7 +231,7 @@ mod tests {
     fn create2_init_code_hash() {
         let init_code_hash = "bc36789e7a1e281436464229828f817d6612f7b477d66591ff96a9e064bcc98a";
         let args = Create2Args::parse_from([
-            "orbitalis-cli",
+            "foxar-cli",
             "--starts-with",
             "babe",
             "--init-code-hash",

@@ -1267,7 +1267,7 @@ mod tests {
         let value: serde_json::Value = serde_json::from_str(s).unwrap();
         let _req = serde_json::from_value::<EthRequest>(value).unwrap();
 
-        // this case deviates from the spec, but we're supporting this for legacy reasons: <https://github.com/orbitalis-rs/orbitalis/issues/1868>
+        // this case deviates from the spec, but we're supporting this for legacy reasons: <https://github.com/foxar-rs/foxar/issues/1868>
         let s = r#"{"method": "xcb_getBlockByNumber", "params": [0, true]}"#;
         let value: serde_json::Value = serde_json::from_str(s).unwrap();
         let _req = serde_json::from_value::<EthRequest>(value).unwrap();

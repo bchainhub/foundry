@@ -21,8 +21,8 @@ use corebc::{
     types::{Address, U256},
 };
 use eth::backend::fork::ClientFork;
+use foxar_evm::revm;
 use futures::{FutureExt, TryFutureExt};
-use orbitalis_evm::revm;
 use std::{
     future::Future,
     io,
@@ -328,7 +328,7 @@ impl Future for NodeHandle {
         // poll the ipc task
         if let Some(mut ipc) = pin.ipc_task.take() {
             if let Poll::Ready(res) = ipc.poll_unpin(cx) {
-                return Poll::Ready(res.map(|res| res.map_err(NodeError::from)))
+                return Poll::Ready(res.map(|res| res.map_err(NodeError::from)));
             } else {
                 pin.ipc_task = Some(ipc);
             }
@@ -336,7 +336,7 @@ impl Future for NodeHandle {
 
         // poll the node service task
         if let Poll::Ready(res) = pin.node_service.poll_unpin(cx) {
-            return Poll::Ready(res)
+            return Poll::Ready(res);
         }
 
         pin.server.poll_unpin(cx)

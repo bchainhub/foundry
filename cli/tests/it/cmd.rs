@@ -10,13 +10,13 @@ use corebc::{
         ConfigurableContractArtifact,
     },
 };
-use orbitalis_cli::opts::spark::Opts;
-use orbitalis_cli_test_utils::{
+use foxar_cli::opts::spark::Opts;
+use foxar_cli_test_utils::{
     corebc_ylem::PathStyle,
     sparktest, sparktest_init,
     util::{pretty_err, read_string, OutputExt, TestCommand, TestProject},
 };
-use orbitalis_config::{parse_with_profile, BasicConfig, Config, SolidityErrorCode};
+use foxar_config::{parse_with_profile, BasicConfig, Config, SolidityErrorCode};
 use semver::Version;
 use std::{
     env, fs,
@@ -47,7 +47,7 @@ sparktest!(can_clean_non_existing, |prj: TestProject, mut cmd: TestCommand| {
     prj.assert_cleaned();
 });
 
-// checks that `cache ls` can be invoked and displays the orbitalis cache
+// checks that `cache ls` can be invoked and displays the foxar cache
 sparktest!(
     #[ignore]
     can_cache_ls,
@@ -56,11 +56,11 @@ sparktest!(
         let block1 = 100;
         let block2 = 101;
 
-        let block1_cache_dir = Config::orbitalis_block_cache_dir(chain, block1).unwrap();
-        let block1_file = Config::orbitalis_block_cache_file(chain, block1).unwrap();
-        let block2_cache_dir = Config::orbitalis_block_cache_dir(chain, block2).unwrap();
-        let block2_file = Config::orbitalis_block_cache_file(chain, block2).unwrap();
-        let etherscan_cache_dir = Config::orbitalis_etherscan_network_cache_dir(chain).unwrap();
+        let block1_cache_dir = Config::foxar_block_cache_dir(chain, block1).unwrap();
+        let block1_file = Config::foxar_block_cache_file(chain, block1).unwrap();
+        let block2_cache_dir = Config::foxar_block_cache_dir(chain, block2).unwrap();
+        let block2_file = Config::foxar_block_cache_file(chain, block2).unwrap();
+        let etherscan_cache_dir = Config::foxar_etherscan_network_cache_dir(chain).unwrap();
         fs::create_dir_all(block1_cache_dir).unwrap();
         fs::write(block1_file, "{}").unwrap();
         fs::create_dir_all(block2_cache_dir).unwrap();
@@ -80,17 +80,17 @@ sparktest!(
         assert!(output_lines[4].starts_with("\t-️ Block 100 ("));
         assert_eq!(output_lines[5], "");
 
-        Config::clean_orbitalis_cache().unwrap();
+        Config::clean_foxar_cache().unwrap();
     }
 );
 
-// checks that `cache clean` can be invoked and cleans the orbitalis cache
+// checks that `cache clean` can be invoked and cleans the foxar cache
 // this test is not isolated and modifies ~ so it is ignored
 sparktest!(
     #[ignore]
     can_cache_clean,
     |_: TestProject, mut cmd: TestCommand| {
-        let cache_dir = Config::orbitalis_cache_dir().unwrap();
+        let cache_dir = Config::foxar_cache_dir().unwrap();
         let path = cache_dir.as_path();
         fs::create_dir_all(path).unwrap();
         cmd.args(["cache", "clean"]);
@@ -100,14 +100,14 @@ sparktest!(
     }
 );
 
-// checks that `cache clean --etherscan` can be invoked and only cleans the orbitalis etherscan
+// checks that `cache clean --etherscan` can be invoked and only cleans the foxar etherscan
 // cache this test is not isolated and modifies ~ so it is ignored
 sparktest!(
     #[ignore]
     can_cache_clean_etherscan,
     |_: TestProject, mut cmd: TestCommand| {
-        let cache_dir = Config::orbitalis_cache_dir().unwrap();
-        let etherscan_cache_dir = Config::orbitalis_etherscan_cache_dir().unwrap();
+        let cache_dir = Config::foxar_cache_dir().unwrap();
+        let etherscan_cache_dir = Config::foxar_etherscan_cache_dir().unwrap();
         let path = cache_dir.as_path();
         let etherscan_path = etherscan_cache_dir.as_path();
         fs::create_dir_all(etherscan_path).unwrap();
@@ -117,18 +117,18 @@ sparktest!(
         assert!(path.exists());
         assert!(!etherscan_path.exists());
 
-        Config::clean_orbitalis_cache().unwrap();
+        Config::clean_foxar_cache().unwrap();
     }
 );
 
-// checks that `cache clean all --etherscan` can be invoked and only cleans the orbitalis etherscan
+// checks that `cache clean all --etherscan` can be invoked and only cleans the foxar etherscan
 // cache. This test is not isolated and modifies ~ so it is ignored
 sparktest!(
     #[ignore]
     can_cache_clean_all_etherscan,
     |_: TestProject, mut cmd: TestCommand| {
-        let rpc_cache_dir = Config::orbitalis_rpc_cache_dir().unwrap();
-        let etherscan_cache_dir = Config::orbitalis_etherscan_cache_dir().unwrap();
+        let rpc_cache_dir = Config::foxar_rpc_cache_dir().unwrap();
+        let etherscan_cache_dir = Config::foxar_etherscan_cache_dir().unwrap();
         let rpc_path = rpc_cache_dir.as_path();
         let etherscan_path = etherscan_cache_dir.as_path();
         fs::create_dir_all(rpc_path).unwrap();
@@ -139,7 +139,7 @@ sparktest!(
         assert!(rpc_path.exists());
         assert!(!etherscan_path.exists());
 
-        Config::clean_orbitalis_cache().unwrap();
+        Config::clean_foxar_cache().unwrap();
     }
 );
 
@@ -150,8 +150,8 @@ sparktest!(
     can_cache_clean_chain,
     |_: TestProject, mut cmd: TestCommand| {
         let chain = corebc::prelude::Network::Mainnet;
-        let cache_dir = Config::orbitalis_network_cache_dir(chain).unwrap();
-        let etherscan_cache_dir = Config::orbitalis_etherscan_network_cache_dir(chain).unwrap();
+        let cache_dir = Config::foxar_network_cache_dir(chain).unwrap();
+        let etherscan_cache_dir = Config::foxar_etherscan_network_cache_dir(chain).unwrap();
         let path = cache_dir.as_path();
         let etherscan_path = etherscan_cache_dir.as_path();
         fs::create_dir_all(path).unwrap();
@@ -162,7 +162,7 @@ sparktest!(
         assert!(!path.exists());
         assert!(!etherscan_path.exists());
 
-        Config::clean_orbitalis_cache().unwrap();
+        Config::clean_foxar_cache().unwrap();
     }
 );
 
@@ -176,10 +176,10 @@ sparktest!(
         let block1 = 100;
         let block2 = 101;
         let block3 = 102;
-        let block1_cache_dir = Config::orbitalis_block_cache_dir(chain, block1).unwrap();
-        let block2_cache_dir = Config::orbitalis_block_cache_dir(chain, block2).unwrap();
-        let block3_cache_dir = Config::orbitalis_block_cache_dir(chain, block3).unwrap();
-        let etherscan_cache_dir = Config::orbitalis_etherscan_network_cache_dir(chain).unwrap();
+        let block1_cache_dir = Config::foxar_block_cache_dir(chain, block1).unwrap();
+        let block2_cache_dir = Config::foxar_block_cache_dir(chain, block2).unwrap();
+        let block3_cache_dir = Config::foxar_block_cache_dir(chain, block3).unwrap();
+        let etherscan_cache_dir = Config::foxar_etherscan_network_cache_dir(chain).unwrap();
         let block1_path = block1_cache_dir.as_path();
         let block2_path = block2_cache_dir.as_path();
         let block3_path = block3_cache_dir.as_path();
@@ -196,7 +196,7 @@ sparktest!(
         assert!(block3_path.exists());
         assert!(etherscan_path.exists());
 
-        Config::clean_orbitalis_cache().unwrap();
+        Config::clean_foxar_cache().unwrap();
     }
 );
 
@@ -206,11 +206,9 @@ sparktest!(
     #[ignore]
     can_cache_clean_chain_etherscan,
     |_: TestProject, mut cmd: TestCommand| {
-        let cache_dir =
-            Config::orbitalis_network_cache_dir(corebc::prelude::Network::Mainnet).unwrap();
+        let cache_dir = Config::foxar_network_cache_dir(corebc::prelude::Network::Mainnet).unwrap();
         let etherscan_cache_dir =
-            Config::orbitalis_etherscan_network_cache_dir(corebc::prelude::Network::Mainnet)
-                .unwrap();
+            Config::foxar_etherscan_network_cache_dir(corebc::prelude::Network::Mainnet).unwrap();
         let path = cache_dir.as_path();
         let etherscan_path = etherscan_cache_dir.as_path();
         fs::create_dir_all(path).unwrap();
@@ -221,19 +219,19 @@ sparktest!(
         assert!(path.exists());
         assert!(!etherscan_path.exists());
 
-        Config::clean_orbitalis_cache().unwrap();
+        Config::clean_foxar_cache().unwrap();
     }
 );
 
 // checks that init works
 sparktest!(can_init_repo_with_config, |prj: TestProject, mut cmd: TestCommand| {
-    let orbitalis_toml = prj.root().join(Config::FILE_NAME);
-    assert!(!orbitalis_toml.exists());
+    let foxar_toml = prj.root().join(Config::FILE_NAME);
+    assert!(!foxar_toml.exists());
 
     cmd.args(["init", "--force"]).arg(prj.root());
     cmd.assert_non_empty_stdout();
 
-    let s = read_string(&orbitalis_toml);
+    let s = read_string(&foxar_toml);
     let _config: BasicConfig = parse_with_profile(&s).unwrap().unwrap().1;
 });
 
@@ -342,7 +340,7 @@ sparktest!(can_init_in_non_empty_repo, |prj: TestProject, mut cmd: TestCommand| 
     assert!(root.join(".git").exists());
 
     prj.create_file("README.md", "non-empty dir");
-    prj.create_file(".gitignore", "not orbitalis .gitignore");
+    prj.create_file(".gitignore", "not foxar .gitignore");
 
     cmd.arg("init").arg(root);
     cmd.assert_err();
@@ -354,7 +352,7 @@ sparktest!(can_init_in_non_empty_repo, |prj: TestProject, mut cmd: TestCommand| 
     // not overwritten
     let gitignore = root.join(".gitignore");
     let gitignore = fs::read_to_string(gitignore).unwrap();
-    assert_eq!(gitignore, "not orbitalis .gitignore");
+    assert_eq!(gitignore, "not foxar .gitignore");
 });
 
 // Checks that remappings.txt and .vscode/settings.json is generated
@@ -748,12 +746,12 @@ sparktest!(
     |_: TestProject, mut cmd: TestCommand| {
         let current_dir = std::env::current_dir().unwrap();
         let root = current_dir
-            .join("../../orbitalis-integration-tests/testdata/spells-mainnet")
+            .join("../../foxar-integration-tests/testdata/spells-mainnet")
             .to_string_lossy()
             .to_string();
         println!("project root: \"{root}\"");
 
-        let eth_rpc_url = orbitalis_utils::rpc::next_http_archive_rpc_endpoint(Network::Mainnet);
+        let eth_rpc_url = foxar_utils::rpc::next_http_archive_rpc_endpoint(Network::Mainnet);
         let dss_exec_lib = "src/DssSpell.sol:DssExecLib:0xfD88CeE74f7D78697775aBDAE53f9Da1559728E4";
 
         cmd.args([
@@ -982,13 +980,13 @@ sparktest!(
         let package_mod = git_mod.join("issue-2264-repro");
 
         let install = |cmd: &mut TestCommand| {
-            cmd.spark_fuse().args(["install", "orbitalis-rs/issue-2264-repro", "--no-commit"]);
+            cmd.spark_fuse().args(["install", "bchainhub/issue-2264-repro", "--no-commit"]);
             cmd.assert_non_empty_stdout();
             assert!(package.exists());
             assert!(package_mod.exists());
 
             let submods = read_string(&git_mod_file);
-            assert!(submods.contains("https://github.com/orbitalis-rs/issue-2264-repro"));
+            assert!(submods.contains("https://github.com/bchainhub/issue-2264-repro"));
         };
 
         install(&mut cmd);
@@ -1469,7 +1467,7 @@ sparktest_init!(
     }
 );
 
-// <https://github.com/orbitalis-rs/orbitalis/issues/3440>
+// <https://github.com/bchainhub/foxar/issues/3440>
 sparktest_init!(
     can_use_absolute_imports_from_test_and_script,
     |prj: TestProject, mut cmd: TestCommand| {

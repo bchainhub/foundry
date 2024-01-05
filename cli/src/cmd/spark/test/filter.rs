@@ -1,8 +1,8 @@
-use crate::utils::OrbitalisPathExt;
+use crate::utils::FoxarPathExt;
 use clap::Parser;
 use corebc::ylem::{FileFilter, ProjectPathsConfig};
-use orbitalis_common::glob::GlobMatcher;
-use orbitalis_config::Config;
+use foxar_common::glob::GlobMatcher;
+use foxar_config::Config;
 use spark::TestFilter;
 use std::{fmt, path::Path};
 
@@ -86,14 +86,14 @@ impl FileFilter for FilterArgs {
     /// Returns true if the file regex pattern match the `file`
     ///
     /// If no file regex is set this returns true if the file ends with `.t.sol`, see
-    /// [OrbitalisPathExr::is_sol_test()]
+    /// [FoxarPathExr::is_sol_test()]
     fn is_match(&self, file: &Path) -> bool {
         if let Some(file) = file.as_os_str().to_str() {
             if let Some(ref glob) = self.path_pattern {
-                return glob.is_match(file)
+                return glob.is_match(file);
             }
             if let Some(ref glob) = self.path_pattern_inverse {
-                return !glob.is_match(file)
+                return !glob.is_match(file);
             }
         }
         file.is_sol_test()
@@ -188,7 +188,7 @@ impl FileFilter for ProjectPathsAwareFilter {
     /// Returns true if the file regex pattern match the `file`
     ///
     /// If no file regex is set this returns true if the file ends with `.t.sol`, see
-    /// [OrbitalisPathExr::is_sol_test()]
+    /// [FoxarPathExr::is_sol_test()]
     fn is_match(&self, file: &Path) -> bool {
         self.args_filter.is_match(file)
     }

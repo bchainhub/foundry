@@ -9,9 +9,9 @@ use corebc::{
     signers::LocalWallet,
 };
 use eyre::{ContextCompat, WrapErr};
+use foxar_common::{fs, get_http_provider};
+use foxar_config::Config;
 use futures::future::join_all;
-use orbitalis_common::{fs, get_http_provider};
-use orbitalis_config::Config;
 use serde::{Deserialize, Serialize};
 use std::{
     io::BufWriter,
@@ -152,7 +152,7 @@ impl ScriptArgs {
                 join_all(futs).await.into_iter().filter(|res| res.is_err()).collect::<Vec<_>>();
 
             if !errors.is_empty() {
-                return Err(eyre::eyre!("{errors:?}"))
+                return Err(eyre::eyre!("{errors:?}"));
             }
         }
 
@@ -172,7 +172,7 @@ impl ScriptArgs {
                 {
                     Ok(_) => {
                         if self.verify {
-                            return sequence.verify_contracts(config, verify.clone()).await
+                            return sequence.verify_contracts(config, verify.clone()).await;
                         }
                         Ok(())
                     }
@@ -185,7 +185,7 @@ impl ScriptArgs {
             join_all(futs).await.into_iter().filter(|res| res.is_err()).collect::<Vec<_>>();
 
         if !errors.is_empty() {
-            return Err(eyre::eyre!("{errors:?}"))
+            return Err(eyre::eyre!("{errors:?}"));
         }
 
         Ok(())

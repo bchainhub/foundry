@@ -58,7 +58,7 @@ impl FromStr for Dependency {
             for (alias, real_org) in COMMON_ORG_ALIASES.iter() {
                 if dependency.starts_with(alias) {
                     dependency = dependency.replacen(alias, real_org, 1);
-                    break
+                    break;
                 }
             }
 
@@ -319,7 +319,7 @@ mod tests {
         assert_eq!(dep.alias, None);
     }
 
-    // <https://github.com/orbitalis-rs/orbitalis/pull/3130>
+    // <https://github.com/bchainhub/foxar/pull/3130>
     #[test]
     fn can_parse_oz_with_alias() {
         let dep =

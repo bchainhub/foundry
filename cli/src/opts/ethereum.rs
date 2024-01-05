@@ -1,7 +1,7 @@
 use super::{Wallet, WalletSigner};
 use clap::Parser;
 use eyre::Result;
-use orbitalis_config::{
+use foxar_config::{
     figment::{
         self,
         value::{Dict, Map, Value},

@@ -2,10 +2,10 @@ use crate::opts::EtherscanOpts;
 use clap::{Parser, ValueHint};
 use corebc::prelude::{errors::BlockindexError, Abigen, Client, MultiAbigen};
 use eyre::Result;
-use orbitalis_config::Config;
+use foxar_config::Config;
 use std::path::{Path, PathBuf};
 
-static DEFAULT_CRATE_NAME: &str = "orbitalis-contracts";
+static DEFAULT_CRATE_NAME: &str = "foxar-contracts";
 static DEFAULT_CRATE_VERSION: &str = "0.0.1";
 
 /// CLI arguments for `probe bind`.

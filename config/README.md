@@ -1,24 +1,24 @@
 # Configuration
 
-Orbitalis's configuration system allows you to configure it's tools the way _you_ want while also providing with a
+Foxar's configuration system allows you to configure it's tools the way _you_ want while also providing with a
 sensible set of defaults.
 
 ## Profiles
 
-Configurations can be arbitrarily namespaced by profiles. Orbitalis's default config is also named `default`, but can
-arbitrarily name and configure profiles as you like and set the `ORBITALIS_PROFILE` environment variable to the selected
-profile's name. This results in orbitalis's tools (spark) preferring the values in the profile with the named that's set
-in `ORBITALIS_PROFILE`. But all custom profiles inherit from the `default` profile.
+Configurations can be arbitrarily namespaced by profiles. Foxar's default config is also named `default`, but can
+arbitrarily name and configure profiles as you like and set the `FOXAR_PROFILE` environment variable to the selected
+profile's name. This results in foxar's tools (spark) preferring the values in the profile with the named that's set
+in `FOXAR_PROFILE`. But all custom profiles inherit from the `default` profile.
 
-## orbitalis.toml
+## foxar.toml
 
-Orbitalis's tools search for a `orbitalis.toml` or the filename in a `ORBITALIS_CONFIG` environment variable starting at the
+Foxar's tools search for a `foxar.toml` or the filename in a `FOXAR_CONFIG` environment variable starting at the
 current working directory. If it is not found, the parent directory, its parent directory, and so on are searched until
-the file is found or the root is reached. But the typical location for the global `orbitalis.toml` would
-be `~/.orbitalis/orbitalis.toml`, which is also checked. If the path set in `ORBITALIS_CONFIG` is absolute, no such search
+the file is found or the root is reached. But the typical location for the global `foxar.toml` would
+be `~/.foxar/foxar.toml`, which is also checked. If the path set in `FOXAR_CONFIG` is absolute, no such search
 takes place and the absolute path is used directly.
 
-In `orbitalis.toml` you can define multiple profiles, therefore the file is assumed to be _nested_, so each top-level key
+In `foxar.toml` you can define multiple profiles, therefore the file is assumed to be _nested_, so each top-level key
 declares a profile and its values configure the profile.
 
 The following is an example of what such a file might look like. This can also be obtained with `spark config`
@@ -49,14 +49,14 @@ When determining the profile to use, `Config` considers the following sources in
 and merge, at the per-key level:
 
 1. [`Config::default()`], which provides default values for all parameters.
-2. `orbitalis.toml` _or_ TOML file path in `ORBITALIS_CONFIG` environment variable.
-3. `ORBITALIS_` or `DAPP_` prefixed environment variables.
+2. `foxar.toml` _or_ TOML file path in `FOXAR_CONFIG` environment variable.
+3. `FOXAR_` or `DAPP_` prefixed environment variables.
 
-The selected profile is the value of the `ORBITALIS_PROFILE` environment variable, or if it is not set, "default".
+The selected profile is the value of the `FOXAR_PROFILE` environment variable, or if it is not set, "default".
 
 ### All Options
 
-The following is a orbitalis.toml file with all configuration options set. See also [/config/src/lib.rs](/config/src/lib.rs) and [/cli/tests/it/config.rs](/cli/tests/it/config.rs).
+The following is a foxar.toml file with all configuration options set. See also [/config/src/lib.rs](/config/src/lib.rs) and [/cli/tests/it/config.rs](/cli/tests/it/config.rs).
 
 ```toml
 ## defaults for _all_ profiles
@@ -113,7 +113,7 @@ no_match_contract = "Bar"
 match_path = "*/Foo*"
 no_match_path = "*/Bar*"
 ffi = false
-# These are the default callers, generated using `address(uint160(uint256(keccak256("orbitalis default caller"))))`
+# These are the default callers, generated using `address(uint160(uint256(keccak256("foxar default caller"))))`
 sender = '0xcb681804c8ab1f12e6bbf3894d4083f33e07309d1f38'
 tx_origin = '0xcb681804c8ab1f12e6bbf3894d4083f33e07309d1f38'
 initial_balance = '0xffffffffffffffffffffffff'
@@ -289,10 +289,10 @@ findings as warnings if any.
 
 ## Environment Variables
 
-Orbitalis's tools read all environment variable names prefixed with `ORBITALIS_` using the string after the `_` as the name
+Foxar's tools read all environment variable names prefixed with `FOXAR_` using the string after the `_` as the name
 of a configuration value as the value of the parameter as the value itself. But the
 corresponding [dapptools](https://github.com/dapphub/dapptools/tree/master/src/dapp#configuration) config vars are also
-supported, this means that `ORBITALIS_SRC` and `DAPP_SRC` are equivalent.
+supported, this means that `FOXAR_SRC` and `DAPP_SRC` are equivalent.
 
-Environment variables take precedence over values in `orbitalis.toml`. Values are parsed as loose form of TOML syntax.
+Environment variables take precedence over values in `foxar.toml`. Values are parsed as loose form of TOML syntax.
 Consider the following examples:

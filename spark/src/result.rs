@@ -2,8 +2,8 @@
 
 use crate::Address;
 use corebc::prelude::Log;
-use orbitalis_common::evm::Breakpoints;
-use orbitalis_evm::{
+use foxar_common::evm::Breakpoints;
+use foxar_evm::{
     coverage::HitMaps,
     executor::EvmError,
     fuzz::{CounterExample, FuzzCase},

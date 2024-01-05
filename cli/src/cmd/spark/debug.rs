@@ -1,11 +1,11 @@
 use super::{build::BuildArgs, script::ScriptArgs};
 use crate::cmd::{retry::RETRY_VERIFY_ON_CREATE, spark::build::CoreBuildArgs};
 use clap::{Parser, ValueHint};
-use orbitalis_common::evm::{Breakpoints, EvmArgs};
+use foxar_common::evm::{Breakpoints, EvmArgs};
 use std::path::PathBuf;
 
 // Loads project's figment and merges the build cli arguments into it
-orbitalis_config::impl_figment_convert!(DebugArgs, opts, evm_opts);
+foxar_config::impl_figment_convert!(DebugArgs, opts, evm_opts);
 
 /// CLI arguments for `spark debug`.
 #[derive(Debug, Clone, Parser)]

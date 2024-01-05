@@ -8,8 +8,8 @@ use corebc_core::{
 };
 use corebc_providers::Middleware;
 use eyre::{eyre, Result};
+use foxar_common::abi::{encode_args, get_func, get_func_blockindex};
 use futures::future::join_all;
-use orbitalis_common::abi::{encode_args, get_func, get_func_blockindex};
 
 use crate::strip_0x;
 
@@ -57,8 +57,7 @@ impl<'a, M: Middleware> TxBuilder<'a, M> {
             TransactionRequest::new().from(from_addr).network_id(network).into();
 
         let to_addr = if let Some(to) = to {
-            let addr =
-                resolve_ens(provider, orbitalis_utils::resolve_addr(to, Some(network))?).await?;
+            let addr = resolve_ens(provider, foxar_utils::resolve_addr(to, Some(network))?).await?;
             tx.set_to(addr);
             Some(addr)
         } else {
@@ -148,7 +147,7 @@ impl<'a, M: Middleware> TxBuilder<'a, M> {
         args: Vec<String>,
     ) -> Result<(Vec<u8>, Function)> {
         if sig.trim().is_empty() {
-            return Err(FunctionSignatureError::MissingSignature.into())
+            return Err(FunctionSignatureError::MissingSignature.into());
         }
 
         let args = resolve_name_args(&args, self.provider).await;
@@ -200,7 +199,7 @@ impl<'a, M: Middleware> TxBuilder<'a, M> {
         value: Option<(&str, Vec<String>)>,
     ) -> Result<&mut TxBuilder<'a, M>> {
         if let Some((sig, args)) = value {
-            return self.set_args(sig, args).await
+            return self.set_args(sig, args).await;
         }
         Ok(self)
     }

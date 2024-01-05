@@ -154,7 +154,7 @@ The `test_directory` macro is used to specify a new folder with source files for
 
 ## Contributing
 
-Check out the [orbitalis contribution guide](https://github.com/orbitalis-rs/orbitalis/blob/master/CONTRIBUTING.md).
+Check out the [foxar contribution guide](https://github.com/bchainhub/foxar/blob/master/CONTRIBUTING.md).
 
 Guidelines for contributing to `spark fmt`:
 
@@ -172,7 +172,7 @@ Guidelines for contributing to `spark fmt`:
         Forge fmt postfix comment misplaced
         Forge fmt does not inline short yul blocks
         ```
-2. Fill in the issue template fields that include orbitalis version, platform & component info.
+2. Fill in the issue template fields that include foxar version, platform & component info.
 3. Provide the code snippets showing the current & expected behaviors.
 4. If it's a feature request, specify why this feature is needed.
 5. Besides the default label (`T-Bug` for bugs or `T-feature` for features), add `C-spark` and `Cmd-spark-fmt` labels.

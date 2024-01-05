@@ -130,7 +130,7 @@ jobs:
             - name: cargo nextest
               shell: bash
               run: |
-                  # see https://github.com/orbitalis-rs/orbitalis/pull/3959
+                  # see https://github.com/foxar-rs/foxar/pull/3959
                   export LD_LIBRARY_PATH="$(rustc --print sysroot)/lib"
                   cargo nextest run --retries 3 --archive-file  ${{ matrix.job.target }}-${{ matrix.archive.file }} -E '${{ matrix.nextest.filter }}'
 
@@ -181,7 +181,7 @@ jobs:
               uses: actions/cache@v3
               if: matrix.nextest.name != 'non-forking'
               with:
-                  path: "$HOME/.orbitalis/cache"
+                  path: "$HOME/.foxar/cache"
                   key: rpc-cache-${{ hashFiles('cli/tests/rpc-cache-keyfile') }}
             - name: Setup git config
               run: |
@@ -192,7 +192,7 @@ jobs:
               if: ${{ matrix.job.target == 'aarch64-apple-darwin' }}
               shell: bash
               run: |
-                  # see https://github.com/orbitalis-rs/orbitalis/pull/3959
+                  # see https://github.com/foxar-rs/foxar/pull/3959
                   export LD_LIBRARY_PATH="$(rustc --print sysroot)/lib"
                   cargo nextest run --retries 3 --archive-file ${{ matrix.job.target }}-${{ matrix.archive.file }} -E '${{ matrix.nextest.macos-aarch-filter }}'
 
@@ -200,6 +200,6 @@ jobs:
               if: ${{ matrix.job.target != 'aarch64-apple-darwin' }}
               shell: bash
               run: |
-                  # see https://github.com/orbitalis-rs/orbitalis/pull/3959
+                  # see https://github.com/foxar-rs/foxar/pull/3959
                   export LD_LIBRARY_PATH="$(rustc --print sysroot)/lib"
                   cargo nextest run --retries 3 --archive-file ${{ matrix.job.target }}-${{ matrix.archive.file }} -E '${{ matrix.nextest.filter }}'

@@ -1,7 +1,7 @@
 use crate::opts::EtherscanOpts;
 use clap::Parser;
-use orbitalis_common::fs;
-use orbitalis_config::Config;
+use foxar_common::fs;
+use foxar_config::Config;
 use probe::{AbiPath, SimpleCast};
 use std::path::{Path, PathBuf};
 

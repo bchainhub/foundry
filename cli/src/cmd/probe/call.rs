@@ -6,7 +6,7 @@ use crate::{
 use clap::Parser;
 use corebc::types::{BlockId, NameOrAddress, U256};
 use eyre::WrapErr;
-use orbitalis_config::Config;
+use foxar_config::Config;
 use probe::{Cast, TxBuilder};
 use std::str::FromStr;
 
@@ -25,7 +25,7 @@ pub struct CallArgs {
     /// Data for the transaction.
     #[clap(
         long,
-        value_parser = orbitalis_common::clap_helpers::strip_0x_prefix,
+        value_parser = foxar_common::clap_helpers::strip_0x_prefix,
         conflicts_with_all = &["sig", "args"]
     )]
     data: Option<String>,
@@ -128,10 +128,10 @@ mod tests {
     fn can_parse_call_data() {
         let data = hex::encode("hello");
         let args: CallArgs =
-            CallArgs::parse_from(["orbitalis-cli", "--data", format!("0x{data}").as_str()]);
+            CallArgs::parse_from(["foxar-cli", "--data", format!("0x{data}").as_str()]);
         assert_eq!(args.data, Some(data.clone()));
 
-        let args: CallArgs = CallArgs::parse_from(["orbitalis-cli", "--data", data.as_str()]);
+        let args: CallArgs = CallArgs::parse_from(["foxar-cli", "--data", data.as_str()]);
         assert_eq!(args.data, Some(data));
     }
 
@@ -140,7 +140,7 @@ mod tests {
         let data = hex::encode("hello");
         let to = Address::zero();
         let args = CallArgs::try_parse_from([
-            "orbitalis-cli",
+            "foxar-cli",
             format!("{to:?}").as_str(),
             "signature",
             "--data",

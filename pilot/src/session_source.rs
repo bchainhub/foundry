@@ -9,7 +9,7 @@ use corebc_ylem::{
     CompilerInput, CompilerOutput, Ylem,
 };
 use eyre::Result;
-use orbitalis_config::{Config, YlemReq};
+use foxar_config::{Config, YlemReq};
 use semver::Version;
 use serde::{Deserialize, Serialize};
 use solang_parser::pt;
@@ -18,7 +18,7 @@ use spark_fmt::solang_ext::SafeUnwrap;
 use std::{collections::HashMap, fs, path::PathBuf};
 use yansi::Paint;
 
-/// Solidity source for the `Vm` interface in [forge-std](https://github.com/orbitalis-rs/forge-std)
+/// Solidity source for the `Vm` interface in [forge-std](https://github.com/foxar-rs/forge-std)
 static VM_SOURCE: &str = include_str!("../../testdata/cheats/Cheats.sol");
 
 /// Intermediate output for the compiled [SessionSource]
@@ -65,8 +65,8 @@ pub struct GeneratedOutput {
 /// Configuration for the [SessionSource]
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct SessionSourceConfig {
-    /// Orbitalis configuration
-    pub orbitalis_config: Config,
+    /// Foxar configuration
+    pub foxar_config: Config,
     /// EVM Options
     pub evm_opts: EvmOpts,
     #[serde(skip)]
@@ -82,16 +82,16 @@ impl SessionSourceConfig {
     /// Returns the ylem version to use
     ///
     /// Ylem version precedence
-    /// - Orbitalis configuration / `--use` flag
+    /// - Foxar configuration / `--use` flag
     /// - Latest installed version via YVM
     /// - Default: Latest 1.1.0
     pub(crate) fn ylem(&self) -> Result<Ylem> {
-        let ylem_req = if let Some(ylem_req) = self.orbitalis_config.ylem.clone() {
+        let ylem_req = if let Some(ylem_req) = self.foxar_config.ylem.clone() {
             ylem_req
         } else if let Some(version) = Ylem::installed_versions().into_iter().max() {
             YlemReq::Version(version.into())
         } else {
-            if !self.orbitalis_config.offline {
+            if !self.foxar_config.offline {
                 print!("{}", Paint::green("No solidity versions installed! "));
             }
             // use default
@@ -103,13 +103,13 @@ impl SessionSourceConfig {
                 // We now need to verify if the ylem version provided is supported by the evm
                 // version set. If not, we bail and ask the user to provide a newer version.
                 // 1. Do we need ylem 1.1.0 or higher?
-                let evm_version = self.orbitalis_config.cvm_version;
+                let evm_version = self.foxar_config.cvm_version;
                 // 2. Check if the version provided is less than 1.1.0 and bail,
                 // or leave it as-is if we don't need a post merge ylem version or the version we
                 // have is good enough.
                 let v = if version < Version::new(0, 8, 18) {
                     eyre::bail!("ylem {version} is not supported by the set evm version: {evm_version}. Please install and use a version of ylem higher or equal to 1.1.0.
-You can also set the ylem version in your orbitalis.toml.")
+You can also set the ylem version in your foxar.toml.")
                 } else {
                     version.to_string()
                 };
@@ -117,7 +117,7 @@ You can also set the ylem version in your orbitalis.toml.")
                 let mut ylem = Ylem::find_yvm_installed_version(&v)?;
 
                 if ylem.is_none() {
-                    if self.orbitalis_config.offline {
+                    if self.foxar_config.offline {
                         eyre::bail!("can't install missing ylem {version} in offline mode")
                     }
                     println!(
@@ -324,14 +324,14 @@ impl SessionSource {
         // file
         compiler_input.settings.remappings = self
             .config
-            .orbitalis_config
+            .foxar_config
             .get_all_remappings()
             .into_iter()
             .filter(|remapping| !remapping.name.starts_with("forge-std"))
             .collect();
 
         // We also need to enforce the EVM version that the user has specified.
-        compiler_input.settings.evm_version = Some(self.config.orbitalis_config.cvm_version);
+        compiler_input.settings.evm_version = Some(self.config.foxar_config.cvm_version);
 
         compiler_input
     }
@@ -641,13 +641,13 @@ pub fn parse_fragment(
     let mut base = SessionSource::new(ylem, config);
 
     if base.clone().with_run_code(buffer).parse().is_ok() {
-        return Some(ParseTreeFragment::Function)
+        return Some(ParseTreeFragment::Function);
     }
     if base.clone().with_top_level_code(buffer).parse().is_ok() {
-        return Some(ParseTreeFragment::Contract)
+        return Some(ParseTreeFragment::Contract);
     }
     if base.with_global_code(buffer).parse().is_ok() {
-        return Some(ParseTreeFragment::Source)
+        return Some(ParseTreeFragment::Source);
     }
 
     None

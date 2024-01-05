@@ -3,7 +3,7 @@ use std::error::Error;
 use tracing::error;
 use yansi::Paint;
 
-/// A custom context type for Orbitalis specific error reporting via `eyre`
+/// A custom context type for Foxar specific error reporting via `eyre`
 #[derive(Debug)]
 pub struct Handler;
 
@@ -14,7 +14,7 @@ impl EyreHandler for Handler {
         f: &mut core::fmt::Formatter<'_>,
     ) -> core::fmt::Result {
         if f.alternate() {
-            return core::fmt::Debug::fmt(error, f)
+            return core::fmt::Debug::fmt(error, f);
         }
         writeln!(f)?;
         write!(f, "{}", Paint::red(error))?;
@@ -39,29 +39,29 @@ impl EyreHandler for Handler {
     }
 }
 
-/// Installs the Orbitalis eyre hook as the global error report hook.
+/// Installs the Foxar eyre hook as the global error report hook.
 ///
 /// # Details
 ///
 /// By default a simple user-centric handler is installed, unless
-/// `ORBITALIS_DEBUG` is set in the environment, in which case a more
+/// `FOXAR_DEBUG` is set in the environment, in which case a more
 /// verbose debug-centric handler is installed.
 ///
 /// Panics are always caught by the more debug-centric handler.
 #[cfg_attr(windows, inline(never))]
 pub fn install() -> eyre::Result<()> {
-    let debug_enabled = std::env::var("ORBITALIS_DEBUG").is_ok();
+    let debug_enabled = std::env::var("FOXAR_DEBUG").is_ok();
 
     if debug_enabled {
         color_eyre::install()?;
     } else {
         let (panic_hook, _) = color_eyre::config::HookBuilder::default()
             .panic_section(
-                "This is a bug. Consider reporting it at https://github.com/orbitalis-rs/orbitalis",
+                "This is a bug. Consider reporting it at https://github.com/bchainhub/foxar",
             )
             .into_hooks();
         panic_hook.install();
-        // see <https://github.com/orbitalis-rs/orbitalis/issues/3050>
+        // see <https://github.com/bchainhub/foxar/issues/3050>
         if cfg!(windows) {
             if let Err(err) = eyre::set_hook(Box::new(move |_| Box::new(Handler))) {
                 error!(?err, "failed to install panic hook");

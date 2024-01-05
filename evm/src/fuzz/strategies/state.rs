@@ -9,9 +9,9 @@ use corebc::{
     abi::Function,
     types::{Address, Log, Network, H256, U256},
 };
+use foxar_common::contracts::{ContractsByAddress, ContractsByArtifact};
+use foxar_config::FuzzDictionaryConfig;
 use hashbrown::HashSet;
-use orbitalis_common::contracts::{ContractsByAddress, ContractsByArtifact};
-use orbitalis_config::FuzzDictionaryConfig;
 use parking_lot::RwLock;
 use proptest::prelude::{BoxedStrategy, Strategy};
 use revm::{
@@ -75,7 +75,7 @@ pub fn fuzz_calldata_from_state(
                 .unwrap_or_else(|_| {
                     panic!(
                         r#"Fuzzer generated invalid tokens {:?} for function `{}` inputs {:?}
-This is a bug, please open an issue: https://github.com/orbitalis-rs/orbitalis/issues"#,
+This is a bug, please open an issue: https://github.com/foxar-rs/foxar/issues"#,
                         tokens, func.name, func.inputs
                     )
                 })
@@ -182,7 +182,7 @@ pub fn collect_state_from_call(
                 }
             }
         } else {
-            return
+            return;
         }
 
         // Insert log topics and data
@@ -226,7 +226,7 @@ fn collect_push_bytes(code: Bytes) -> Vec<[u8; 32]> {
             // As a precaution, if a fuzz test deploys malformed bytecode (such as using `CREATE2`)
             // this will terminate the loop early.
             if push_start > code.len() || push_end > code.len() {
-                return bytes
+                return bytes;
             }
 
             let push_value = U256::from_big_endian(&code[push_start..push_end]);

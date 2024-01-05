@@ -4,8 +4,8 @@ use corebc::{
     abi::{self, AbiEncode, Token, Tokenize},
     types::Bytes,
 };
-use orbitalis_common::fs;
-use orbitalis_config::fs_permissions::FsAccessKind;
+use foxar_common::fs;
+use foxar_config::fs_permissions::FsAccessKind;
 use std::{
     io::{BufRead, BufReader, Write},
     path::Path,
@@ -67,8 +67,8 @@ pub(super) fn write_file(
     content: impl AsRef<[u8]>,
 ) -> Result {
     let path = state.config.ensure_path_allowed(path, FsAccessKind::Write)?;
-    // write access to orbitalis.toml is not allowed
-    state.config.ensure_not_orbitalis_toml(&path)?;
+    // write access to foxar.toml is not allowed
+    state.config.ensure_not_foxar_toml(&path)?;
 
     if state.fs_commit {
         fs::write(path, content.as_ref())?;
@@ -82,7 +82,7 @@ pub(super) fn write_file(
 /// This will create a file if it does not exist, and append the `line` if it does.
 fn write_line(state: &Cheatcodes, path: impl AsRef<Path>, line: &str) -> Result {
     let path = state.config.ensure_path_allowed(path, FsAccessKind::Write)?;
-    state.config.ensure_not_orbitalis_toml(&path)?;
+    state.config.ensure_not_foxar_toml(&path)?;
 
     if state.fs_commit {
         let mut file = std::fs::OpenOptions::new().append(true).create(true).open(path)?;
@@ -103,12 +103,12 @@ fn close_file(state: &mut Cheatcodes, path: impl AsRef<Path>) -> Result {
 
 /// Removes a file from the filesystem.
 ///
-/// Only files inside `<root>/` can be removed, `orbitalis.toml` excluded.
+/// Only files inside `<root>/` can be removed, `foxar.toml` excluded.
 ///
 /// This will return an error if the path points to a directory, or the file does not exist
 fn remove_file(state: &mut Cheatcodes, path: impl AsRef<Path>) -> Result {
     let path = state.config.ensure_path_allowed(path, FsAccessKind::Write)?;
-    state.config.ensure_not_orbitalis_toml(&path)?;
+    state.config.ensure_not_foxar_toml(&path)?;
 
     // also remove from the set if opened previously
     state.context.opened_read_files.remove(&path);

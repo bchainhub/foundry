@@ -92,7 +92,7 @@ async fn can_sign_typed_data() {
     );
 }
 
-// <https://github.com/orbitalis-rs/orbitalis/issues/2458>
+// <https://github.com/foxar-rs/foxar/issues/2458>
 #[tokio::test(flavor = "multi_thread")]
 async fn can_sign_typed_data_os() {
     let (api, _handle) = spawn(NodeConfig::test()).await;
@@ -306,7 +306,7 @@ async fn rejects_invalid_chain_id() {
     let _err = res.unwrap_err();
 }
 
-// <https://github.com/orbitalis-rs/orbitalis/issues/3409>
+// <https://github.com/foxar-rs/foxar/issues/3409>
 #[tokio::test(flavor = "multi_thread")]
 async fn can_sign_typed_seaport_data() {
     let (api, _handle) = spawn(NodeConfig::test()).await;

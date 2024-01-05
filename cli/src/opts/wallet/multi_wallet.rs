@@ -7,9 +7,9 @@ use corebc::{
     types::{Address, Network},
 };
 use eyre::{ContextCompat, Result};
+use foxar_common::RetryProvider;
+use foxar_config::Config;
 use itertools::izip;
-use orbitalis_common::RetryProvider;
-use orbitalis_config::Config;
 use serde::Serialize;
 use std::{
     collections::{HashMap, HashSet},
@@ -99,7 +99,7 @@ pub struct MultiWallet {
         long,
         help_heading = "Wallet options - raw",
         value_name = "RAW_PRIVATE_KEYS",
-        value_parser = orbitalis_common::clap_helpers::strip_0x_prefix,
+        value_parser = foxar_common::clap_helpers::strip_0x_prefix,
     )]
     pub private_keys: Option<Vec<String>>,
 
@@ -109,7 +109,7 @@ pub struct MultiWallet {
         help_heading = "Wallet options - raw",
         conflicts_with = "private_keys",
         value_name = "RAW_PRIVATE_KEY",
-        value_parser = orbitalis_common::clap_helpers::strip_0x_prefix,
+        value_parser = foxar_common::clap_helpers::strip_0x_prefix,
     )]
     pub private_key: Option<String>,
 
@@ -238,7 +238,7 @@ impl MultiWallet {
                     local_wallets.insert(address, signer);
 
                     if addresses.is_empty() {
-                        return Ok(local_wallets)
+                        return Ok(local_wallets);
                     }
                 } else {
                     // Just to show on error.
@@ -251,7 +251,7 @@ impl MultiWallet {
 
         // This is an actual used address
         if addresses.contains(&Config::DEFAULT_SENDER) {
-            error_msg += "\nYou seem to be using Orbitalis's default sender. Be sure to set your own --sender.\n";
+            error_msg += "\nYou seem to be using Foxar's default sender. Be sure to set your own --sender.\n";
         }
 
         unused_wallets.extend(local_wallets.into_keys());
@@ -269,7 +269,7 @@ impl MultiWallet {
             for _ in 0..self.interactives {
                 wallets.push(self.get_from_interactive()?);
             }
-            return Ok(Some(wallets))
+            return Ok(Some(wallets));
         }
         Ok(None)
     }
@@ -280,7 +280,7 @@ impl MultiWallet {
             for private_key in private_keys.iter() {
                 wallets.push(self.get_from_private_key(private_key.trim())?);
             }
-            return Ok(Some(wallets))
+            return Ok(Some(wallets));
         }
         Ok(None)
     }
@@ -301,7 +301,7 @@ impl MultiWallet {
             for path in keystore_paths {
                 wallets.push(self.get_from_keystore(Some(path), passwords_iter.next().as_ref(), password_files_iter.next().as_ref())?.wrap_err("Keystore paths do not have the same length as provided passwords or password files.")?);
             }
-            return Ok(Some(wallets))
+            return Ok(Some(wallets));
         }
         Ok(None)
     }
@@ -336,7 +336,7 @@ impl MultiWallet {
                     mnemonic_index,
                 )?)
             }
-            return Ok(Some(wallets))
+            return Ok(Some(wallets));
         }
         Ok(None)
     }
@@ -423,11 +423,11 @@ mod tests {
     #[test]
     fn parse_keystore_args() {
         let args: MultiWallet =
-            MultiWallet::parse_from(["orbitalis-cli", "--keystores", "my/keystore/path"]);
+            MultiWallet::parse_from(["foxar-cli", "--keystores", "my/keystore/path"]);
         assert_eq!(args.keystore_paths, Some(vec!["my/keystore/path".to_string()]));
 
         std::env::set_var("ETH_KEYSTORE", "MY_KEYSTORE");
-        let args: MultiWallet = MultiWallet::parse_from(["orbitalis-cli"]);
+        let args: MultiWallet = MultiWallet::parse_from(["foxar-cli"]);
         assert_eq!(args.keystore_paths, Some(vec!["MY_KEYSTORE".to_string()]));
 
         std::env::remove_var("ETH_KEYSTORE");
@@ -445,7 +445,7 @@ mod tests {
             .into_os_string();
 
         let args: MultiWallet = MultiWallet::parse_from([
-            "orbitalis-cli",
+            "foxar-cli",
             "--keystores",
             keystore_file.to_str().unwrap(),
             "--password-file",

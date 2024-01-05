@@ -1,5 +1,5 @@
 use criterion::{criterion_group, criterion_main, Criterion};
-use orbitalis_cli_test_utils::{util::setup_spark_remote, TestCommand, TestProject};
+use foxar_cli_test_utils::{util::setup_spark_remote, TestCommand, TestProject};
 
 /// Returns a cloned and `spark built` `solmate` project
 fn built_solmate() -> (TestProject, TestCommand) {

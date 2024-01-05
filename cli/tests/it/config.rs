@@ -5,12 +5,12 @@ use corebc::{
     types::{Address, H256, U256},
     ylem::{artifacts::RevertStrings, CvmVersion},
 };
-use orbitalis_cli_test_utils::{
+use foxar_cli_test_utils::{
     corebc_ylem::{remappings::Remapping, YlemVersion},
     pretty_eq, sparktest, sparktest_init,
     util::{pretty_err, OutputExt, TestCommand, TestProject},
 };
-use orbitalis_config::{
+use foxar_config::{
     cache::{CachedEndpoints, CachedNetworks, StorageCachingConfig},
     Config, FuzzConfig, InvariantConfig, OptimizerDetails, YlemReq,
 };
@@ -131,7 +131,7 @@ sparktest!(
 );
 
 // checks that config works
-// - orbitalis.toml is properly generated
+// - foxar.toml is properly generated
 // - paths are resolved properly
 // - config supports overrides from env, and cli
 sparktest_init!(
@@ -139,8 +139,8 @@ sparktest_init!(
     can_override_config,
     |prj: TestProject, mut cmd: TestCommand| {
         cmd.set_current_dir(prj.root());
-        let orbitalis_toml = prj.root().join(Config::FILE_NAME);
-        assert!(orbitalis_toml.exists());
+        let foxar_toml = prj.root().join(Config::FILE_NAME);
+        assert!(foxar_toml.exists());
 
         let profile = Config::load_with_root(prj.root());
 
@@ -218,7 +218,7 @@ sparktest_init!(
         let mut config = Config::load_with_root(prj.root());
         config.eth_rpc_url = Some("http://127.0.0.1:8545".to_string());
         config.auto_detect_ylem = false;
-        // write to `orbitalis.toml`
+        // write to `foxar.toml`
         prj.create_file(
             Config::FILE_NAME,
             &config.to_string_pretty().unwrap().replace("eth_rpc_url", "eth-rpc-url"),
@@ -239,11 +239,11 @@ sparktest_init!(
         assert_eq!(config.eth_rpc_url, Some(url.to_string()));
         assert!(config.ffi);
 
-        std::env::set_var("ORBITALIS_ETH_RPC_URL", url);
+        std::env::set_var("FOXAR_ETH_RPC_URL", url);
         let figment = Config::figment_with_root(prj.root()).merge(("debug", false));
         let evm_opts: EvmOpts = figment.extract().unwrap();
         assert_eq!(evm_opts.fork_url, Some(url.to_string()));
-        std::env::remove_var("ORBITALIS_ETH_RPC_URL");
+        std::env::remove_var("FOXAR_ETH_RPC_URL");
     }
 );
 
@@ -353,7 +353,7 @@ sparktest!(can_set_gas_price, |prj: TestProject, mut cmd: TestCommand| {
 });
 
 // test that optimizer runs works
-sparktest_init!(can_detect_lib_orbitalis_toml, |prj: TestProject, mut cmd: TestCommand| {
+sparktest_init!(can_detect_lib_foxar_toml, |prj: TestProject, mut cmd: TestCommand| {
     let config = cmd.config();
     let remappings = config.remappings.iter().cloned().map(Remapping::from).collect::<Vec<_>>();
     pretty_assertions::assert_eq!(
@@ -368,7 +368,7 @@ sparktest_init!(can_detect_lib_orbitalis_toml, |prj: TestProject, mut cmd: TestC
     config.remappings = vec![Remapping::from_str("nested/=lib/nested").unwrap().into()];
     let nested = prj.paths().libraries[0].join("nested-lib");
     pretty_err(&nested, fs::create_dir_all(&nested));
-    let toml_file = nested.join("orbitalis.toml");
+    let toml_file = nested.join("foxar.toml");
     pretty_err(&toml_file, fs::write(&toml_file, config.to_string_pretty().unwrap()));
 
     let config = cmd.config();
@@ -388,7 +388,7 @@ sparktest_init!(can_detect_lib_orbitalis_toml, |prj: TestProject, mut cmd: TestC
     config.remappings = vec![Remapping::from_str("nested-twice/=lib/nested-twice").unwrap().into()];
     let nested = nested.join("lib/another-lib");
     pretty_err(&nested, fs::create_dir_all(&nested));
-    let toml_file = nested.join("orbitalis.toml");
+    let toml_file = nested.join("foxar.toml");
     pretty_err(&toml_file, fs::write(&toml_file, config.to_string_pretty().unwrap()));
 
     let another_config = cmd.config();
@@ -437,7 +437,7 @@ sparktest_init!(
             vec![Remapping::from_str("forge-std/=lib/forge-std/src/").unwrap().into()];
         let nested = prj.paths().libraries[0].join("dep1");
         pretty_err(&nested, fs::create_dir_all(&nested));
-        let toml_file = nested.join("orbitalis.toml");
+        let toml_file = nested.join("foxar.toml");
         pretty_err(&toml_file, fs::write(&toml_file, config.to_string_pretty().unwrap()));
 
         let config = cmd.config();
@@ -453,7 +453,7 @@ sparktest_init!(
     }
 );
 
-// test to check that orbitalis.toml libs section updates on install
+// test to check that foxar.toml libs section updates on install
 sparktest!(can_update_libs_section, |prj: TestProject, mut cmd: TestCommand| {
     cmd.git_init();
 
@@ -477,7 +477,7 @@ sparktest!(can_update_libs_section, |prj: TestProject, mut cmd: TestCommand| {
     assert_eq!(config.libs, expected);
 });
 
-// test to check that loading the config emits warnings on the root orbitalis.toml and
+// test to check that loading the config emits warnings on the root foxar.toml and
 // is silent for any libs
 sparktest!(config_emit_warnings, |prj: TestProject, mut cmd: TestCommand| {
     cmd.git_init();
@@ -490,9 +490,8 @@ sparktest!(config_emit_warnings, |prj: TestProject, mut cmd: TestCommand| {
     out = 'out'
     libs = ['lib']"#;
 
-    fs::write(prj.root().join("orbitalis.toml"), faulty_toml).unwrap();
-    fs::write(prj.root().join("lib").join("forge-std").join("orbitalis.toml"), faulty_toml)
-        .unwrap();
+    fs::write(prj.root().join("foxar.toml"), faulty_toml).unwrap();
+    fs::write(prj.root().join("lib").join("forge-std").join("foxar.toml"), faulty_toml).unwrap();
 
     cmd.spark_fuse().args(["config"]);
     let output = cmd.execute();
@@ -517,7 +516,7 @@ sparktest_init!(can_skip_remappings_auto_detection, |prj: TestProject, mut cmd: 
 
     let config = cmd.config();
 
-    // only loads remappings from orbitalis.toml
+    // only loads remappings from foxar.toml
     assert_eq!(config.remappings.len(), 1);
     assert_eq!("remapping/=lib/remapping/", config.remappings[0].to_string());
 });

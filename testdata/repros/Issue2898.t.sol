@@ -5,7 +5,7 @@ import "ds-test/test.sol";
 import "../cheats/Cheats.sol";
 import "../logs/console.sol";
 
-// https://github.com/orbitalis-rs/orbitalis/issues/2898
+// https://github.com/foxar-rs/foxar/issues/2898
 contract Issue2898Test is DSTest {
     address private constant BRIDGE = address(10);
     address private constant BENEFICIARY = address(11);

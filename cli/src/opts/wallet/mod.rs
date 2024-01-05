@@ -10,7 +10,7 @@ use corebc::{
     },
 };
 use eyre::{bail, Result, WrapErr};
-use orbitalis_common::fs;
+use foxar_common::fs;
 use serde::{Deserialize, Serialize};
 use std::{
     path::{Path, PathBuf},
@@ -53,7 +53,7 @@ pub struct Wallet {
         long,
         help_heading = "Wallet options - raw",
         value_name = "RAW_PRIVATE_KEY",
-        value_parser = orbitalis_common::clap_helpers::strip_0x_prefix
+        value_parser = foxar_common::clap_helpers::strip_0x_prefix
     )]
     pub private_key: Option<String>,
 
@@ -282,14 +282,14 @@ pub trait WalletTrait {
                         // SAFETY: at this point we know the user actually wanted to use an env var
                         // and most likely forgot the `$` anchor, so the
                         // `private_key` here is an unresolved env var
-                        return Err(PrivateKeyError::ExistsAsEnvVar(pk.to_string()))
+                        return Err(PrivateKeyError::ExistsAsEnvVar(pk.to_string()));
                     }
                     Ok(())
                 };
                 match err {
                     WalletError::HexError(err) => {
                         ensure_not_env(private_key)?;
-                        return Err(PrivateKeyError::InvalidHex(err).into())
+                        return Err(PrivateKeyError::InvalidHex(err).into());
                     }
                     WalletError::ED448Error(_) => {
                         ensure_not_env(private_key)?;
@@ -545,7 +545,7 @@ mod tests {
             "UTC--2020-07-20T17-37-08.515483762Z--cb27de521e43741cf785cbad450d5649187b9612018f",
         );
         let wallet: Wallet = Wallet::parse_from([
-            "orbitalis-cli",
+            "foxar-cli",
             "--from",
             "cb27de521e43741cf785cbad450d5649187b9612018f",
         ]);
@@ -586,7 +586,7 @@ mod tests {
         let path = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
             .join("tests/fixtures/keystore/password")
             .into_os_string();
-        let wallet: Wallet = Wallet::parse_from(["orbitalis-cli"]);
+        let wallet: Wallet = Wallet::parse_from(["foxar-cli"]);
         let password = wallet.password_from_file(path).unwrap();
         assert_eq!(password, "this is keystore password")
     }

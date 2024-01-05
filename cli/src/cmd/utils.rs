@@ -10,8 +10,8 @@ use corebc::{
     },
 };
 use eyre::WrapErr;
-use orbitalis_common::{cli_warn, fs, TestFunctionExt};
-use orbitalis_config::{error::ExtractConfigError, figment::Figment, Config};
+use foxar_common::{cli_warn, fs, TestFunctionExt};
+use foxar_config::{error::ExtractConfigError, figment::Figment, Config};
 use spark::executor::opts::EvmOpts;
 use std::{fmt::Write, path::PathBuf};
 use tracing::trace;
@@ -93,7 +93,7 @@ pub fn get_cached_entry_by_name(
     }
 
     if let Some(entry) = cached_entry {
-        return Ok(entry)
+        return Ok(entry);
     }
 
     let mut err = format!("could not find artifact: `{name}`");

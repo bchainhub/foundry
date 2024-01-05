@@ -1,4 +1,4 @@
-use crate::{orbitalis_toml_dirs, remappings_from_env_var, remappings_from_newline, Config};
+use crate::{foxar_toml_dirs, remappings_from_env_var, remappings_from_newline, Config};
 use corebc_ylem::remappings::{RelativeRemapping, Remapping};
 use figment::{
     value::{Dict, Map},
@@ -14,7 +14,7 @@ use tracing::trace;
 
 /// A figment provider that checks if the remappings were previously set and if they're unset looks
 /// up the fs via
-///   - `DAPP_REMAPPINGS` || `ORBITALIS_REMAPPINGS` env var
+///   - `DAPP_REMAPPINGS` || `FOXAR_REMAPPINGS` env var
 ///   - `<root>/remappings.txt` file
 ///   - `Remapping::find_many`.
 pub struct RemappingsProvider<'a> {
@@ -64,7 +64,7 @@ impl<'a> RemappingsProvider<'a> {
 
         // check env var
         if let Some(env_remappings) = remappings_from_env_var("DAPP_REMAPPINGS")
-            .or_else(|| remappings_from_env_var("ORBITALIS_REMAPPINGS"))
+            .or_else(|| remappings_from_env_var("FOXAR_REMAPPINGS"))
         {
             new_remappings
                 .extend(env_remappings.map_err::<Error, _>(|err| err.to_string().into())?);
@@ -85,8 +85,8 @@ impl<'a> RemappingsProvider<'a> {
         // scan all library dirs and autodetect remappings
         if self.auto_detect_remappings {
             let mut lib_remappings = HashMap::new();
-            // find all remappings of from libs that use a orbitalis.toml
-            for r in self.lib_orbitalis_toml_remappings() {
+            // find all remappings of from libs that use a foxar.toml
+            for r in self.lib_foxar_toml_remappings() {
                 insert_closest(&mut lib_remappings, r.name, r.path.into());
             }
             // use auto detection for all libs
@@ -101,7 +101,7 @@ impl<'a> RemappingsProvider<'a> {
             {
                 // this is an additional safety check for weird auto-detected remappings
                 if ["lib/", "src/", "contracts/"].contains(&r.name.as_str()) {
-                    continue
+                    continue;
                 }
                 insert_closest(&mut lib_remappings, r.name, r.path.into());
             }
@@ -120,14 +120,14 @@ impl<'a> RemappingsProvider<'a> {
         Ok(new_remappings)
     }
 
-    /// Returns all remappings declared in orbitalis.toml files of libraries
-    fn lib_orbitalis_toml_remappings(&self) -> impl Iterator<Item = Remapping> + '_ {
+    /// Returns all remappings declared in foxar.toml files of libraries
+    fn lib_foxar_toml_remappings(&self) -> impl Iterator<Item = Remapping> + '_ {
         self.lib_paths
             .iter()
             .map(|p| self.root.join(p))
-            .flat_map(orbitalis_toml_dirs)
+            .flat_map(foxar_toml_dirs)
             .inspect(|lib| {
-                trace!("find all remappings of nested orbitalis.toml lib: {:?}", lib);
+                trace!("find all remappings of nested foxar.toml lib: {:?}", lib);
             })
             .flat_map(|lib: PathBuf| {
                 // load config, of the nested lib if it exists
@@ -175,7 +175,7 @@ impl<'a> Provider for RemappingsProvider<'a> {
                 if let figment::error::Kind::MissingField(_) = err.kind {
                     self.get_remappings(vec![])
                 } else {
-                    return Err(err.clone())
+                    return Err(err.clone());
                 }
             }
         }?;

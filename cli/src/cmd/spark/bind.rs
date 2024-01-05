@@ -4,8 +4,8 @@ use crate::cmd::{
 };
 use clap::{Parser, ValueHint};
 use corebc::contract::{Abigen, ContractFilter, ExcludeContracts, MultiAbigen, SelectContracts};
-use orbitalis_common::{compile, fs::json_files};
-use orbitalis_config::impl_figment_convert;
+use foxar_common::{compile, fs::json_files};
+use foxar_config::impl_figment_convert;
 use std::{
     fs,
     path::{Path, PathBuf},
@@ -13,7 +13,7 @@ use std::{
 
 impl_figment_convert!(BindArgs, build_args);
 
-const DEFAULT_CRATE_NAME: &str = "orbitalis-contracts";
+const DEFAULT_CRATE_NAME: &str = "foxar-contracts";
 const DEFAULT_CRATE_VERSION: &str = "0.1.0";
 
 /// CLI arguments for `spark bind`.
@@ -97,13 +97,13 @@ impl BindArgs {
     /// Returns the filter to use for `MultiAbigen`
     fn get_filter(&self) -> ContractFilter {
         if self.select_all {
-            return ContractFilter::All
+            return ContractFilter::All;
         }
         if !self.select.is_empty() {
-            return SelectContracts::default().extend_regex(self.select.clone()).into()
+            return SelectContracts::default().extend_regex(self.select.clone()).into();
         }
         if !self.skip.is_empty() {
-            return ExcludeContracts::default().extend_regex(self.skip.clone()).into()
+            return ExcludeContracts::default().extend_regex(self.skip.clone()).into();
         }
         // This excludes all Test/Script and forge-std contracts
         ExcludeContracts::default()
@@ -197,7 +197,7 @@ impl Cmd for BindArgs {
 
         if !self.overwrite && self.bindings_exist(&artifacts) {
             println!("Bindings found. Checking for consistency.");
-            return self.check_existing_bindings(&artifacts)
+            return self.check_existing_bindings(&artifacts);
         }
 
         if self.overwrite && self.bindings_exist(&artifacts) {

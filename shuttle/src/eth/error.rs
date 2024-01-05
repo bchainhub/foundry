@@ -7,8 +7,8 @@ use corebc::{
     signers::WalletError,
     types::{Bytes, SignatureError, U256},
 };
-use orbitalis_common::SELECTOR_LEN;
-use orbitalis_evm::{executor::backend::DatabaseError, revm::interpreter::InstructionResult};
+use foxar_common::SELECTOR_LEN;
+use foxar_evm::{executor::backend::DatabaseError, revm::interpreter::InstructionResult};
 use serde::Serialize;
 use shuttle_rpc::{
     error::{ErrorCode, RpcError},
@@ -216,7 +216,7 @@ impl From<revm::primitives::InvalidTransaction> for InvalidTransactionError {
 pub(crate) fn decode_revert_reason(out: impl AsRef<[u8]>) -> Option<String> {
     let out = out.as_ref();
     if out.len() < SELECTOR_LEN {
-        return None
+        return None;
     }
     String::decode(&out[SELECTOR_LEN..]).ok()
 }

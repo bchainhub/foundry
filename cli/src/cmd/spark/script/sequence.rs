@@ -12,8 +12,8 @@ use corebc::{
     types::{transaction::eip2718::TypedTransaction, Network},
 };
 use eyre::{ContextCompat, WrapErr};
-use orbitalis_common::{fs, shell, SELECTOR_LEN};
-use orbitalis_config::Config;
+use foxar_common::{fs, shell, SELECTOR_LEN};
+use foxar_config::Config;
 use serde::{Deserialize, Serialize};
 use std::{
     collections::{HashMap, VecDeque},
@@ -377,12 +377,12 @@ impl Drop for ScriptSequence {
 fn sig_to_file_name(sig: &str) -> String {
     if let Some((name, _)) = sig.split_once('(') {
         // strip until call argument parenthesis
-        return name.to_string()
+        return name.to_string();
     }
     // assume calldata if `sig` is hex
     if let Ok(calldata) = hex::decode(sig) {
         // in which case we return the function signature
-        return hex::encode(&calldata[..SELECTOR_LEN])
+        return hex::encode(&calldata[..SELECTOR_LEN]);
     }
 
     // return sig as is

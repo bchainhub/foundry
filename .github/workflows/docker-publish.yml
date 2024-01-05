@@ -12,7 +12,7 @@ on:
 
 env:
     REGISTRY: ghcr.io
-    # Will resolve to orbitalis-rs/orbitalis
+    # Will resolve to foxar-rs/foxar
     IMAGE_NAME: ${{ github.repository }}
 
 jobs:

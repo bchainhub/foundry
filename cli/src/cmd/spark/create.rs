@@ -16,7 +16,7 @@ use corebc::{
     ylem::{info::ContractInfo, utils::canonicalized},
 };
 use eyre::Context;
-use orbitalis_common::{abi::parse_tokens, compile};
+use foxar_common::{abi::parse_tokens, compile};
 use rustc_hex::ToHex;
 use serde_json::json;
 use std::{path::PathBuf, sync::Arc};
@@ -260,7 +260,7 @@ impl CreateArgs {
         };
 
         if !self.verify {
-            return Ok(())
+            return Ok(());
         }
 
         println!("Starting contract verification...");
@@ -312,7 +312,7 @@ mod tests {
     #[test]
     fn can_parse_create() {
         let args: CreateArgs = CreateArgs::parse_from([
-            "orbitalis-cli",
+            "foxar-cli",
             "src/Domains.sol:Domains",
             "--verify",
             "--retries",

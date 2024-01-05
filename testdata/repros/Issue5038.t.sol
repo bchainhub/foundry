@@ -8,7 +8,7 @@ struct Value {
     uint256 value;
 }
 
-// https://github.com/orbitalis-rs/orbitalis/issues/5038
+// https://github.com/foxar-rs/foxar/issues/5038
 contract Issue5038Test is DSTest {
     Cheats constant vm = Cheats(HEVM_ADDRESS);
 

@@ -8,7 +8,7 @@ use crate::prelude::{
     SolidityHelper,
 };
 use corebc::{contract::Lazy, utils::hex};
-use orbitalis_config::{Config, RpcEndpoint};
+use foxar_config::{Config, RpcEndpoint};
 use regex::Regex;
 use reqwest::Url;
 use solang_parser::diagnostics::Diagnostic;
@@ -30,7 +30,7 @@ static DEFAULT_PROMPT: &str = "➜ ";
 /// Command leader character
 pub static COMMAND_LEADER: char = '!';
 /// Pilot character
-pub static Pilot_CHAR: &str = "⚒️";
+pub static PILOT_CHAR: &str = "⚒️";
 
 /// Matches Ylem comments
 static COMMENT_RE: Lazy<Regex> =
@@ -153,7 +153,7 @@ impl PilotDispatcher {
                     PilotCommand::iter().map(CmdDescriptor::from).collect::<Vec<CmdDescriptor>>();
                 DispatchResult::CommandSuccess(Some(format!(
                     "{}\n{}",
-                    Paint::cyan(format!("{Pilot_CHAR} Pilot help\n=============")),
+                    Paint::cyan(format!("{PILOT_CHAR} Pilot help\n=============")),
                     CmdCategory::iter()
                         .map(|cat| {
                             // Get commands in the current category
@@ -271,7 +271,7 @@ impl PilotDispatcher {
             PilotCommand::ListSessions => match PilotSession::list_sessions() {
                 Ok(sessions) => DispatchResult::CommandSuccess(Some(format!(
                     "{}\n{}",
-                    Paint::cyan(format!("{Pilot_CHAR} Pilot Sessions")),
+                    Paint::cyan(format!("{PILOT_CHAR} Pilot Sessions")),
                     sessions
                         .iter()
                         .map(|(time, name)| {
@@ -288,7 +288,7 @@ impl PilotDispatcher {
                 if let Some(session_source) = self.session.session_source.as_ref() {
                     match format_source(
                         &session_source.to_repl_source(),
-                        session_source.config.orbitalis_config.fmt.clone(),
+                        session_source.config.foxar_config.fmt.clone(),
                     ) {
                         Ok(formatted_source) => DispatchResult::CommandSuccess(Some(
                             SolidityHelper::highlight(&formatted_source).into_owned(),
@@ -324,10 +324,10 @@ impl PilotDispatcher {
                     let arg = *args.first().unwrap();
 
                     // If the argument is an RPC alias designated in the
-                    // `[rpc_endpoints]` section of the `orbitalis.toml` within
+                    // `[rpc_endpoints]` section of the `foxar.toml` within
                     // the pwd, use the URL matched to the key.
                     let endpoint = if let Some(endpoint) =
-                        session_source.config.orbitalis_config.rpc_endpoints.get(arg)
+                        session_source.config.foxar_config.rpc_endpoints.get(arg)
                     {
                         endpoint.clone()
                     } else {
@@ -458,8 +458,8 @@ impl PilotDispatcher {
             PilotCommand::Export => {
                 // Check if the current session inherits `Script.sol` before exporting
                 if let Some(session_source) = self.session.session_source.as_ref() {
-                    // Check if the pwd is a orbitalis project
-                    if PathBuf::from("orbitalis.toml").exists() {
+                    // Check if the pwd is a foxar project
+                    if PathBuf::from("foxar.toml").exists() {
                         // Create "script" dir if it does not already exist.
                         if !PathBuf::from("script").exists() {
                             if let Err(e) = std::fs::create_dir_all("script") {
@@ -471,7 +471,7 @@ impl PilotDispatcher {
 
                         match format_source(
                             &session_source.to_script_source(),
-                            session_source.config.orbitalis_config.fmt.clone(),
+                            session_source.config.foxar_config.fmt.clone(),
                         ) {
                             Ok(formatted_source) => {
                                 // Write session source to `script/REPL.s.sol`
@@ -494,7 +494,7 @@ impl PilotDispatcher {
                         }
                     } else {
                         DispatchResult::CommandFailed(Self::make_error(
-                            "Must be in a orbitalis project to export source to script.",
+                            "Must be in a foxar project to export source to script.",
                         ))
                     }
                 } else {
@@ -519,7 +519,7 @@ impl PilotDispatcher {
             //             .as_ref()
             //             .unwrap()
             //             .config
-            //             .orbitalis_config
+            //             .foxar_config
             //             .etherscan_api_key
             //             .as_ref()
             //         {
@@ -941,7 +941,7 @@ impl PilotDispatcher {
     ) -> eyre::Result<CallTraceDecoder> {
         //todo:error2215 commented out (waiting for blockindex implementation)
         // let mut etherscan_identifier = EtherscanIdentifier::new(
-        //     &session_config.orbitalis_config,
+        //     &session_config.foxar_config,
         //     session_config.evm_opts.get_remote_chain_id(),
         // )?;
 
@@ -949,8 +949,8 @@ impl PilotDispatcher {
             CallTraceDecoderBuilder::new().with_labels(result.labeled_addresses.clone()).build();
 
         decoder.add_signature_identifier(SignaturesIdentifier::new(
-            Config::orbitalis_cache_dir(),
-            session_config.orbitalis_config.offline,
+            Config::foxar_cache_dir(),
+            session_config.foxar_config.offline,
         )?);
 
         for (_, _trace) in &mut result.traces {
@@ -976,7 +976,7 @@ impl PilotDispatcher {
         result: &mut PilotResult,
     ) -> eyre::Result<()> {
         if result.traces.is_empty() {
-            eyre::bail!("Unexpected error: No traces gathered. Please report this as a bug: https://github.com/orbitalis-rs/orbitalis/issues/new?assignees=&labels=T-bug&template=BUG-FORM.yml");
+            eyre::bail!("Unexpected error: No traces gathered. Please report this as a bug: https://github.com/foxar-rs/foxar/issues/new?assignees=&labels=T-bug&template=BUG-FORM.yml");
         }
 
         println!("{}", Paint::green("Traces:"));
@@ -1001,7 +1001,7 @@ impl PilotDispatcher {
     ///
     /// A formatted error [String].
     pub fn make_error<T: std::fmt::Display>(msg: T) -> String {
-        format!("{} {}", Paint::red(format!("{Pilot_CHAR} Pilot Error:")), Paint::red(msg))
+        format!("{} {}", Paint::red(format!("{PILOT_CHAR} Pilot Error:")), Paint::red(msg))
     }
 }
 

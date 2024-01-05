@@ -11,7 +11,7 @@ use corebc::{
     types::{Bloom, H256, U256},
     utils::rlp,
 };
-use orbitalis_evm::{
+use foxar_evm::{
     executor::backend::DatabaseError,
     revm,
     revm::{
@@ -20,7 +20,7 @@ use orbitalis_evm::{
     },
     trace::{node::CallTraceNode, CallTraceArena},
 };
-use orbitalis_utils::types::ToEthersU256;
+use foxar_utils::types::ToEthersU256;
 use shuttle_core::eth::{
     block::{Block, BlockInfo, Header, PartialHeader},
     receipt::{EIP658Receipt, Log, TypedReceipt},
@@ -121,13 +121,13 @@ impl<'a, DB: Db + ?Sized, Validator: TransactionValidator> TransactionExecutor<'
                 TransactionExecutionOutcome::Exhausted(_) => continue,
                 TransactionExecutionOutcome::Invalid(tx, _) => {
                     invalid.push(tx);
-                    continue
+                    continue;
                 }
                 TransactionExecutionOutcome::DatabaseError(_, err) => {
                     // Note: this is only possible in forking mode, if for example a rpc request
                     // failed
                     trace!(target: "backend", ?err,  "Failed to execute transaction due to database error");
-                    continue
+                    continue;
                 }
             };
             let receipt = tx.create_receipt();
@@ -221,7 +221,7 @@ impl<'a, 'b, DB: Db + ?Sized, Validator: TransactionValidator> Iterator
         // check that we comply with the block's energy limit
         let max_energy = self.energy_used.saturating_add(U256::from(env.tx.energy_limit));
         if max_energy > env.block.energy_limit.to_ethers_u256() {
-            return Some(TransactionExecutionOutcome::Exhausted(transaction))
+            return Some(TransactionExecutionOutcome::Exhausted(transaction));
         }
 
         // validate before executing
@@ -231,7 +231,7 @@ impl<'a, 'b, DB: Db + ?Sized, Validator: TransactionValidator> Iterator
             &env,
         ) {
             warn!(target: "backend", "Skipping invalid tx execution [{:?}] {}", transaction.hash(), err);
-            return Some(TransactionExecutionOutcome::Invalid(transaction, err))
+            return Some(TransactionExecutionOutcome::Invalid(transaction, err));
         }
 
         let mut evm = revm::EVM::new();

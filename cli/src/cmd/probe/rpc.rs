@@ -1,8 +1,8 @@
 use crate::{opts::RpcOpts, utils};
 use clap::Parser;
 use eyre::Result;
+use foxar_config::Config;
 use itertools::Itertools;
-use orbitalis_config::Config;
 use probe::Cast;
 
 /// CLI arguments for `probe rpc`.

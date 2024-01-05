@@ -17,7 +17,7 @@ body:
               - Forge
               - Cast
               - Anvil
-              - Orbitalisup
+              - Foxarup
               - Pilot
               - Other (please describe)
       validations:
@@ -26,11 +26,11 @@ body:
       attributes:
           label: Have you ensured that all of these are up to date?
           options:
-              - label: Orbitalis
-              - label: Orbitalisup
+              - label: Foxar
+              - label: Foxarup
     - type: input
       attributes:
-          label: What version of Orbitalis are you on?
+          label: What version of Foxar are you on?
           placeholder: "Run spark --version and paste the output here"
     - type: input
       attributes:

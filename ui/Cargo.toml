@@ -4,12 +4,12 @@ version = "0.2.0"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 readme = "../README.md"
-repository = "https://github.com/orbitalis-rs/orbitalis"
+repository = "https://github.com/bchainhub/foxar"
 keywords = ["ethereum", "web3", "evm", "debugger"]
 
 [dependencies]
 spark = { path = "../spark" }
-orbitalis-common = { path = "../common" }
+foxar-common = { path = "../common" }
 
 corebc = { workspace = true}
 

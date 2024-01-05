@@ -140,7 +140,7 @@ impl SessionSource {
         let mut res = match source.execute().await {
             Ok((_, res)) => res,
             Err(e) => {
-                if self.config.orbitalis_config.verbosity >= 3 {
+                if self.config.foxar_config.verbosity >= 3 {
                     eprintln!("Could not inspect: {e}");
                 }
                 return Ok((true, None));
@@ -243,7 +243,7 @@ impl SessionSource {
             Some(backend) => backend,
             None => {
                 let backend = Backend::spawn(
-                    self.config.evm_opts.get_fork(&self.config.orbitalis_config, env.clone()),
+                    self.config.evm_opts.get_fork(&self.config.foxar_config, env.clone()),
                 )
                 .await;
                 self.config.backend = Some(backend.clone());
@@ -256,12 +256,9 @@ impl SessionSource {
             .with_config(env)
             .with_pilot_state(final_pc)
             .set_tracing(true)
-            .with_spec(orbitalis_evm::utils::evm_spec(&self.config.orbitalis_config.cvm_version))
+            .with_spec(foxar_evm::utils::evm_spec(&self.config.foxar_config.cvm_version))
             .with_energy_limit(self.config.evm_opts.energy_limit())
-            .with_cheatcodes(CheatsConfig::new(
-                &self.config.orbitalis_config,
-                &self.config.evm_opts,
-            ))
+            .with_cheatcodes(CheatsConfig::new(&self.config.foxar_config, &self.config.evm_opts))
             .build(backend);
 
         // Create a [PilotRunner] with a default balance of [U256::MAX] and

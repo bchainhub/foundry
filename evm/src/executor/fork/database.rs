@@ -266,14 +266,14 @@ impl DatabaseRef for ForkDbSnapshot {
 mod tests {
     use super::*;
     use crate::executor::fork::BlockchainDbMeta;
-    use orbitalis_common::get_http_provider;
+    use foxar_common::get_http_provider;
     use std::collections::BTreeSet;
 
     /// Demonstrates that `Database::basic` for `ForkedDatabase` will always return the
     /// `AccountInfo`
     #[tokio::test(flavor = "multi_thread")]
     async fn fork_db_insert_basic_default() {
-        // let rpc = orbitalis_utils::rpc::rpc_endpoint(corebc::types::Network::Mainnet);
+        // let rpc = foxar_utils::rpc::rpc_endpoint(corebc::types::Network::Mainnet);
         // let provider = get_http_provider(rpc.clone());
         // let meta = BlockchainDbMeta {
         //     cfg_env: Default::default(),

@@ -4,8 +4,8 @@ use corebc::{
     signers::LocalWallet,
     types::{serde_helpers::*, Address, Bytes, H256, U256},
 };
-use orbitalis_common::errors::FsPathError;
-use orbitalis_evm::utils::u256_to_ru256;
+use foxar_common::errors::FsPathError;
+use foxar_evm::utils::u256_to_ru256;
 use serde::{Deserialize, Serialize};
 use spark::{
     revm::primitives::{Bytecode, Env, SHA3_EMPTY, U256 as rU256},
@@ -64,7 +64,7 @@ pub struct Genesis {
 impl Genesis {
     /// Loads the `Genesis` object from the given json file path
     pub fn load(path: impl AsRef<Path>) -> Result<Self, FsPathError> {
-        orbitalis_common::fs::read_json_file(path.as_ref())
+        foxar_common::fs::read_json_file(path.as_ref())
     }
 
     /// The clap `value_parser` function
@@ -233,7 +233,7 @@ pub mod secret_key {
     {
         if let Some(s) = Option::<Bytes>::deserialize(deserializer)? {
             if s.is_empty() {
-                return Ok(None)
+                return Ok(None);
             }
 
             Ok(Some(SecretKey::from_bytes(s.as_ref()).into()))

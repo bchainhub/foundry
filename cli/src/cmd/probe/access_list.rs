@@ -10,7 +10,7 @@
 //     types::{BlockId, NameOrAddress},
 // };
 // use eyre::WrapErr;
-// use orbitalis_config::{Config, Network};
+// use foxar_config::{Config, Network};
 // use std::str::FromStr;
 
 // /// CLI arguments for `probe access-list`.
@@ -35,7 +35,7 @@
 //     #[clap(
 //         long,
 //         value_name = "DATA",
-//         value_parser = orbitalis_common::clap_helpers::strip_0x_prefix,
+//         value_parser = foxar_common::clap_helpers::strip_0x_prefix,
 //         conflicts_with_all = &["sig", "args"]
 //     )]
 //     data: Option<String>,

@@ -7,9 +7,9 @@ use corebc::{
     types::{Bytes, DefaultFrame, GoCoreDebugTracingOptions, StructLog, H256, U256},
 };
 pub use decoder::{CallTraceDecoder, CallTraceDecoderBuilder};
+use foxar_common::contracts::{ContractsByAddress, ContractsByArtifact};
 use hashbrown::HashMap;
 use node::CallTraceNode;
-use orbitalis_common::contracts::{ContractsByAddress, ContractsByArtifact};
 use revm::interpreter::{opcode, CallContext, InstructionResult, Memory, Stack};
 use serde::{Deserialize, Serialize};
 use std::{
@@ -82,7 +82,7 @@ impl CallTraceArena {
             .map(|node| {
                 if node.trace.created() {
                     if let RawOrDecodedReturnData::Raw(ref bytes) = node.trace.output {
-                        return (&node.trace.address, Some(bytes.as_ref()))
+                        return (&node.trace.address, Some(bytes.as_ref()));
                     }
                 }
 
@@ -156,7 +156,7 @@ impl CallTraceArena {
         opts: GoCoreDebugTracingOptions,
     ) -> DefaultFrame {
         if self.arena.is_empty() {
-            return Default::default()
+            return Default::default();
         }
 
         let mut storage = HashMap::new();
@@ -594,7 +594,7 @@ pub fn load_contracts(
             .iter()
             .filter_map(|(addr, name)| {
                 if let Ok(Some((_, (abi, _)))) = contracts.find_by_name_or_identifier(name) {
-                    return Some((*addr, (name.clone(), abi.clone())))
+                    return Some((*addr, (name.clone(), abi.clone())));
                 }
                 None
             })

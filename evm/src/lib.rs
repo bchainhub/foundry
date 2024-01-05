@@ -38,7 +38,7 @@ use serde::{Deserialize, Serialize};
 ///     - deploying Test contracts
 ///     - deploying Script contracts
 ///
-/// The address was derived from `address(uint160(uint256(sha3("orbitalis default caller"))))`
+/// The address was derived from `address(uint160(uint256(sha3("foxar default caller"))))`
 /// and is equal to cb681804c8ab1f12e6bbf3894d4083f33e07309d1f38.
 pub const CALLER: Address = H176([
     0xcb, 0x68, 0x18, 0x04, 0xc8, 0xAB, 0x1F, 0x12, 0xE6, 0xbb, 0xF3, 0x89, 0x4D, 0x40, 0x83, 0xF3,

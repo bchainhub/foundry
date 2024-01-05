@@ -1,10 +1,10 @@
 # Cheat codes
 
-orbitalis's EVM support is mainly dedicated to testing and exploration, it features a set of cheat codes which can
+foxar's EVM support is mainly dedicated to testing and exploration, it features a set of cheat codes which can
 manipulate the environment in which the execution is run.
 
 Most of the time, simply testing your smart contracts outputs isn't enough. To manipulate the state of the EVM, as well
-as test for specific reverts and events, Orbitalis is shipped with a set of cheat codes.
+as test for specific reverts and events, Foxar is shipped with a set of cheat codes.
 
 ## `revm` `Inspector`
 
@@ -23,7 +23,7 @@ For example [`Inspector::call`](https://docs.rs/revm/latest/revm/trait.Inspector
 ) -> (InstructionResult, Gas, Bytes) { ... }
 ```
 
-## [Orbitalis Inspectors](../../evm/src/executor/inspector)
+## [Foxar Inspectors](../../evm/src/executor/inspector)
 
 the `evm` crate has a variety of inspectors for different use cases, such as
 
@@ -87,6 +87,6 @@ This process consists of 4 steps:
 
 1. add the function signature to the `abigen!` macro so a new `HEVMCalls` variant is generated
 2. implement the cheat code handler
-3. add a Solidity test for the cheatcode under [`testdata/cheats`](https://github.com/orbitalis-rs/orbitalis/tree/master/testdata/cheats)
+3. add a Solidity test for the cheatcode under [`testdata/cheats`](https://github.com/bchainhub/foxar/tree/master/testdata/cheats)
 4. add the function signature
-   to [forge-std Vm interface](https://github.com/orbitalis-rs/forge-std/blob/master/src/Vm.sol)
+   to [forge-std Vm interface](https://github.com/bchainhub/forge-std/blob/master/src/Vm.sol)

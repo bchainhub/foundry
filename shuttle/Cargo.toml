@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 readme = "README.md"
-description = "Orbitalis's local ethereum node"
+description = "Foxar's local ethereum node"
 
 [[bin]]
 name = "shuttle"
@@ -15,15 +15,15 @@ required-features = ["cli"]
 vergen = { version = "8", default-features = false, features = ["build", "git", "git2"] }
 
 [dependencies]
-# orbitalis internal
-orbitalis-evm = { path = "../evm" }
+# foxar internal
+foxar-evm = { path = "../evm" }
 shuttle-core = { path = "core", features = ["fastrlp", "serde", "impersonated-tx"] }
 shuttle-rpc = { path = "rpc" }
 shuttle-server = { path = "server" }
-orbitalis-utils = { path = "../utils" }
-orbitalis-common = { path = "../common", optional = true }
+foxar-utils = { path = "../utils" }
+foxar-common = { path = "../common", optional = true }
 spark = { path = "../spark", optional = true }
-orbitalis-config = { path = "../config" }
+foxar-config = { path = "../config" }
 
 # evm support
 bytes = "1.4.0"
@@ -76,5 +76,5 @@ crc = "3.0.1"
 
 [features]
 default = ["cli"]
-cmd = ["orbitalis-common", "spark", "clap", "clap_complete", "ctrlc", "shuttle-server/clap"]
+cmd = ["foxar-common", "spark", "clap", "clap_complete", "ctrlc", "shuttle-server/clap"]
 cli = ["tokio/full", "cmd", "fdlimit"]

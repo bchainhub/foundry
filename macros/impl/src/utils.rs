@@ -7,6 +7,6 @@ pub fn krate() -> syn::Path {
 pub fn crate_str() -> &'static str {
     match std::env::var("CARGO_MANIFEST_DIR") {
         Ok(var) if var.ends_with("macros") => "crate",
-        _ => "::orbitalis_macros",
+        _ => "::foxar_macros",
     }
 }

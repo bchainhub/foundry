@@ -40,7 +40,7 @@ async fn can_set_block_energy_limit() {
     assert_eq!(block_energy_limit, latest_block.energy_limit);
 }
 
-// Ref <https://github.com/orbitalis-rs/orbitalis/issues/2341>
+// Ref <https://github.com/foxar-rs/foxar/issues/2341>
 #[tokio::test(flavor = "multi_thread")]
 async fn can_set_storage() {
     let (api, _handle) = spawn(NodeConfig::test()).await;
@@ -358,7 +358,7 @@ async fn test_timestamp_interval() {
     assert!(another_block.timestamp - new_block.timestamp < U256::from(interval));
 }
 
-// <https://github.com/orbitalis-rs/orbitalis/issues/2341>
+// <https://github.com/foxar-rs/foxar/issues/2341>
 #[ignore = "Forking is disabled"]
 #[tokio::test(flavor = "multi_thread")]
 async fn test_can_set_storage_bsc_fork() {

@@ -13,7 +13,7 @@ use std::{
 use tracing::warn;
 
 /// The user agent to use when querying the etherscan API.
-pub const ETHERSCAN_USER_AGENT: &str = concat!("orbitalis/", env!("CARGO_PKG_VERSION"));
+pub const ETHERSCAN_USER_AGENT: &str = concat!("foxar/", env!("CARGO_PKG_VERSION"));
 
 /// Errors that can occur when creating an `EtherscanConfig`
 #[derive(Debug, Clone, PartialEq, Eq, thiserror::Error)]
@@ -277,7 +277,7 @@ impl ResolvedEtherscanConfig {
                     None
                 }
             })
-            .and_then(Config::orbitalis_etherscan_network_cache_dir);
+            .and_then(Config::foxar_etherscan_network_cache_dir);
 
         if let Some(ref cache_path) = cache {
             // we also create the `sources` sub dir here

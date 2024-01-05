@@ -12,7 +12,7 @@ module.exports = async ({ github, context }) => {
             // Only consider releases tagged `nightly-${SHA}` for deletion
             release.tag_name.includes("nightly") &&
             release.tag_name !== "nightly" &&
-            // ref: https://github.com/orbitalis-rs/orbitalis/issues/3881
+            // ref: https://github.com/foxar-rs/foxar/issues/3881
             // Skipping pruning the build on 1st day of each month
             !release.created_at.includes("-01T")
     );

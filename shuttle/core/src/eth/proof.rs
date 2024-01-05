@@ -5,7 +5,7 @@ use corebc_core::{
     types::{H256, U256},
     utils::rlp,
 };
-use orbitalis_evm::revm::primitives::SHA3_EMPTY;
+use foxar_evm::revm::primitives::SHA3_EMPTY;
 // reexport for convenience
 pub use corebc_core::types::{EIP1186ProofResponse as AccountProof, StorageProof};
 

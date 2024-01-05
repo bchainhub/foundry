@@ -6,8 +6,8 @@ use crate::{
 };
 use clap::{Parser, ValueHint};
 use corebc::ylem::remappings::Remapping;
-use orbitalis_common::fs;
-use orbitalis_config::Config;
+use foxar_common::fs;
+use foxar_config::Config;
 use std::path::{Path, PathBuf};
 use yansi::Paint;
 
@@ -114,7 +114,7 @@ impl Cmd for InitArgs {
             let contract_path = script.join("Counter.s.sol");
             fs::write(contract_path, include_str!("../../../assets/CounterTemplate.s.sol"))?;
 
-            // write orbitalis.toml, if it doesn't exist already
+            // write foxar.toml, if it doesn't exist already
             let dest = root.join(Config::FILE_NAME);
             let mut config = Config::load_with_root(&root);
             if !dest.exists() {

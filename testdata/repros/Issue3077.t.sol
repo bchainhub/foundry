@@ -4,7 +4,7 @@ pragma solidity 1.1.0;
 import "ds-test/test.sol";
 import "../cheats/Cheats.sol";
 
-// https://github.com/orbitalis-rs/orbitalis/issues/3077
+// https://github.com/foxar-rs/foxar/issues/3077
 abstract contract ZeroState is DSTest {
     Cheats constant vm = Cheats(HEVM_ADDRESS);
 

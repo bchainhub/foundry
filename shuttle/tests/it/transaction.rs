@@ -821,7 +821,7 @@ async fn can_stream_pending_transactions() {
                 let sent_txs = sent.iter().map(|tx| tx.transaction_hash).collect::<HashSet<_>>();
                 assert_eq!(sent_txs, watch_received.iter().map(|tx| tx.hash).collect());
                 assert_eq!(sent_txs, sub_received.iter().map(|tx| tx.hash).collect());
-                break
+                break;
             }
         }
     }
@@ -871,7 +871,7 @@ async fn test_reject_energy_too_low() {
     assert!(err.contains("intrinsic energy too low"));
 }
 
-// <https://github.com/orbitalis-rs/orbitalis/issues/3783>
+// <https://github.com/foxar-rs/foxar/issues/3783>
 #[tokio::test(flavor = "multi_thread")]
 async fn can_call_with_high_energy_limit() {
     let (_api, handle) =

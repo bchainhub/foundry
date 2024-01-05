@@ -5,8 +5,8 @@ use crate::cmd::{
 use clap::{Parser, ValueHint};
 use corebc::ylem::Graph;
 use eyre::WrapErr;
+use foxar_config::{impl_figment_convert_basic, Config};
 use itertools::Itertools;
-use orbitalis_config::{impl_figment_convert_basic, Config};
 use rayon::prelude::*;
 use std::path::PathBuf;
 use yansi::Paint;
@@ -66,7 +66,7 @@ impl GeigerArgs {
             } else {
                 self.paths
                     .iter()
-                    .flat_map(|path| orbitalis_common::fs::files_with_ext(path, "sol"))
+                    .flat_map(|path| foxar_common::fs::files_with_ext(path, "sol"))
                     .unique()
                     .collect()
             }

@@ -8,7 +8,7 @@ use serde::Deserialize;
 /// # Examples
 ///
 /// ```
-/// use orbitalis_macros::fmt::UIfmt;
+/// use foxar_macros::fmt::UIfmt;
 /// let boolean: bool = true;
 /// let string = boolean.pretty();
 /// ```

@@ -5,9 +5,9 @@ use async_trait::async_trait;
 use corebc::ylem::ConfigurableContractArtifact;
 
 use crate::cmd::spark::verify::provider::VerificationProvider;
+use foxar_common::fs;
+use foxar_utils::Retry;
 use futures::FutureExt;
-use orbitalis_common::fs;
-use orbitalis_utils::Retry;
 use serde::{Deserialize, Serialize};
 use std::{collections::HashMap, path::PathBuf};
 use tracing::{trace, warn};
@@ -124,7 +124,7 @@ impl SourcifyVerificationProvider {
             eyre::bail!(
                 r#"Contract {} was compiled without the solc `metadata` setting.
 Sourcify requires contract metadata for verification.
-metadata output can be enabled via `extra_output = ["metadata"]` in `orbitalis.toml`"#,
+metadata output can be enabled via `extra_output = ["metadata"]` in `foxar.toml`"#,
                 args.contract.name
             )
         }
@@ -144,7 +144,7 @@ metadata output can be enabled via `extra_output = ["metadata"]` in `orbitalis.t
             eyre::bail!(
                 r#"No metadata found in artifact `{}` for contract {}.
 Sourcify requires contract metadata for verification.
-metadata output can be enabled via `extra_output = ["metadata"]` in `orbitalis.toml`"#,
+metadata output can be enabled via `extra_output = ["metadata"]` in `foxar.toml`"#,
                 artifact_path.display(),
                 args.contract.name
             )

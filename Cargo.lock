@@ -1058,7 +1058,7 @@ checksum = "e496a50fda8aacccc86d7529e2c1e0892dbd0f898a6b5645b5561b89c3210efa"
 [[package]]
 name = "corebc"
 version = "2.0.3"
-source = "git+https://github.com/core-coin/corebc-rs.git?branch=development#12af329fc0e9a85c3812d68ecc7b2a8fef394d2e"
+source = "git+https://github.com/core-coin/corebc-rs.git#28c044897fbb9564ac50c992d13d21a8635370e4"
 dependencies = [
  "corebc-addressbook",
  "corebc-blockindex",
@@ -1074,7 +1074,7 @@ dependencies = [
 [[package]]
 name = "corebc-addressbook"
 version = "2.0.3"
-source = "git+https://github.com/core-coin/corebc-rs.git?branch=development#12af329fc0e9a85c3812d68ecc7b2a8fef394d2e"
+source = "git+https://github.com/core-coin/corebc-rs.git#28c044897fbb9564ac50c992d13d21a8635370e4"
 dependencies = [
  "corebc-core",
  "once_cell",
@@ -1085,7 +1085,7 @@ dependencies = [
 [[package]]
 name = "corebc-blockindex"
 version = "2.0.3"
-source = "git+https://github.com/core-coin/corebc-rs.git?branch=development#12af329fc0e9a85c3812d68ecc7b2a8fef394d2e"
+source = "git+https://github.com/core-coin/corebc-rs.git#28c044897fbb9564ac50c992d13d21a8635370e4"
 dependencies = [
  "corebc-core",
  "corebc-ylem",
@@ -1101,7 +1101,7 @@ dependencies = [
 [[package]]
 name = "corebc-contract"
 version = "2.0.3"
-source = "git+https://github.com/core-coin/corebc-rs.git?branch=development#12af329fc0e9a85c3812d68ecc7b2a8fef394d2e"
+source = "git+https://github.com/core-coin/corebc-rs.git#28c044897fbb9564ac50c992d13d21a8635370e4"
 dependencies = [
  "corebc-contract-abigen",
  "corebc-contract-derive",
@@ -1119,7 +1119,7 @@ dependencies = [
 [[package]]
 name = "corebc-contract-abigen"
 version = "2.0.3"
-source = "git+https://github.com/core-coin/corebc-rs.git?branch=development#12af329fc0e9a85c3812d68ecc7b2a8fef394d2e"
+source = "git+https://github.com/core-coin/corebc-rs.git#28c044897fbb9564ac50c992d13d21a8635370e4"
 dependencies = [
  "Inflector",
  "corebc-blockindex",
@@ -1145,7 +1145,7 @@ dependencies = [
 [[package]]
 name = "corebc-contract-derive"
 version = "2.0.3"
-source = "git+https://github.com/core-coin/corebc-rs.git?branch=development#12af329fc0e9a85c3812d68ecc7b2a8fef394d2e"
+source = "git+https://github.com/core-coin/corebc-rs.git#28c044897fbb9564ac50c992d13d21a8635370e4"
 dependencies = [
  "Inflector",
  "corebc-contract-abigen",
@@ -1160,7 +1160,7 @@ dependencies = [
 [[package]]
 name = "corebc-core"
 version = "2.0.3"
-source = "git+https://github.com/core-coin/corebc-rs.git?branch=development#12af329fc0e9a85c3812d68ecc7b2a8fef394d2e"
+source = "git+https://github.com/core-coin/corebc-rs.git#28c044897fbb9564ac50c992d13d21a8635370e4"
 dependencies = [
  "arrayvec",
  "bytes",
@@ -1189,7 +1189,7 @@ dependencies = [
 [[package]]
 name = "corebc-keystore"
 version = "2.0.3"
-source = "git+https://github.com/core-coin/corebc-rs.git?branch=development#12af329fc0e9a85c3812d68ecc7b2a8fef394d2e"
+source = "git+https://github.com/core-coin/corebc-rs.git#28c044897fbb9564ac50c992d13d21a8635370e4"
 dependencies = [
  "aes",
  "bytes",
@@ -1214,7 +1214,7 @@ dependencies = [
 [[package]]
 name = "corebc-middleware"
 version = "2.0.3"
-source = "git+https://github.com/core-coin/corebc-rs.git?branch=development#12af329fc0e9a85c3812d68ecc7b2a8fef394d2e"
+source = "git+https://github.com/core-coin/corebc-rs.git#28c044897fbb9564ac50c992d13d21a8635370e4"
 dependencies = [
  "async-trait",
  "auto_impl",
@@ -1240,7 +1240,7 @@ dependencies = [
 [[package]]
 name = "corebc-providers"
 version = "2.0.3"
-source = "git+https://github.com/core-coin/corebc-rs.git?branch=development#12af329fc0e9a85c3812d68ecc7b2a8fef394d2e"
+source = "git+https://github.com/core-coin/corebc-rs.git#28c044897fbb9564ac50c992d13d21a8635370e4"
 dependencies = [
  "async-trait",
  "auto_impl",
@@ -1278,7 +1278,7 @@ dependencies = [
 [[package]]
 name = "corebc-signers"
 version = "2.0.3"
-source = "git+https://github.com/core-coin/corebc-rs.git?branch=development#12af329fc0e9a85c3812d68ecc7b2a8fef394d2e"
+source = "git+https://github.com/core-coin/corebc-rs.git#28c044897fbb9564ac50c992d13d21a8635370e4"
 dependencies = [
  "async-trait",
  "coins-bip32",
@@ -1305,7 +1305,7 @@ dependencies = [
 [[package]]
 name = "corebc-ylem"
 version = "2.0.3"
-source = "git+https://github.com/core-coin/corebc-rs.git?branch=development#12af329fc0e9a85c3812d68ecc7b2a8fef394d2e"
+source = "git+https://github.com/core-coin/corebc-rs.git#28c044897fbb9564ac50c992d13d21a8635370e4"
 dependencies = [
  "cfg-if",
  "corebc-core",
@@ -2211,6 +2211,269 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a62bc1cf6f830c2ec14a513a9fb124d0a213a629668a4186f329db21fe045652"
 dependencies = [
  "percent-encoding",
+]
+
+[[package]]
+name = "foxar-abi"
+version = "0.1.0"
+dependencies = [
+ "corebc-contract",
+ "corebc-contract-abigen",
+ "corebc-core",
+ "corebc-providers",
+ "eyre",
+ "foxar-macros",
+ "syn 2.0.39",
+]
+
+[[package]]
+name = "foxar-binder"
+version = "0.1.0"
+dependencies = [
+ "corebc-contract",
+ "corebc-ylem",
+ "curl",
+ "eyre",
+ "foxar-config",
+ "git2",
+ "tempfile",
+ "tracing",
+ "url",
+]
+
+[[package]]
+name = "foxar-cli"
+version = "0.2.0"
+dependencies = [
+ "async-trait",
+ "bytes",
+ "clap 4.4.8",
+ "clap_complete",
+ "clap_complete_fig",
+ "color-eyre",
+ "comfy-table",
+ "console",
+ "corebc",
+ "criterion",
+ "dialoguer",
+ "dotenvy",
+ "dunce",
+ "eyre",
+ "foxar-cli-test-utils",
+ "foxar-common",
+ "foxar-config",
+ "foxar-evm",
+ "foxar-utils",
+ "futures",
+ "globset",
+ "hex",
+ "indicatif",
+ "is-terminal",
+ "itertools",
+ "once_cell",
+ "parking_lot",
+ "path-slash",
+ "pretty_assertions",
+ "probe",
+ "proptest",
+ "rayon",
+ "regex",
+ "reqwest",
+ "rpassword",
+ "rustc-hex",
+ "semver 1.0.20",
+ "serde",
+ "serde_json",
+ "serial_test",
+ "shuttle",
+ "similar",
+ "solang-parser 0.3.0",
+ "spark",
+ "spark-doc",
+ "spark-fmt",
+ "strsim",
+ "strum 0.25.0",
+ "tempfile",
+ "thiserror",
+ "tokio",
+ "toml 0.7.8",
+ "tracing",
+ "tracing-error",
+ "tracing-subscriber",
+ "ui",
+ "vergen",
+ "walkdir",
+ "watchexec",
+ "watchexec-events",
+ "watchexec-signals",
+ "yansi 0.5.1",
+ "yvm-rs",
+]
+
+[[package]]
+name = "foxar-cli-test-utils"
+version = "0.1.0"
+dependencies = [
+ "corebc",
+ "corebc-addressbook",
+ "corebc-ylem",
+ "eyre",
+ "foxar-common",
+ "foxar-config",
+ "is-terminal",
+ "once_cell",
+ "parking_lot",
+ "pretty_assertions",
+ "regex",
+ "serde_json",
+ "tempfile",
+ "walkdir",
+]
+
+[[package]]
+name = "foxar-common"
+version = "0.1.0"
+dependencies = [
+ "auto_impl",
+ "clap 4.4.8",
+ "comfy-table",
+ "corebc-blockindex",
+ "corebc-core",
+ "corebc-providers",
+ "corebc-ylem",
+ "dunce",
+ "eyre",
+ "foxar-config",
+ "foxar-macros",
+ "globset",
+ "is-terminal",
+ "once_cell",
+ "regex",
+ "reqwest",
+ "semver 1.0.20",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "thiserror",
+ "tokio",
+ "tracing",
+ "walkdir",
+ "yansi 0.5.1",
+]
+
+[[package]]
+name = "foxar-config"
+version = "0.2.0"
+dependencies = [
+ "Inflector",
+ "corebc-blockindex",
+ "corebc-core",
+ "corebc-ylem",
+ "dirs-next",
+ "eyre",
+ "figment",
+ "globset",
+ "number_prefix",
+ "once_cell",
+ "path-slash",
+ "pretty_assertions",
+ "regex",
+ "reqwest",
+ "semver 1.0.20",
+ "serde",
+ "serde_json",
+ "serde_regex",
+ "tempfile",
+ "thiserror",
+ "toml 0.7.8",
+ "toml_edit 0.19.15",
+ "tracing",
+ "walkdir",
+]
+
+[[package]]
+name = "foxar-evm"
+version = "0.2.0"
+dependencies = [
+ "auto_impl",
+ "bytes",
+ "corebc",
+ "eyre",
+ "foxar-abi",
+ "foxar-common",
+ "foxar-config",
+ "foxar-macros",
+ "foxar-utils",
+ "futures",
+ "hashbrown 0.13.2",
+ "hex",
+ "itertools",
+ "jsonpath_lib",
+ "libgoldilocks 0.1.0 (git+https://github.com/todesstille/ed448-rs.git)",
+ "once_cell",
+ "ordered-float",
+ "parking_lot",
+ "proptest",
+ "revm",
+ "semver 1.0.20",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "thiserror",
+ "tokio",
+ "tracing",
+ "url",
+ "walkdir",
+ "yansi 0.5.1",
+]
+
+[[package]]
+name = "foxar-macros"
+version = "0.1.0"
+dependencies = [
+ "corebc-core",
+ "foxar-macros-impl",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "foxar-macros-impl"
+version = "0.0.0"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.39",
+]
+
+[[package]]
+name = "foxar-utils"
+version = "0.2.0"
+dependencies = [
+ "corebc",
+ "corebc-addressbook",
+ "corebc-blockindex",
+ "corebc-contract",
+ "corebc-core",
+ "corebc-providers",
+ "corebc-ylem",
+ "eyre",
+ "foxar-common",
+ "futures",
+ "glob",
+ "hex",
+ "once_cell",
+ "pretty_assertions",
+ "rand 0.8.5",
+ "reqwest",
+ "revm",
+ "rlp 0.5.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rustc-hex",
+ "serde",
+ "serde_json",
+ "spark-fmt",
+ "tokio",
+ "tracing",
 ]
 
 [[package]]
@@ -4035,269 +4298,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "04744f49eae99ab78e0d5c0b603ab218f515ea8cfe5a456d7629ad883a3b6e7d"
 
 [[package]]
-name = "orbitalis-abi"
-version = "0.1.0"
-dependencies = [
- "corebc-contract",
- "corebc-contract-abigen",
- "corebc-core",
- "corebc-providers",
- "eyre",
- "orbitalis-macros",
- "syn 2.0.39",
-]
-
-[[package]]
-name = "orbitalis-binder"
-version = "0.1.0"
-dependencies = [
- "corebc-contract",
- "corebc-ylem",
- "curl",
- "eyre",
- "git2",
- "orbitalis-config",
- "tempfile",
- "tracing",
- "url",
-]
-
-[[package]]
-name = "orbitalis-cli"
-version = "0.2.0"
-dependencies = [
- "async-trait",
- "bytes",
- "clap 4.4.8",
- "clap_complete",
- "clap_complete_fig",
- "color-eyre",
- "comfy-table",
- "console",
- "corebc",
- "criterion",
- "dialoguer",
- "dotenvy",
- "dunce",
- "eyre",
- "futures",
- "globset",
- "hex",
- "indicatif",
- "is-terminal",
- "itertools",
- "once_cell",
- "orbitalis-cli-test-utils",
- "orbitalis-common",
- "orbitalis-config",
- "orbitalis-evm",
- "orbitalis-utils",
- "parking_lot",
- "path-slash",
- "pretty_assertions",
- "probe",
- "proptest",
- "rayon",
- "regex",
- "reqwest",
- "rpassword",
- "rustc-hex",
- "semver 1.0.20",
- "serde",
- "serde_json",
- "serial_test",
- "shuttle",
- "similar",
- "solang-parser 0.3.0",
- "spark",
- "spark-doc",
- "spark-fmt",
- "strsim",
- "strum 0.25.0",
- "tempfile",
- "thiserror",
- "tokio",
- "toml 0.7.8",
- "tracing",
- "tracing-error",
- "tracing-subscriber",
- "ui",
- "vergen",
- "walkdir",
- "watchexec",
- "watchexec-events",
- "watchexec-signals",
- "yansi 0.5.1",
- "yvm-rs",
-]
-
-[[package]]
-name = "orbitalis-cli-test-utils"
-version = "0.1.0"
-dependencies = [
- "corebc",
- "corebc-addressbook",
- "corebc-ylem",
- "eyre",
- "is-terminal",
- "once_cell",
- "orbitalis-common",
- "orbitalis-config",
- "parking_lot",
- "pretty_assertions",
- "regex",
- "serde_json",
- "tempfile",
- "walkdir",
-]
-
-[[package]]
-name = "orbitalis-common"
-version = "0.1.0"
-dependencies = [
- "auto_impl",
- "clap 4.4.8",
- "comfy-table",
- "corebc-blockindex",
- "corebc-core",
- "corebc-providers",
- "corebc-ylem",
- "dunce",
- "eyre",
- "globset",
- "is-terminal",
- "once_cell",
- "orbitalis-config",
- "orbitalis-macros",
- "regex",
- "reqwest",
- "semver 1.0.20",
- "serde",
- "serde_json",
- "tempfile",
- "thiserror",
- "tokio",
- "tracing",
- "walkdir",
- "yansi 0.5.1",
-]
-
-[[package]]
-name = "orbitalis-config"
-version = "0.2.0"
-dependencies = [
- "Inflector",
- "corebc-blockindex",
- "corebc-core",
- "corebc-ylem",
- "dirs-next",
- "eyre",
- "figment",
- "globset",
- "number_prefix",
- "once_cell",
- "path-slash",
- "pretty_assertions",
- "regex",
- "reqwest",
- "semver 1.0.20",
- "serde",
- "serde_json",
- "serde_regex",
- "tempfile",
- "thiserror",
- "toml 0.7.8",
- "toml_edit 0.19.15",
- "tracing",
- "walkdir",
-]
-
-[[package]]
-name = "orbitalis-evm"
-version = "0.2.0"
-dependencies = [
- "auto_impl",
- "bytes",
- "corebc",
- "eyre",
- "futures",
- "hashbrown 0.13.2",
- "hex",
- "itertools",
- "jsonpath_lib",
- "libgoldilocks 0.1.0 (git+https://github.com/todesstille/ed448-rs.git)",
- "once_cell",
- "orbitalis-abi",
- "orbitalis-common",
- "orbitalis-config",
- "orbitalis-macros",
- "orbitalis-utils",
- "ordered-float",
- "parking_lot",
- "proptest",
- "revm",
- "semver 1.0.20",
- "serde",
- "serde_json",
- "tempfile",
- "thiserror",
- "tokio",
- "tracing",
- "url",
- "walkdir",
- "yansi 0.5.1",
-]
-
-[[package]]
-name = "orbitalis-macros"
-version = "0.1.0"
-dependencies = [
- "corebc-core",
- "orbitalis-macros-impl",
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "orbitalis-macros-impl"
-version = "0.0.0"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn 2.0.39",
-]
-
-[[package]]
-name = "orbitalis-utils"
-version = "0.2.0"
-dependencies = [
- "corebc",
- "corebc-addressbook",
- "corebc-blockindex",
- "corebc-contract",
- "corebc-core",
- "corebc-providers",
- "corebc-ylem",
- "eyre",
- "futures",
- "glob",
- "hex",
- "once_cell",
- "orbitalis-common",
- "pretty_assertions",
- "rand 0.8.5",
- "reqwest",
- "revm",
- "rlp 0.5.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "rustc-hex",
- "serde",
- "serde_json",
- "spark-fmt",
- "tokio",
- "tracing",
-]
-
-[[package]]
 name = "ordered-float"
 version = "3.9.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4652,11 +4652,11 @@ dependencies = [
  "criterion",
  "dirs 5.0.1",
  "eyre",
+ "foxar-cli",
+ "foxar-common",
+ "foxar-config",
+ "foxar-evm",
  "once_cell",
- "orbitalis-cli",
- "orbitalis-common",
- "orbitalis-config",
- "orbitalis-evm",
  "regex",
  "reqwest",
  "revm",
@@ -4832,13 +4832,13 @@ dependencies = [
  "corebc-signers",
  "evm-disassembler",
  "eyre",
+ "foxar-common",
+ "foxar-config",
+ "foxar-evm",
+ "foxar-utils",
  "futures",
  "hex",
  "num_cpus",
- "orbitalis-common",
- "orbitalis-config",
- "orbitalis-evm",
- "orbitalis-utils",
  "rayon",
  "rusoto_core",
  "rusoto_kms",
@@ -6018,14 +6018,14 @@ dependencies = [
  "ethereum-forkid",
  "fdlimit",
  "flate2",
+ "foxar-common",
+ "foxar-config",
+ "foxar-evm",
+ "foxar-utils",
  "futures",
  "hash-db",
  "hyper",
  "memory-db",
- "orbitalis-common",
- "orbitalis-config",
- "orbitalis-evm",
- "orbitalis-utils",
  "parking_lot",
  "pretty_assertions",
  "revm",
@@ -6053,12 +6053,12 @@ version = "0.1.0"
 dependencies = [
  "bytes",
  "corebc-core",
+ "foxar-evm",
+ "foxar-utils",
  "hash-db",
  "hash256-std-hasher",
  "keccak-hasher",
  "open-fastrlp",
- "orbitalis-evm",
- "orbitalis-utils",
  "reference-trie",
  "revm",
  "serde",
@@ -6238,13 +6238,13 @@ dependencies = [
  "comfy-table",
  "corebc",
  "eyre",
+ "foxar-common",
+ "foxar-config",
+ "foxar-evm",
+ "foxar-utils",
  "glob",
  "hex",
  "once_cell",
- "orbitalis-common",
- "orbitalis-config",
- "orbitalis-evm",
- "orbitalis-utils",
  "parking_lot",
  "proptest",
  "rayon",
@@ -6269,13 +6269,13 @@ dependencies = [
  "corebc-ylem",
  "derive_more",
  "eyre",
+ "foxar-common",
+ "foxar-config",
+ "foxar-utils",
  "futures-util",
  "itertools",
  "mdbook",
  "once_cell",
- "orbitalis-common",
- "orbitalis-config",
- "orbitalis-utils",
  "rayon",
  "serde",
  "serde_json",
@@ -6294,8 +6294,8 @@ version = "0.2.0"
 dependencies = [
  "ariadne",
  "corebc-core",
+ "foxar-config",
  "itertools",
- "orbitalis-config",
  "pretty_assertions",
  "semver 1.0.20",
  "solang-parser 0.3.0",
@@ -7165,8 +7165,8 @@ dependencies = [
  "corebc",
  "crossterm 0.26.1",
  "eyre",
+ "foxar-common",
  "hex",
- "orbitalis-common",
  "revm",
  "spark",
  "tui",
@@ -7819,7 +7819,7 @@ checksum = "1367295b8f788d371ce2dbc842c7b709c73ee1364d30351dd300ec2203b12377"
 [[package]]
 name = "yvm-rs"
 version = "0.3.0"
-source = "git+https://github.com/core-coin/yvm-rs.git#eaddd48dfc636d0308600c88335213cd91237b03"
+source = "git+https://github.com/core-coin/yvm-rs.git#b5251d1b1de8dfe6a35071d4887af44942939071"
 dependencies = [
  "dirs 5.0.1",
  "fs2",
@@ -7838,7 +7838,7 @@ dependencies = [
 [[package]]
 name = "yvm-rs-builds"
 version = "0.2.0"
-source = "git+https://github.com/core-coin/yvm-rs.git#eaddd48dfc636d0308600c88335213cd91237b03"
+source = "git+https://github.com/core-coin/yvm-rs.git#b5251d1b1de8dfe6a35071d4887af44942939071"
 dependencies = [
  "build_const",
  "hex",

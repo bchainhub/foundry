@@ -1,7 +1,7 @@
 //! scan a file for unsafe usage
 
 use crate::cmd::spark::geiger::{error::ScanFileError, visitor::CheatcodeVisitor};
-use orbitalis_common::fs;
+use foxar_common::fs;
 use solang_parser::{diagnostics::Diagnostic, pt::Loc};
 use spark_fmt::{offset_to_line_column, parse, Visitable};
 use std::{

@@ -10,7 +10,7 @@ use shuttle_core::eth::proof::{AccountProof, BasicAccount};
 
 use crate::proof::eip1186::verify_proof;
 use corebc::utils::{rlp, sha3};
-use orbitalis_evm::revm::primitives::SHA3_EMPTY;
+use foxar_evm::revm::primitives::SHA3_EMPTY;
 use shuttle_core::eth::trie::ExtensionLayout;
 
 mod eip1186;

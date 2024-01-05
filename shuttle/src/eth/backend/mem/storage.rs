@@ -10,7 +10,7 @@ use corebc::{
     prelude::{BlockId, BlockNumber, DefaultFrame, Trace, H256, H256 as TxHash, U64},
     types::{ActionType, Bytes, GoCoreDebugTracingOptions, TransactionReceipt, U256},
 };
-use orbitalis_utils::types::ToEthersU256;
+use foxar_utils::types::ToEthersU256;
 use parking_lot::RwLock;
 use shuttle_core::eth::{
     block::{Block, PartialHeader},
@@ -158,7 +158,7 @@ impl InMemoryBlockStates {
             if let Some(state) = self.on_disk_states.get_mut(hash) {
                 if let Some(cached) = self.disk_cache.read(*hash) {
                     state.init_from_snapshot(cached);
-                    return Some(state)
+                    return Some(state);
                 }
             }
             None
@@ -415,7 +415,7 @@ mod tests {
     use super::*;
     use crate::eth::backend::db::Db;
     use corebc::{abi::ethereum_types::BigEndianHash, types::Address};
-    use orbitalis_evm::executor::backend::MemDb;
+    use foxar_evm::executor::backend::MemDb;
     use spark::revm::{
         db::DatabaseRef,
         primitives::{AccountInfo, U256 as rU256},

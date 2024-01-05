@@ -10,16 +10,16 @@ use corebc::{
     ylem::artifacts::StorageLayout,
 };
 use eyre::Result;
-use futures::future::join_all;
-use orbitalis_common::{
+use foxar_common::{
     abi::find_source,
     compile::{compile, etherscan_project, suppress_compile},
     RetryProvider,
 };
-use orbitalis_config::{
+use foxar_config::{
     figment::{self, value::Dict, Metadata, Profile},
     impl_figment_convert_probe, Config,
 };
+use futures::future::join_all;
 use probe::Cast;
 use semver::Version;
 use std::str::FromStr;
@@ -88,7 +88,7 @@ impl StorageArgs {
         if let Some(slot) = slot {
             let probe = Cast::new(provider);
             println!("{}", probe.storage(address, slot, block).await?);
-            return Ok(())
+            return Ok(());
         }
 
         // No slot was provided
@@ -112,7 +112,7 @@ impl StorageArgs {
             let artifact =
                 out.artifacts().find(|(_, artifact)| match_code(artifact).unwrap_or_default());
             if let Some((_, artifact)) = artifact {
-                return fetch_and_print_storage(provider, address, artifact, true).await
+                return fetch_and_print_storage(provider, address, artifact, true).await;
             }
         }
 
@@ -210,7 +210,7 @@ async fn fetch_storage_values(
 fn print_storage(layout: StorageLayout, values: Vec<String>, pretty: bool) -> Result<()> {
     if !pretty {
         println!("{}", serde_json::to_string_pretty(&serde_json::to_value(layout)?)?);
-        return Ok(())
+        return Ok(());
     }
 
     let mut table = Table::new();

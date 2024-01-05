@@ -1,5 +1,5 @@
 //! Contains various tests related to spark script
-use orbitalis_cli_test_utils::{
+use foxar_cli_test_utils::{
     sparktest_async,
     util::{TestCommand, TestProject},
     ScriptOutcome, ScriptTester,

@@ -1,16 +1,16 @@
 //! yvm sanity checks
 
-use orbitalis_cli_test_utils::{sparktest_init, TestCommand, TestProject};
+use foxar_cli_test_utils::{sparktest_init, TestCommand, TestProject};
 use semver::Version;
 use yvm::{self, Platform};
 
 /// The latest solc release
 ///
-/// solc to orbitalis release process:
+/// solc to foxar release process:
 ///     1. new solc release
 ///     2. yvm updated with all build info
 ///     3. yvm bumped in ethers-rs
-///     4. ethers bumped in orbitalis + update the `LATEST_SOLC`
+///     4. ethers bumped in foxar + update the `LATEST_SOLC`
 const LATEST_SOLC: Version = Version::new(1, 1, 0);
 
 macro_rules! ensure_yvm_releases {

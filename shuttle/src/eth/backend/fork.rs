@@ -9,8 +9,8 @@ use corebc::{
         Transaction, TransactionReceipt, TxHash, H256, U256,
     },
 };
-use orbitalis_common::{ProviderBuilder, RetryProvider};
-use orbitalis_evm::utils::u256_to_h256_be;
+use foxar_common::{ProviderBuilder, RetryProvider};
+use foxar_evm::utils::u256_to_h256_be;
 use parking_lot::{
     lock_api::{RwLockReadGuard, RwLockWriteGuard},
     RawRwLock, RwLock,
@@ -162,7 +162,7 @@ impl ClientFork {
             // check if this request was already been sent
             let key = (request.clone(), num.as_u64());
             if let Some(res) = self.storage_read().eth_call.get(&key).cloned() {
-                return Ok(res)
+                return Ok(res);
             }
         }
 
@@ -191,7 +191,7 @@ impl ClientFork {
             // check if this request was already been sent
             let key = (request.clone(), num.as_u64());
             if let Some(res) = self.storage_read().eth_energy_estimations.get(&key).cloned() {
-                return Ok(res)
+                return Ok(res);
             }
         }
         let tx = corebc::utils::serialize(request.as_ref());
@@ -219,7 +219,7 @@ impl ClientFork {
 
     pub async fn logs(&self, filter: &Filter) -> Result<Vec<Log>, ProviderError> {
         if let Some(logs) = self.storage_read().logs.get(filter).cloned() {
-            return Ok(logs)
+            return Ok(logs);
         }
 
         let logs = self.provider().get_logs(filter).await?;
@@ -236,7 +236,7 @@ impl ClientFork {
     ) -> Result<Bytes, ProviderError> {
         trace!(target: "backend::fork", "get_code={:?}", address);
         if let Some(code) = self.storage_read().code_at.get(&(address, blocknumber)).cloned() {
-            return Ok(code)
+            return Ok(code);
         }
 
         let code = self.provider().get_code(address, Some(blocknumber.into())).await?;
@@ -271,7 +271,7 @@ impl ClientFork {
     ) -> Result<Option<Transaction>, ProviderError> {
         if let Some(block) = self.block_by_number(number).await? {
             if let Some(tx_hash) = block.transactions.get(index) {
-                return self.transaction_by_hash(*tx_hash).await
+                return self.transaction_by_hash(*tx_hash).await;
             }
         }
         Ok(None)
@@ -284,7 +284,7 @@ impl ClientFork {
     ) -> Result<Option<Transaction>, ProviderError> {
         if let Some(block) = self.block_by_hash(hash).await? {
             if let Some(tx_hash) = block.transactions.get(index) {
-                return self.transaction_by_hash(*tx_hash).await
+                return self.transaction_by_hash(*tx_hash).await;
             }
         }
         Ok(None)
@@ -296,20 +296,20 @@ impl ClientFork {
     ) -> Result<Option<Transaction>, ProviderError> {
         trace!(target: "backend::fork", "transaction_by_hash={:?}", hash);
         if let tx @ Some(_) = self.storage_read().transactions.get(&hash).cloned() {
-            return Ok(tx)
+            return Ok(tx);
         }
 
         if let Some(tx) = self.provider().get_transaction(hash).await? {
             let mut storage = self.storage_write();
             storage.transactions.insert(hash, tx.clone());
-            return Ok(Some(tx))
+            return Ok(Some(tx));
         }
         Ok(None)
     }
 
     pub async fn trace_transaction(&self, hash: H256) -> Result<Vec<Trace>, ProviderError> {
         if let Some(traces) = self.storage_read().transaction_traces.get(&hash).cloned() {
-            return Ok(traces)
+            return Ok(traces);
         }
 
         let traces = self.provider().trace_transaction(hash).await?;
@@ -325,7 +325,7 @@ impl ClientFork {
         opts: GoCoreDebugTracingOptions,
     ) -> Result<GoCoreTrace, ProviderError> {
         if let Some(traces) = self.storage_read().geth_transaction_traces.get(&hash).cloned() {
-            return Ok(traces)
+            return Ok(traces);
         }
 
         let trace = self.provider().debug_trace_transaction(hash, opts).await?;
@@ -337,7 +337,7 @@ impl ClientFork {
 
     pub async fn trace_block(&self, number: u64) -> Result<Vec<Trace>, ProviderError> {
         if let Some(traces) = self.storage_read().block_traces.get(&number).cloned() {
-            return Ok(traces)
+            return Ok(traces);
         }
 
         let traces = self.provider().trace_block(number.into()).await?;
@@ -352,13 +352,13 @@ impl ClientFork {
         hash: H256,
     ) -> Result<Option<TransactionReceipt>, ProviderError> {
         if let Some(receipt) = self.storage_read().transaction_receipts.get(&hash).cloned() {
-            return Ok(Some(receipt))
+            return Ok(Some(receipt));
         }
 
         if let Some(receipt) = self.provider().get_transaction_receipt(hash).await? {
             let mut storage = self.storage_write();
             storage.transaction_receipts.insert(hash, receipt.clone());
-            return Ok(Some(receipt))
+            return Ok(Some(receipt));
         }
 
         Ok(None)
@@ -366,7 +366,7 @@ impl ClientFork {
 
     pub async fn block_by_hash(&self, hash: H256) -> Result<Option<Block<TxHash>>, ProviderError> {
         if let Some(block) = self.storage_read().blocks.get(&hash).cloned() {
-            return Ok(Some(block))
+            return Ok(Some(block));
         }
         let block = self.fetch_full_block(hash).await?.map(Into::into);
         Ok(block)
@@ -377,7 +377,7 @@ impl ClientFork {
         hash: H256,
     ) -> Result<Option<Block<Transaction>>, ProviderError> {
         if let Some(block) = self.storage_read().blocks.get(&hash).cloned() {
-            return Ok(Some(self.convert_to_full_block(block)))
+            return Ok(Some(self.convert_to_full_block(block)));
         }
         self.fetch_full_block(hash).await
     }
@@ -393,7 +393,7 @@ impl ClientFork {
             .copied()
             .and_then(|hash| self.storage_read().blocks.get(&hash).cloned())
         {
-            return Ok(Some(block))
+            return Ok(Some(block));
         }
 
         let block = self.fetch_full_block(block_number).await?.map(Into::into);
@@ -411,7 +411,7 @@ impl ClientFork {
             .copied()
             .and_then(|hash| self.storage_read().blocks.get(&hash).cloned())
         {
-            return Ok(Some(self.convert_to_full_block(block)))
+            return Ok(Some(self.convert_to_full_block(block)));
         }
 
         self.fetch_full_block(block_number).await
@@ -429,7 +429,7 @@ impl ClientFork {
             storage.transactions.extend(block.transactions.iter().map(|tx| (tx.hash, tx.clone())));
             storage.hashes.insert(block_number, hash);
             storage.blocks.insert(hash, block.clone().into());
-            return Ok(Some(block))
+            return Ok(Some(block));
         }
 
         Ok(None)
@@ -441,7 +441,7 @@ impl ClientFork {
         index: usize,
     ) -> Result<Option<Block<TxHash>>, ProviderError> {
         if let Some(block) = self.block_by_hash(hash).await? {
-            return self.uncles_by_block_and_index(block, index).await
+            return self.uncles_by_block_and_index(block, index).await;
         }
         Ok(None)
     }
@@ -452,7 +452,7 @@ impl ClientFork {
         index: usize,
     ) -> Result<Option<Block<TxHash>>, ProviderError> {
         if let Some(block) = self.block_by_number(number).await? {
-            return self.uncles_by_block_and_index(block, index).await
+            return self.uncles_by_block_and_index(block, index).await;
         }
         Ok(None)
     }
@@ -466,7 +466,7 @@ impl ClientFork {
             .hash
             .ok_or_else(|| ProviderError::CustomError("missing block-hash".to_string()))?;
         if let Some(uncles) = self.storage_read().uncles.get(&block_hash) {
-            return Ok(uncles.get(index).cloned())
+            return Ok(uncles.get(index).cloned());
         }
 
         let mut uncles = Vec::with_capacity(block.uncles.len());

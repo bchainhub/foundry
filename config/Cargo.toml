@@ -1,10 +1,10 @@
 [package]
-name = "orbitalis-config"
+name = "foxar-config"
 version = "0.2.0"
 edition = "2021"
 license = "MIT OR Apache-2.0"
-description = "Orbitalis configuration"
-repository = "https://github.com/orbitalis-rs/orbitalis"
+description = "Foxar configuration"
+repository = "https://github.com/bchainhub/foxar"
 readme = "README.md"
 
 [dependencies]

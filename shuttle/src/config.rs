@@ -26,16 +26,16 @@ use corebc::{
     types::BlockNumber,
     utils::{format_core, hex, to_checksum, WEI_IN_CORE},
 };
-use orbitalis_common::{
+use foxar_common::{
     ProviderBuilder, ALCHEMY_FREE_TIER_CUPS, NON_ARCHIVE_NODE_WARNING, REQUEST_TIMEOUT,
 };
-use orbitalis_config::Config;
-use orbitalis_evm::{
+use foxar_config::Config;
+use foxar_evm::{
     executor::fork::{BlockchainDb, BlockchainDbMeta, SharedBackend},
     revm,
     revm::primitives::{BlockEnv, CfgEnv, TxEnv, U256 as rU256},
 };
-use orbitalis_utils::types::ToRuint;
+use foxar_utils::types::ToRuint;
 use parking_lot::RwLock;
 use serde_json::{json, to_writer, Value};
 use shuttle_server::ServerConfig;
@@ -161,11 +161,8 @@ impl NodeConfig {
         let mut config_string: String = "".to_owned();
         let _ = write!(config_string, "\n{}", Paint::green(BANNER));
         let _ = write!(config_string, "\n    {VERSION_MESSAGE}");
-        let _ = write!(
-            config_string,
-            "\n    {}",
-            Paint::green("https://github.com/orbitalis-rs/orbitalis")
-        );
+        let _ =
+            write!(config_string, "\n    {}", Paint::green("https://github.com/foxar-rs/foxar"));
 
         let _ = write!(
             config_string,
@@ -706,7 +703,7 @@ impl NodeConfig {
             .expect("Failed writing json");
         }
         if self.silent {
-            return
+            return;
         }
 
         println!("{}", self.as_string(fork))
@@ -714,14 +711,14 @@ impl NodeConfig {
 
     /// Returns the path where the cache file should be stored
     ///
-    /// See also [ Config::orbitalis_block_cache_file()]
+    /// See also [ Config::foxar_block_cache_file()]
     pub fn block_cache_path(&self, block: u64) -> Option<PathBuf> {
         if self.no_storage_caching || self.eth_rpc_url.is_none() {
-            return None
+            return None;
         }
         let chain_id = self.get_network_id();
 
-        Config::orbitalis_block_cache_file(chain_id, block)
+        Config::foxar_block_cache_file(chain_id, block)
     }
 
     /// Configures everything related to env, backend and database and returns the
@@ -813,7 +810,7 @@ latest block number: {latest_block}"
                     panic!("Failed to get block for block number: {fork_block_number}")
                 };
 
-                // we only use the energy limit value of the block if it is non-zero, since there are networks where this is not used and is always `0x0` which would inevitably result in `OutOfGas` errors as soon as the evm is about to record energy, See also <https://github.com/orbitalis-rs/orbitalis/issues/3247>
+                // we only use the energy limit value of the block if it is non-zero, since there are networks where this is not used and is always `0x0` which would inevitably result in `OutOfGas` errors as soon as the evm is about to record energy, See also <https://github.com/foxar-rs/foxar/issues/3247>
 
                 let energy_limit = if block.energy_limit.is_zero() {
                     env.block.energy_limit
@@ -1046,12 +1043,12 @@ impl AccountGenerator {
     }
 }
 
-/// Returns the path to shuttle dir `~/.orbitalis/shuttle`
+/// Returns the path to shuttle dir `~/.foxar/shuttle`
 pub fn shuttle_dir() -> Option<PathBuf> {
-    Config::orbitalis_dir().map(|p| p.join("shuttle"))
+    Config::foxar_dir().map(|p| p.join("shuttle"))
 }
 
-/// Returns the root path to shuttle's temporary storage `~/.orbitalis/shuttle/`
+/// Returns the root path to shuttle's temporary storage `~/.foxar/shuttle/`
 pub fn shuttle_tmp_dir() -> Option<PathBuf> {
     shuttle_dir().map(|p| p.join("tmp"))
 }
@@ -1059,7 +1056,7 @@ pub fn shuttle_tmp_dir() -> Option<PathBuf> {
 /// Finds the latest appropriate block to fork
 ///
 /// This fetches the "latest" block and checks whether the `Block` is fully populated (`hash` field
-/// is present). This prevents edge cases where shuttle forks the "latest" block but `eth_getBlockByNumber` still returns a pending block, <https://github.com/orbitalis-rs/orbitalis/issues/2036>
+/// is present). This prevents edge cases where shuttle forks the "latest" block but `eth_getBlockByNumber` still returns a pending block, <https://github.com/foxar-rs/foxar/issues/2036>
 async fn find_latest_fork_block<M: Middleware>(provider: M) -> Result<u64, M::Error> {
     let mut num = provider.get_block_number().await?.as_u64();
 
@@ -1068,7 +1065,7 @@ async fn find_latest_fork_block<M: Middleware>(provider: M) -> Result<u64, M::Er
     for _ in 0..2 {
         if let Some(block) = provider.get_block(num).await? {
             if block.hash.is_some() {
-                break
+                break;
             }
         }
         // block not actually finalized, so we try the block before

@@ -4,7 +4,7 @@ mod tests {
         config::runner,
         test_helpers::{filter::Filter, COMPILED, PROJECT},
     };
-    use orbitalis_config::{FuzzConfig, InvariantConfig};
+    use foxar_config::{FuzzConfig, InvariantConfig};
     use spark::{
         result::{SuiteResult, TestKind, TestResult},
         TestOptions, TestOptionsBuilder,

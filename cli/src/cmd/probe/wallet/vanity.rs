@@ -300,7 +300,7 @@ impl TypedValueParser for HexAddressValidator {
             return Err(clap::Error::raw(
                 clap::error::ErrorKind::InvalidValue,
                 "vanity patterns length exceeded. cannot be more than 40 characters",
-            ))
+            ));
         }
         let value = value.to_str().ok_or_else(|| {
             clap::Error::raw(clap::error::ErrorKind::InvalidUtf8, "address must be valid utf8")
@@ -315,13 +315,8 @@ mod tests {
 
     #[test]
     fn find_simple_vanity_start() {
-        let args: VanityArgs = VanityArgs::parse_from([
-            "orbitalis-cli",
-            "--starts-with",
-            "00",
-            "--network",
-            "mainnet",
-        ]);
+        let args: VanityArgs =
+            VanityArgs::parse_from(["foxar-cli", "--starts-with", "00", "--network", "mainnet"]);
         let wallet = args.run().unwrap();
         let addr = wallet.address();
         let addr = format!("{addr:x}");
@@ -331,7 +326,7 @@ mod tests {
     #[test]
     fn find_simple_vanity_start2() {
         let args: VanityArgs =
-            VanityArgs::parse_from(["orbitalis-cli", "--starts-with", "9", "--network", "1"]);
+            VanityArgs::parse_from(["foxar-cli", "--starts-with", "9", "--network", "1"]);
         let wallet = args.run().unwrap();
         let addr = wallet.address();
         let addr = format!("{addr:x}");
@@ -341,7 +336,7 @@ mod tests {
     #[test]
     fn find_simple_vanity_end() {
         let args: VanityArgs =
-            VanityArgs::parse_from(["orbitalis-cli", "--ends-with", "00", "--network", "mainnet"]);
+            VanityArgs::parse_from(["foxar-cli", "--ends-with", "00", "--network", "mainnet"]);
         let wallet = args.run().unwrap();
         let addr = wallet.address();
         let addr = format!("{addr:x}");

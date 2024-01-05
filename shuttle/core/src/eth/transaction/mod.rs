@@ -11,8 +11,8 @@ use corebc_core::{
         sha3,
     },
 };
-use orbitalis_evm::trace::CallTraceArena;
-use orbitalis_utils::types::ToRuint;
+use foxar_evm::trace::CallTraceArena;
+use foxar_utils::types::ToRuint;
 use revm::{
     interpreter::InstructionResult,
     primitives::{CreateScheme, TransactTo, TxEnv},
@@ -252,7 +252,7 @@ impl MaybeImpersonatedTransaction {
     #[cfg(feature = "impersonated-tx")]
     pub fn recover(&self) -> Result<Address, SignatureError> {
         if let Some(sender) = self.impersonated_sender {
-            return Ok(sender)
+            return Ok(sender);
         }
         self.transaction.recover()
     }
@@ -265,7 +265,7 @@ impl MaybeImpersonatedTransaction {
     pub fn hash(&self) -> H256 {
         if self.transaction.is_impersonated() {
             if let Some(sender) = self.impersonated_sender {
-                return self.transaction.impersonated_hash(sender)
+                return self.transaction.impersonated_hash(sender);
             }
         }
         self.transaction.hash()
@@ -564,7 +564,7 @@ impl Encodable for LegacyTransaction {
 impl Decodable for LegacyTransaction {
     fn decode(rlp: &Rlp) -> Result<Self, DecoderError> {
         if rlp.item_count()? != 8 {
-            return Err(DecoderError::RlpIncorrectListLen)
+            return Err(DecoderError::RlpIncorrectListLen);
         }
 
         Ok(Self {
@@ -616,7 +616,7 @@ impl PendingTransaction {
     /// In order to prevent collisions from multiple different impersonated accounts, we update the
     /// transaction's hash with the address to make it unique.
     ///
-    /// See: <https://github.com/orbitalis-rs/orbitalis/issues/3759>
+    /// See: <https://github.com/foxar-rs/foxar/issues/3759>
     #[cfg(feature = "impersonated-tx")]
     pub fn with_impersonated(transaction: TypedTransaction, sender: Address) -> Self {
         let hash = transaction.impersonated_hash(sender);
@@ -636,7 +636,7 @@ impl PendingTransaction {
         &self.sender
     }
 
-    /// Converts the [PendingTransaction] into the [TxEnv] context that [`revm`](orbitalis_evm)
+    /// Converts the [PendingTransaction] into the [TxEnv] context that [`revm`](foxar_evm)
     /// expects.
     pub fn to_revm_tx_env(&self) -> TxEnv {
         fn transact_to(kind: &TransactionKind) -> TransactTo {
@@ -703,7 +703,7 @@ impl TransactionInfo {
     pub fn trace_address(&self, idx: usize) -> Vec<usize> {
         if idx == 0 {
             // root call has empty traceAddress
-            return vec![]
+            return vec![];
         }
         let mut graph = vec![];
         let mut node = &self.traces.arena[idx];

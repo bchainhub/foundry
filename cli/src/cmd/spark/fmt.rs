@@ -1,12 +1,12 @@
 use crate::{
     cmd::{Cmd, LoadConfig},
-    utils::OrbitalisPathExt,
+    utils::FoxarPathExt,
 };
 use clap::{Parser, ValueHint};
 use console::{style, Style};
-use orbitalis_common::{fs, term::cli_warn};
-use orbitalis_config::{impl_figment_convert_basic, Config};
-use orbitalis_utils::glob::expand_globs;
+use foxar_common::{fs, term::cli_warn};
+use foxar_config::{impl_figment_convert_basic, Config};
+use foxar_utils::glob::expand_globs;
 use rayon::prelude::*;
 use similar::{ChangeTag, TextDiff};
 use spark_fmt::{format, parse, print_diagnostics_report};
@@ -52,7 +52,7 @@ impl FmtArgs {
     /// Returns all inputs to format
     fn inputs(&self, config: &Config) -> Vec<Input> {
         if self.paths.is_empty() {
-            return config.project_paths().input_files().into_iter().map(Input::Path).collect()
+            return config.project_paths().input_files().into_iter().map(Input::Path).collect();
         }
 
         let mut paths = self.paths.iter().peekable();
@@ -62,7 +62,7 @@ impl FmtArgs {
             if *path == Path::new("-") && !is_terminal::is_terminal(&stdin) {
                 let mut buf = String::new();
                 stdin.read_to_string(&mut buf).expect("Failed to read from stdin");
-                return vec![Input::Stdin(buf)]
+                return vec![Input::Stdin(buf)];
             }
         }
 
@@ -106,7 +106,7 @@ impl Cmd for FmtArgs {
 
         if inputs.is_empty() {
             cli_warn!("Nothing to format.\nHINT: If you are working outside of the project, try providing paths to your source files: `spark fmt <paths>`");
-            return Ok(())
+            return Ok(());
         }
 
         let diffs = inputs

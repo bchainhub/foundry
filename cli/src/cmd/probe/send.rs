@@ -8,8 +8,8 @@ use corebc::{
     core::types::Network, prelude::MiddlewareBuilder, providers::Middleware, signers::Signer,
     types::NameOrAddress,
 };
-use orbitalis_common::cli_warn;
-use orbitalis_config::Config;
+use foxar_common::cli_warn;
+use foxar_config::Config;
 use probe::{Cast, TxBuilder};
 use std::str::FromStr;
 
@@ -168,7 +168,7 @@ impl SendTxArgs {
 The specified sender via CLI/env vars does not match the sender configured via
 the hardware wallet's HD Path.
 Please use the `--hd-path <PATH>` parameter to specify the BIP32 Path which
-corresponds to the sender, or let orbitalis automatically detect it by not specifying any sender address."
+corresponds to the sender, or let foxar automatically detect it by not specifying any sender address."
                     )
                 }
             }

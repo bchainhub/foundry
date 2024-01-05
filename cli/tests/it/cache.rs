@@ -1,5 +1,5 @@
 //! Tests for various cache command
-use orbitalis_cli_test_utils::{
+use foxar_cli_test_utils::{
     sparktest,
     util::{TestCommand, TestProject},
 };

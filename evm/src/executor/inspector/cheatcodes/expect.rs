@@ -4,7 +4,7 @@ use corebc::{
     abi::{AbiDecode, RawLog},
     types::{Address, Bytes, H176, U256},
 };
-use orbitalis_utils::error::{ERROR_PREFIX, REVERT_PREFIX};
+use foxar_utils::error::{ERROR_PREFIX, REVERT_PREFIX};
 use revm::{
     interpreter::{return_ok, InstructionResult},
     primitives::Bytecode,
@@ -129,7 +129,7 @@ pub fn handle_expect_emit(state: &mut Cheatcodes, log: RawLog, address: &Address
     // This allows a contract to arbitrarily emit more events than expected (additive behavior),
     // as long as all the previous events were matched in the order they were expected to be.
     if state.expected_emits.iter().all(|expected| expected.found) {
-        return
+        return;
     }
 
     // if there's anything to fill, we need to pop back.
@@ -486,7 +486,7 @@ pub fn apply<DB: DatabaseExt>(
         HEVMCalls::MockCall0(inner) => {
             // TODO: Does this increase energy usage?
             if let Err(err) = data.journaled_state.load_account(h176_to_b176(inner.0), data.db) {
-                return Some(Err(err.into()))
+                return Some(Err(err.into()));
             }
 
             // Etches a single byte onto the account if it is empty to circumvent the `extcodesize`
@@ -510,7 +510,7 @@ pub fn apply<DB: DatabaseExt>(
         }
         HEVMCalls::MockCall1(inner) => {
             if let Err(err) = data.journaled_state.load_account(h176_to_b176(inner.0), data.db) {
-                return Some(Err(err.into()))
+                return Some(Err(err.into()));
             }
 
             state.mocked_calls.entry(inner.0).or_default().insert(

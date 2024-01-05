@@ -4,8 +4,8 @@ use corebc::{
     types::{Address, Block, TxHash, U256},
 };
 use eyre::WrapErr;
+use foxar_common::NON_ARCHIVE_NODE_WARNING;
 use futures::TryFutureExt;
-use orbitalis_common::NON_ARCHIVE_NODE_WARNING;
 use revm::primitives::{BlockEnv, CfgEnv, Env, TxEnv};
 
 /// Initializes a REVM block environment based on a forked

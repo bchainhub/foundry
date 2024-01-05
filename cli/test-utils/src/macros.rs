@@ -10,7 +10,7 @@
 /// run `spark init`
 ///
 /// ```no_run
-/// use orbitalis_cli_test_utils::*;
+/// use foxar_cli_test_utils::*;
 /// sparktest!(my_test, |prj: TestProject, mut cmd: TestCommand| {
 ///     // adds `init` to spark's command arguments
 ///     cmd.arg("init");
@@ -22,8 +22,8 @@
 /// Configure a hardhat project layout by adding a `PathStyle::HardHat` argument
 ///
 /// ```no_run
-/// use orbitalis_cli_test_utils::*;
-/// use orbitalis_cli_test_utils::corebc_ylem::PathStyle;
+/// use foxar_cli_test_utils::*;
+/// use foxar_cli_test_utils::corebc_ylem::PathStyle;
 /// sparktest!(can_clean_hardhat, PathStyle::HardHat, |prj: TestProject, mut cmd: TestCommand| {
 ///     prj.assert_create_dirs_exists();
 ///     prj.assert_style_paths_exist(PathStyle::HardHat);
@@ -178,12 +178,12 @@ macro_rules! sparktest_external {
                 "20000",
                 "--ffi",
             ]);
-            cmd.set_env("ORBITALIS_FUZZ_RUNS", "1");
+            cmd.set_env("FOXAR_FUZZ_RUNS", "1");
 
-            let next_eth_rpc_url = orbitalis_utils::rpc::next_http_archive_rpc_endpoint(corebc_addressbook::Network::Mainnet);
+            let next_eth_rpc_url = foxar_utils::rpc::next_http_archive_rpc_endpoint(corebc_addressbook::Network::Mainnet);
             if $fork_block > 0 {
-                cmd.set_env("ORBITALIS_ETH_RPC_URL", next_eth_rpc_url);
-                cmd.set_env("ORBITALIS_FORK_BLOCK_NUMBER", stringify!($fork_block));
+                cmd.set_env("FOXAR_ETH_RPC_URL", next_eth_rpc_url);
+                cmd.set_env("FOXAR_FORK_BLOCK_NUMBER", stringify!($fork_block));
             }
             cmd.assert_non_empty_stdout();
         }

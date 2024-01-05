@@ -50,7 +50,7 @@ pub enum WalletSubcommands {
         /// If provided, the address will be derived from the specified private key.
         #[clap(
             value_name = "PRIVATE_KEY",
-            value_parser = orbitalis_common::clap_helpers::strip_0x_prefix,
+            value_parser = foxar_common::clap_helpers::strip_0x_prefix,
         )]
         private_key_override: Option<String>,
 
@@ -162,7 +162,7 @@ impl WalletSubcommands {
                 let sig = if data {
                     let typed_data: TypedData = if from_file {
                         // data is a file name, read json from file
-                        orbitalis_common::fs::read_json_file(message.as_ref())?
+                        foxar_common::fs::read_json_file(message.as_ref())?
                     } else {
                         // data is a json string
                         serde_json::from_str(&message)?
@@ -202,7 +202,7 @@ mod tests {
 
     #[test]
     fn can_parse_wallet_sign_message() {
-        let args = WalletSubcommands::parse_from(["orbitalis-cli", "sign", "deadbeef"]);
+        let args = WalletSubcommands::parse_from(["foxar-cli", "sign", "deadbeef"]);
         match args {
             WalletSubcommands::Sign { message, data, from_file, .. } => {
                 assert_eq!(message, "deadbeef".to_string());
@@ -215,7 +215,7 @@ mod tests {
 
     #[test]
     fn can_parse_wallet_sign_hex_message() {
-        let args = WalletSubcommands::parse_from(["orbitalis-cli", "sign", "0xdeadbeef"]);
+        let args = WalletSubcommands::parse_from(["foxar-cli", "sign", "0xdeadbeef"]);
         match args {
             WalletSubcommands::Sign { message, data, from_file, .. } => {
                 assert_eq!(message, "0xdeadbeef".to_string());
@@ -228,7 +228,7 @@ mod tests {
 
     #[test]
     fn can_parse_wallet_sign_data() {
-        let args = WalletSubcommands::parse_from(["orbitalis-cli", "sign", "--data", "{ ... }"]);
+        let args = WalletSubcommands::parse_from(["foxar-cli", "sign", "--data", "{ ... }"]);
         match args {
             WalletSubcommands::Sign { message, data, from_file, .. } => {
                 assert_eq!(message, "{ ... }".to_string());
@@ -242,7 +242,7 @@ mod tests {
     #[test]
     fn can_parse_wallet_sign_data_file() {
         let args = WalletSubcommands::parse_from([
-            "orbitalis-cli",
+            "foxar-cli",
             "sign",
             "--data",
             "--from-file",

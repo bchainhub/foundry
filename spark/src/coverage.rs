@@ -1,5 +1,5 @@
 use comfy_table::{presets::ASCII_MARKDOWN, Attribute, Cell, Color, Row, Table};
-pub use orbitalis_evm::coverage::*;
+pub use foxar_evm::coverage::*;
 use std::io::Write;
 
 /// A coverage reporter.
